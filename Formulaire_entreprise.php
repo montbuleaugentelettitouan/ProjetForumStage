@@ -7,7 +7,7 @@
  *
  */
 
-include('barre_nav_admin.php');
+include('barre_nav_entreprise.php');
 include('fonctionality/bdd.php');
 ?>
 <style>
@@ -16,23 +16,27 @@ include('fonctionality/bdd.php');
     }
 </style>
 
-
 <body>
 <div id="layoutSidenav_content"> <!-- body de la page -->
     <main>
         <div class="container-fluid px-4"> <!-- div de page -->
-            <h1 class="mt-4">Ajout de stage </h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Ajout d'un stage</li>
-            </ol>
+            <h1 class="mt-4">Ajout d'un stage </h1>
+            <br>
 
             <!----------------------------Section entreprise------------------------------------------->
 
             <div class="card mb-4">      <!--div de section 1 -->
                 <div class="card-header">
                     <!--div de encadré 1 -->
-                    <i class="far fa-file-pdf"></i>
-                    Ajouter un stage
+                    <form method="post" enctype="multipart/form-data">
+                        <!-- Other form elements -->
+
+                        <div class="form-group">
+                            <i class="far fa-file-pdf"></i>
+                            <label for="pdfFile">Déposer un fichier PDF :</label>
+                            <input type="file" class="form-control-file" id="pdfFile" name="pdfFile" accept=".pdf">
+                        </div>
+                    </form>
                 </div><!--fin div de encadré 1 -->
 
                 <br>
@@ -171,7 +175,6 @@ include('fonctionality/bdd.php');
                 ?>
             </div><!--fin div de section 1 -->
             <!----------------------------Footer------------------------------------------->
-
         </div><!--fin div de page -->
     </main>
     <?php
