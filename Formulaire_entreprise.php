@@ -66,31 +66,47 @@ include('fonctionality/bdd.php');
                         </div>
                         <br>
                         <div class="form-group">
-                            <label><h5> Missions du stage<b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" id="Missions" name="Missions" required>
+                            <!-- Start: Missions du stage -->
+                            <label>
+                                <h5> Missions du stage <b><span style="color: red;">*</span></b> :</h5>
+                            </label>
+                            <!-- Larger textarea for multiline input -->
+                            <textarea class="form-control" id="Missions" name="Missions" rows="4" style="width: 100%;" required></textarea>
+                            <!-- Instructions or additional information can be added here -->
+                            <small class="form-text text-muted">Veuillez fournir une brève description de vos missions de stage.</small>
+                            <!-- End: Missions du stage -->
                         </div>
+
+
                         <br>
                         <div class="form-group">
                             <label><h5> Compétences attendues<b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" id="Competences" name="Competences" required>
+                            <textarea type="text" class="form-control" id="Competences" name="Competences" rows="4" style="width: 100%;" required></textarea>
                         </div>
                         <br>
                         <div class="form-group">
                             <label><h5> Nombre de stages proposés<b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="number" class="form-control" id="nbPoste" name="nbPoste" required>
+                            <input type="number" class="form-control" id="nbPoste" name="nbPoste"  required>
                         </div>
                         <br>
+
                         <div class="form-group">
                             <label><h5> Mail de la personne à contacter<b><span style="color: red;">*</span></b>:</h5></label>
                             <input type="text" class="form-control" id="mailContact" name="mailContact" required>
                         </div>
                         <br>
+
                         <div class="form-group">
                             <label><h5> Si connu, représentant au forum stage:</h5></label>
                             <input type="text" class="form-control" id="Representant" name="Representant">
                         </div>
                         <br>
-                        <div class="card mb-4">      <!--div de section 1 -->
+                        <div class="form-group">
+                            <label><h5> Mail pour envoie de la confirmation<b><span style="color: red;">*</span></b>:</h5></label>
+                            <input type="text" class="form-control" id="mailConfiramtion" name="mailConfiramtion" required>
+                        </div>
+                        <br>
+                                                <div class="card mb-4">      <!--div de section 1 -->
                             <div class="card-header">
 
                                 <form method="post" enctype="multipart/form-data">
@@ -137,6 +153,10 @@ include('fonctionality/bdd.php');
 
                     $representant = $_POST['Representant'];
                     $representant= strtoupper($representant);
+
+                    $destinataire = $_POST['mailConfirmation'];
+                    $sujet = "[Forum stage 2024] Confirmation de proposition d'offre de stage";
+                    $message = "Votre proposition de stage $titre a bien été prise en compte.";
 
                     $pdf = $_FILES['pdfFile'];
 
