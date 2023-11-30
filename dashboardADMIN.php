@@ -48,11 +48,11 @@ include('fonctionality/annee+promo.php');
                         $val = 'null';
                         /* recupération de la requête et affichage de toutes les données dans un tableau */
                         $req = $bdd->prepare("SELECT nom, prenom, titre, nomSite, nomEntreprise, priorite FROM utilisateur
-                        LEFT JOIN postule on utilisateur.idUtilisateur = postule.idutilisateur
-                        LEFT JOIN offre_stage ON postule.idOffre = offre_stage.idOffre
-                        LEFT JOIN site on offre_stage.idSite = site.idSite
+                        LEFT JOIN postule_m1 on utilisateur.idUtilisateur = postule_m1.idutilisateur
+                        LEFT JOIN offre ON postule_m1.idOffre = offre.idOffre
+                        LEFT JOIN site on offre.idSite = site.idSite
                         LEFT JOIN entreprise on site.idEntreprise = entreprise.idEntreprise
-                        WHERE postule.priorite != ? and promo = ?");
+                        WHERE postule_m1.priorite != ? and promo = ?");
                         $req->execute(array($val, $promo));
                         $resultat = $req->fetchAll();
                         foreach ($resultat as $ligne) { ?>
@@ -92,8 +92,7 @@ include('fonctionality/annee+promo.php');
                         <?php
 
                         /* récupération de l'ensemble des utilisateurs */
-                        $req = $bdd->prepare("SELECT idUtilisateur, statut, nom, prenom, email
-                        FROM utilisateur where promo = ?");
+                        $req = $bdd->prepare("SELECT idUtilisateur, statut, nom, prenom, email FROM utilisateur where promo = ?");
                         $req->execute(array($promo));
                         $resultat = $req->fetchAll();
 
@@ -102,9 +101,7 @@ include('fonctionality/annee+promo.php');
 
                             $relou = $ligne['idUtilisateur'];
                             /* Pour chaque utilisateur on cherche l'id correspondant dans la table choix_offre */
-                            $reqVal = $bdd->prepare("SELECT idUtilisateur
-                            FROM postule
-                            WHERE idUtilisateur = ? ");
+                            $reqVal = $bdd->prepare("SELECT idUtilisateur FROM postule_m1 WHERE idUtilisateur = ? ");
                             $reqVal->execute(array($relou));
                             $resultatVal = $reqVal->fetchAll();
 

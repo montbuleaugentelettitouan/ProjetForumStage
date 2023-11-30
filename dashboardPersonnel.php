@@ -46,7 +46,7 @@ include('fonctionality/bdd.php');
                             <tbody>
                                 <?php
                                     //$user = "hpotter";
-                                    $req = $bdd->prepare('SELECT offre_stage.idOffre, nomEntreprise, nomSite, titre, description, priorite, cr_entretien FROM entreprise JOIN site on entreprise.idEntreprise = site.idEntreprise JOIN offre_stage ON site.idSite = offre_stage.idSite JOIN postule on offre_stage.idOffre = postule.idOffre WHERE postule.idUtilisateur=? ORDER BY priorite ASC');
+                                    $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, description, priorite, cr_entretien FROM entreprise JOIN site on entreprise.idEntreprise = site.idEntreprise JOIN offre ON site.idSite = offre.idSite JOIN postule_m1 on offre.idOffre = postule_m1.idOffre WHERE postule_m1.idUtilisateur=? ORDER BY priorite ASC');
                                     $req->execute(array($_SESSION['user']));
                                     //$req->execute(array($user));
                                     $resultat = $req->fetchAll();
@@ -98,17 +98,17 @@ include('fonctionality/bdd.php');
                             $id = $_SESSION['user'];
                             $prio = $_POST['offre' . $i];
 
-                            $req4 = $bdd->prepare('SELECT * FROM postule WHERE idUtilisateur=? AND idOffre =?');
+                            $req4 = $bdd->prepare('SELECT * FROM postule_m1 WHERE idUtilisateur=? AND idOffre =?');
                             $req4->execute(array($id, $i));
                             $req4_reponse = $req4->fetch();
                             $count = $req4->rowcount();
 
                             if ($count !== 0) {
-                                $req3 = $bdd->prepare('UPDATE postule SET priorite= ? WHERE idUtilisateur=? AND idOffre=?');
+                                $req3 = $bdd->prepare('UPDATE postule_m1 SET priorite= ? WHERE idUtilisateur=? AND idOffre=?');
                                 $req3->execute(array($prio, $id, $i));
                                 $update = $req3->fetch();
                             } else {
-                                $req2 = "INSERT INTO postule (idUtilisateur, idOffre, priorite) VALUES ('$id','$i','$prio')";
+                                $req2 = "INSERT INTO postule_m1 (idUtilisateur, idOffre, priorite) VALUES ('$id','$i','$prio')";
                                 $result = $bdd->query($req2);
                                 $result = $result->fetch();
                             }
@@ -116,13 +116,13 @@ include('fonctionality/bdd.php');
                             $id = $_SESSION['user'];
                             $prio = Null;
 
-                            $req8 = $bdd->prepare('SELECT * FROM postule WHERE idUtilisateur=? AND idOffre =?');
+                            $req8 = $bdd->prepare('SELECT * FROM postule_m1 WHERE idUtilisateur=? AND idOffre =?');
                             $req8->execute(array($id, $i));
                             $req8_reponse = $req8->fetchAll();
                             $count8 = $req8->rowcount();
 
                             if ($count8 !== 0) {
-                                $req7 = $bdd->prepare('DELETE FROM postule WHERE idUtilisateur=? AND idOffre=?');
+                                $req7 = $bdd->prepare('DELETE FROM postule_m1 WHERE idUtilisateur=? AND idOffre=?');
                                 $req7->execute(array($id, $i));
                                 $update = $req7->fetchAll();
                             }
@@ -134,7 +134,7 @@ include('fonctionality/bdd.php');
                         if (isset($_POST['textAreaEntretien' . $i])) {
                             $entretien = $_POST['textAreaEntretien' . $i];
 
-                            $reque = $bdd->prepare('UPDATE postule SET cr_entretien=? WHERE idUtilisateur=? and idOffre=?');
+                            $reque = $bdd->prepare('UPDATE postule_m1 SET cr_entretien=? WHERE idUtilisateur=? and idOffre=?');
                             $reque->execute(array($entretien, $id, $i));
                             $update = $reque->fetchAll();
                         }

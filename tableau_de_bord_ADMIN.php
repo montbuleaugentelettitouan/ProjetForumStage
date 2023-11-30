@@ -27,17 +27,17 @@ include('fonctionality/annee+promo.php');
                 <li class="breadcrumb-item active">Vue générale du statut des étudiants</li>
 				<!-- Récupère le nombre d'étudiants en fonction de leur statut sur la plateforme -->
                 <?php
-                $stockStatus1 = $bdd->prepare("select count(distinct idUtilisateur) as 'Nombre étudiants' from utilisateur where statut = 'etudiant' and promo = ? and etat = 'accepte';");
+                $stockStatus1 = $bdd->prepare("select count(distinct idUtilisateur) as 'Nombre étudiants' from utilisateur where statut = 'etudiant' and promo = ? and etatC = 'accepte';");
                 $stockStatus1->execute(array($promo));
                 $resultatEtuAccepte = $stockStatus1->fetch();
                 $resultatEtuAccepte = $resultatEtuAccepte['Nombre étudiants'];
 
-                $stockStatus2 = $bdd->prepare("select count(distinct idUtilisateur) as 'Nombre étudiants' from utilisateur where statut = 'etudiant' and promo = ? and etat = 'en attente';");
+                $stockStatus2 = $bdd->prepare("select count(distinct idUtilisateur) as 'Nombre étudiants' from utilisateur where statut = 'etudiant' and promo = ? and etatC = 'en attente';");
                 $stockStatus2->execute(array($promo));
                 $resultatEtuEnAttente = $stockStatus2->fetch();
                 $resultatEtuEnAttente = $resultatEtuEnAttente['Nombre étudiants'];
 
-                $stockStatus3 = $bdd->prepare("select count(distinct idUtilisateur) as 'Nombre étudiants' from utilisateur where statut = 'etudiant' and promo = ? and etat = 'en recherche';");
+                $stockStatus3 = $bdd->prepare("select count(distinct idUtilisateur) as 'Nombre étudiants' from utilisateur where statut = 'etudiant' and promo = ? and etatC = 'en recherche';");
                 $stockStatus3->execute(array($promo));
                 $resultatEtuEnRecherche = $stockStatus3->fetch();
                 $resultatEtuEnRecherche = $resultatEtuEnRecherche['Nombre étudiants'];

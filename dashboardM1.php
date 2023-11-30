@@ -53,7 +53,7 @@ ini_set('display_errors', '1');
                             <!--Execution d'une requête permettant d'afficher les différentes offres inscrites dans la base de données en fonction d'un utilisateur-->
 
                                 <?php
-                                    $req = $bdd->prepare('SELECT offre_stage.idOffre, nomEntreprise, nomSite, titre, description, priorite FROM offre_stage JOIN site on offre_stage.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise LEFT JOIN postule on offre_stage.idOffre = postule.idOffre AND postule.idUtilisateur = ? where offre_stage.annee = ? ORDER BY offre_stage.idOffre ASC');
+                                    $req = $bddd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, description, priorite FROM postule_m1 JOIN offre USING (idOffre) JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise AND postule.idUtilisateur = ? where offre_stage.annee = ? ORDER BY offre_stage.idOffre ASC');
                                     $req->execute(array($_SESSION['user'], $annee));
                                     //$resultat = $bdd->query($req);
                                     $resultat = $req->fetchAll();
@@ -102,21 +102,21 @@ ini_set('display_errors', '1');
                                 $prio = $_POST['offre'.$i];
 
                                 //requête pour pour selectionner et compter toutes les lignes presentes dans la table choix_offre qui correspondent à l'utilisateur en question
-                                $req4 = $bdd->prepare('SELECT * FROM postule WHERE idUtilisateur=? AND idOffre =?');
+                                $req4 = $bdd->prepare('SELECT * FROM postule_m1 WHERE idUtilisateur=? AND idOffre =?');
                                 $req4->execute(array($id, $i));
                                 $req4_reponse=$req4->fetchAll();
                                 $count = $req4->rowcount();
 
                                 //Si une ligne correspond deja on va juste modifier l'enregistrement dans la bdd
                                 if ($count!==0){
-                                    $req3 = $bdd->prepare('UPDATE postule SET priorite= ? WHERE idUtilisateur=? AND idOffre=?');
+                                    $req3 = $bdd->prepare('UPDATE postule_m1 SET priorite= ? WHERE idUtilisateur=? AND idOffre=?');
                                     $req3->execute(array($prio, $id, $i));
                                     $update = $req3->fetchAll();
                                 }
     
                                 //Sinon on ajoute une nouvelle information dans la table choix_offre
                                 else{
-                                    $req2 = "INSERT INTO postule (idUtilisateur, idOffre, priorite) VALUES ('$id','$i','$prio')";
+                                    $req2 = "INSERT INTO postule_m1 (idUtilisateur, idOffre, priorite) VALUES ('$id','$i','$prio')";
                                     $result = $bdd->query($req2);
                                     $result = $result->fetchAll();
                                 }
@@ -129,14 +129,14 @@ ini_set('display_errors', '1');
                                 $prio = Null;
     
                                 //Recherche de l'utilisateur et de l'offre dans la table
-                                $req8 = $bdd->prepare('SELECT * FROM postule WHERE idUtilisateur=? AND idOffre =?');
+                                $req8 = $bdd->prepare('SELECT * FROM postule_m1 WHERE idUtilisateur=? AND idOffre =?');
                                 $req8->execute(array($id, $i));
                                 $req8_reponse=$req8->fetchAll();
                                 $count8 = $req8->rowcount();
     
                                 // Si elle est présente sans priorité, ça se supprime de la table
                                 if ($count8!==0){
-                                    $req7 = $bdd->prepare('DELETE FROM postule WHERE idUtilisateur=? AND idOffre=?');
+                                    $req7 = $bdd->prepare('DELETE FROM postule_m1 WHERE idUtilisateur=? AND idOffre=?');
                                     $req7->execute(array($id, $i));
                                     $update = $req7->fetchAll();
                                 }

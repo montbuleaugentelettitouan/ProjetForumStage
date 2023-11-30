@@ -33,7 +33,7 @@ include('fonctionality/annee+promo.php');
                         <select onchange="detailEtu()" name="Etudiant" id="Etudiant" required>
                             <option value="">Sélectionnez un étudiant</option>
                             <?php
-                            $reponse = $bdd->prepare('SELECT idUtilisateur, nom, prenom FROM stage join utilisateur using (idUtilisateur) WHERE statut = "etudiant" and promo = ? ORDER BY nom ASC');
+                            $reponse = $bdd->prepare('SELECT idUtilisateur, nom, prenom FROM convention_contrat join utilisateur using (idUtilisateur) WHERE statut = "etudiant" and promo = ? ORDER BY nom ASC');
                             $reponse->execute(array($promo));
                             while ($donnees = $reponse->fetch()) {
                                 ?>
@@ -52,7 +52,7 @@ include('fonctionality/annee+promo.php');
             <!-- Affichage du nom de l'étudiant sélectionné et ses informations -->
 
             <?php
-            $req = $bdd->prepare('select DISTINCT(email), nom, prenom, nomEntreprise, titre from utilisateur join stage using (idUtilisateur) join offre_stage using (idOffre) join site on stage.idSite = site.idSite join entreprise using (idEntreprise) where statut = "etudiant" and  promo = ?;');
+            $req = $bdd->prepare('select DISTINCT(email), nom, prenom, nomEntreprise, titre from utilisateur join convention_contrat using (idUtilisateur) join offre using (idOffre) join site on offre.idSite = site.idSite join entreprise using (idEntreprise) where statut = "etudiant" and  promo = ?;');
             $req->execute(array($promo));
             $resultatreq = $req->fetchAll();
             ?>

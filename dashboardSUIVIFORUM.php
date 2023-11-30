@@ -59,7 +59,7 @@ include('fonctionality/annee+promo.php');
             <!-- Affichage du nom de l'étudiant sélectionné et ses informations -->
 
             <?php
-            $req = $bdd->prepare('SELECT nom, prenom, etat, promo, nomEntreprise FROM utilisateur left join stage using (idUtilisateur) left join site using (idSite) left join entreprise using (idEntreprise) WHERE promo = ? and statut = "etudiant";');
+            $req = $bdd->prepare('SELECT nom, prenom, etatC, promo, nomEntreprise FROM utilisateur left join convention_contrat using (idUtilisateur) left join offre using (idOffre) left join site using (idSite) left join entreprise using (idEntreprise) WHERE promo = ? and statut = "etudiant";');
             $req->execute(array($promo));
             $resultatreq = $req->fetchAll();
             ?>
@@ -96,7 +96,7 @@ include('fonctionality/annee+promo.php');
                     $reponse76 = $bdd->query("SELECT * FROM utilisateur WHERE idUtilisateur='$valid'");
                     $resultat76 = $reponse76->fetch();
 
-                    $reponse74 = $bdd->query("SELECT utilisateur.idUtilisateur, etat FROM utilisateur WHERE utilisateur.idUtilisateur = '$valid' ");
+                    $reponse74 = $bdd->query("SELECT utilisateur.idUtilisateur, etatC FROM utilisateur WHERE utilisateur.idUtilisateur = '$valid' ");
                     $resultat74 = $reponse74->fetch();
                     ?>
 
@@ -136,11 +136,11 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
 
-                        $etat = $bdd->prepare("SELECT etat_recherche FROM postule WHERE idUtilisateur = ?");
+                        $etat = $bdd->prepare("SELECT etat_recherche FROM postule_m1 WHERE idUtilisateur = ?");
                         $etat->execute(array($valid));
                         $resultEtat = $etat->fetch();
 
-                        $verif = $bdd->prepare('SELECT titre, nomSite, nomEntreprise , cr_entretien, etat_recherche, priorite FROM postule JOIN offre_stage on postule.idOffre = offre_stage.idOffre join site on offre_stage.idSite = site.idSite join entreprise on site.idEntreprise= entreprise.idEntreprise  WHERE postule.idUtilisateur =? and entretien_passe = 1;');
+                        $verif = $bdd->prepare('SELECT titre, nomSite, nomEntreprise , cr_entretien, etat_recherche, priorite FROM postule_m1 JOIN offre on postule_m1.idOffre = offre.idOffre join site on offre.idSite = site.idSite join entreprise on site.idEntreprise= entreprise.idEntreprise  WHERE postule_m1.idUtilisateur =? and entretien_passe = 1;');
                         $verif->execute(array($valid));
                         //while ($donnees = $verif->fetch())
                         foreach ($verif as $donnees){

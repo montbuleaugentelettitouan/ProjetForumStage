@@ -28,7 +28,7 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
                         /* recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bdd->prepare("select DISTINCT(email), nom, prenom, nomEntreprise, titre from utilisateur join stage using (idUtilisateur) join offre_stage using (idOffre) join site on stage.idSite = site.idSite join entreprise using (idEntreprise) where  promo = ?;");
+                        $req = $bdd->prepare("SELECT DISTINCT(email), nom, prenom, nomEntreprise, titre FROM utilisateur JOIN convention_contrat USING (idUtilisateur) JOIN offre USING (idOffre) JOIN site USING (idSite) JOIN entreprise USING (idEntreprise) WHERE promo = ?;");
                         $req->execute(array($promo));
                         $resultat = $req->fetchAll();
                         foreach ($resultat as $ligne) { ?>

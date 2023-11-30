@@ -76,7 +76,7 @@ $selectedValue = $_GET['value'];
                 $reponse76 = $bdd->query("SELECT * FROM utilisateur WHERE idUtilisateur='$valid'");
                 $resultat76 = $reponse76->fetch();
 
-                $reponse74 = $bdd->query("SELECT utilisateur.idUtilisateur, etat, cr_forumM1 FROM utilisateur WHERE utilisateur.idUtilisateur = '$valid' ");
+                $reponse74 = $bdd->query("SELECT utilisateur.idUtilisateur, etatC, cr_forumM1 FROM utilisateur WHERE utilisateur.idUtilisateur = '$valid' ");
                 $resultat74 = $reponse74->fetch();
                 ?>
 
@@ -120,11 +120,11 @@ $selectedValue = $_GET['value'];
                     <tbody>
                     <?php
 
-                    $etat = $bdd->prepare("SELECT etat_recherche FROM postule WHERE idUtilisateur = ?");
+                    $etat = $bdd->prepare("SELECT etat_recherche FROM postule_m1 WHERE idUtilisateur = ?");
                     $etat->execute(array($valid));
                     $resultEtat = $etat->fetch();
 
-                    $verif = $bdd->prepare('SELECT titre, nomSite, nomEntreprise , cr_entretien, etat_recherche, priorite FROM postule JOIN offre_stage on postule.idOffre = offre_stage.idOffre join site on offre_stage.idSite = site.idSite join entreprise on site.idEntreprise= entreprise.idEntreprise  WHERE postule.idUtilisateur =? and entretien_passe = 1;');
+                    $verif = $bdd->prepare('SELECT titre, nomSite, nomEntreprise , cr_entretien, etat_recherche, priorite FROM postule_m1 JOIN offre on postule_m1.idOffre = offre.idOffre join site on offre.idSite = site.idSite join entreprise on site.idEntreprise= entreprise.idEntreprise  WHERE postule_m1.idUtilisateur =? and entretien_passe = 1;');
                     $verif->execute(array($valid));
                     //while ($donnees = $verif->fetch())
                     foreach ($verif as $donnees){

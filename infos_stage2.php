@@ -39,7 +39,7 @@ $selectedValue = $_GET['value'];
                         <select onchange="detailEtu()" name="Etudiant" id="Etudiant" >
                             <option value="">Sélectionnez un étudiant</option>
                             <?php
-                            $reponse = $bdd->prepare('SELECT idUtilisateur, nom, prenom FROM stage join utilisateur using (idUtilisateur) WHERE statut = "etudiant" and promo = ? ORDER BY nom ASC');
+                            $reponse = $bdd->prepare('SELECT idUtilisateur, nom, prenom FROM convention_contrat join utilisateur using (idUtilisateur) WHERE statut = "etudiant" and promo = ? ORDER BY nom ASC');
                             $reponse->execute(array($promo));
                             while ($donnees = $reponse->fetch()) {
                                 ?>
@@ -92,7 +92,7 @@ $selectedValue = $_GET['value'];
                     </thead>
                     <tbody>
                     <?php
-                    $verif = $bdd->prepare('SELECT titre, nomSite, nomEntreprise FROM offre_stage JOIN stage on offre_stage.idOffre = stage.idOffre JOIN site on stage.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE stage.idUtilisateur =?');
+                    $verif = $bdd->prepare('SELECT titre, nomSite, nomEntreprise FROM convention_contrat JOIN offre ON (idOffre) JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE convention_contrat.idUtilisateur =?');
                     $verif->execute(array($valid));
                     $result = $verif->fetch();
 
@@ -117,7 +117,7 @@ $selectedValue = $_GET['value'];
                 <table class="table table-striped" >
                     <?php
 					// récupération de toutes les informations a affiché dans le dernier tableau
-                    $req = $bdd->prepare("SELECT nomTuteur, prenomTuteur,adresse_postale, pays, ville_stage, numTuteur, emailTuteur, type_contrat, dateDeb, dateFin, annee_stage, code_postal, secteur, presentiel, nom_tuteur_academique, prenom_tuteur_academique, gratification, format_gratification FROM stage JOIN site on stage.idSite = site.idSite WHERE stage.idUtilisateur = ?");
+                    $req = $bddd->prepare("SELECT nomMDS, prenomMDS,adresse_postale, pays, ville_stage, numTuteur, emailTuteur, type_contrat, dateDeb, dateFin, annee_stage, code_postal, secteur, presentiel, nom_tuteur_academique, prenom_tuteur_academique, gratification, format_gratification FROM stage JOIN site on stage.idSite = site.idSite WHERE stage.idUtilisateur = ?");
                     $req->execute(array($valid));
                     $resultat = $req->fetch();
 

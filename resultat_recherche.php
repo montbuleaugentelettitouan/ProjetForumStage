@@ -77,15 +77,11 @@ if (isset($_GET['query'])) {
                         /* Recupération de la requête et affichage de toutes les données dans un tableau */
                         /* Cette requête permet de récupérer toutes les infos relatives à un étudiant suivant ce qu'on tape dans la
                         barre de recherche (représenté par le ?). Cette recherche va regarder si '?' est contenu dans le nom ou prenom
-                        de l'étudiant/tuteur académique/tuteur de stage et si il y a des doublons entre les étudiants(même nom et prénom),
-                        la recherche prendra celui qui à la promo la plus élevée.
+                        de l'étudiant et si il y a des doublons (même nom et prénom), la recherche prendra celui qui à la promo la plus
+                        élevée.
                         */
-
-
-                        $req = $bdd->prepare("
-                        SELECT DISTINCT u.idUtilisateur, u.nom, u.prenom, u.email, u.numtel, e.nomEntreprise, u.etat, 
-                        s.nomTuteur, s.prenomTuteur, s.emailTuteur, s.numTuteur, s.nom_tuteur_academique, 
-                        s.prenom_tuteur_academique, s.email_tuteur_academique, s.num_tuteur_academique 
+                        $req = $bddd->prepare("
+                        SELECT DISTINCT u.idUtilisateur, u.nom, u.prenom, u.email, u.numTel, e.nomEntreprise, u.etatC, s.nomMDS, s.prenomMDS, s.emailMDS, s.numMDS, s.nomTA, s.prenomTA, s.emailTA, s.numTA 
                         FROM utilisateur u
                         LEFT JOIN stage s USING (idUtilisateur)
                         LEFT JOIN offre_stage os USING (idOffre)
@@ -94,30 +90,12 @@ if (isset($_GET['query'])) {
                         WHERE u.statut='etudiant' AND (
                             u.nom LIKE CONCAT('%', ?, '%') OR
                             u.prenom LIKE CONCAT('%', ?, '%') OR
-                            s.nomTuteur LIKE CONCAT('%', ?, '%') OR
-                            s.prenomTuteur LIKE CONCAT('%', ?, '%') OR
-                            s.nom_tuteur_academique LIKE CONCAT('%', ?, '%') OR
-                            s.prenom_tuteur_academique LIKE CONCAT('%', ?, '%') OR
                             u.nom IN (
                                 SELECT nom
                                 FROM utilisateur
                                 WHERE prenom <> u.prenom
                                 GROUP BY nom
                                 HAVING COUNT(DISTINCT prenom) > 1
-                            ) OR
-                            s.nomTuteur IN (
-                                SELECT nomTuteur
-                                FROM stage
-                                WHERE prenomTuteur <> s.prenomTuteur
-                                GROUP BY nomTuteur
-                                HAVING COUNT(DISTINCT prenomTuteur) > 1
-                            ) OR
-                            s.nom_tuteur_academique IN (
-                                SELECT nom_tuteur_academique
-                                FROM stage
-                                WHERE prenom_tuteur_academique <> s.prenom_tuteur_academique
-                                GROUP BY nom_tuteur_academique
-                                HAVING COUNT(DISTINCT prenom_tuteur_academique) > 1
                             )
                         )
                         AND (
@@ -126,7 +104,7 @@ if (isset($_GET['query'])) {
                         )
                         ORDER BY u.nom;");
 
-                        $req->execute(array($searchQuery, $searchQuery, $searchQuery, $searchQuery, $searchQuery, $searchQuery));
+                        $req->execute(array($searchQuery, $searchQuery));
                         $resultat = $req->fetchAll();
 
                         /* Ces deux variables permettent de mettre la dernière ligne du tableau en gras */

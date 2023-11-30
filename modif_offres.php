@@ -49,11 +49,11 @@ padding-left : 20px;
                     <tbody>
                         <?php
                         $idO = $_GET['id'];
-                        $afficheO = $bdd ->prepare("SELECT * FROM offre_stage WHERE idOffre =?");
+                        $afficheO = $bdd ->prepare("SELECT * FROM offre WHERE idOffre =?");
                         $afficheO->execute(array($idO));
                         $resultAfficheO = $afficheO->fetch();
 
-                        $afficheES = $bdd ->prepare("SELECT nomEntreprise, nomSite FROM offre_stage JOIN site on offre_stage.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE idOffre =?");
+                        $afficheES = $bdd ->prepare("SELECT nomEntreprise, nomSite FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE idOffre =?");
                         $afficheES->execute(array($idO));
                         $resultAfficheES = $afficheES->fetch();
                         ?>
@@ -91,7 +91,7 @@ padding-left : 20px;
           $Des = $_POST['texteAreaDes'];
           $Poste = $_POST['nbPoste'];
   
-          $AjoutO = $bdd ->prepare("UPDATE offre_stage SET titre = ?, description = ?, NbPoste = ? WHERE idOffre =?");
+          $AjoutO = $bdd ->prepare("UPDATE offre SET titre = ?, description = ?, NbPoste = ? WHERE idOffre =?");
           $AjoutO->execute(array($titre,$Des,$Poste,$idO));
           $resultAjoutO = $AjoutO->fetch();
   

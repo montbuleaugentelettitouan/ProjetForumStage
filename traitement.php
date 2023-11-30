@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         prenom = :prenom, 
         numEtu = :numEtu, 
         parcours = :parcours, 
-        etat = :etat 
+        etatC = :etat 
         WHERE idUtilisateur = :idU";
     $majUtilisateur = $bdd->prepare($sqlUtilisateur);
     $majUtilisateur->bindParam(':email', $emailEtu);
@@ -49,13 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // On teste si les champs additionnels du formulaire ont été affichés ou pas
     if ($Test1 != False) {
-        $sqlStage = "UPDATE stage SET
+        $sqlStage = "UPDATE convention_contrat SET
         type_contrat = :typeContrat,
-        secteur = :secteur,
-        code_postal = :cpEntreprise,
+        //secteur = :secteur,
+        //code_postal = :cpEntreprise,
         statut_contrat = :statutContrat,
-        nom_Site = :nomSite,
-        pays_Stage = :pays,
+        //nom_Site = :nomSite,
+        //pays_Stage = :pays,
         ville_stage = :ville,
         nom_Entreprise = :rsEnt";
 
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $majStage->execute();
     }
 
-    header("Location: form_stage_m2.php?saved");
+    header("Location: formu_stage_m2.php");
 } else {
     header("Location: dashboardPersonnel.php");
 }

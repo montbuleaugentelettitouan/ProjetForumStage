@@ -16,14 +16,14 @@ include('fonctionality/annee+promo.php');
 
             <?php
             $idS = $_GET['id'];
-            $req = $bdd->prepare("SELECT * FROM stage join utilisateur using(idUtilisateur) WHERE idStage = ?");
+            $req = $bddd->prepare("SELECT * FROM convention_contrat join utilisateur using(idUtilisateur) WHERE idConvention = ?");
             $req->execute(array($idS));
             $resultat = $req->fetch();
             ?>
 
             <?php
             $idS = $_GET['id'];
-            $req2 = $bdd->prepare("SELECT etat_convention, date FROM convention WHERE idStage = ? order by id");
+            $req2 = $bddd->prepare("SELECT etat_convention, date FROM convention_contrat WHERE idStage = ? order by id");
             $req2->execute(array($idS));
             $resultat2 = $req2->fetchAll();
             ?>

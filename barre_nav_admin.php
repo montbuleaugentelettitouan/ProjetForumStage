@@ -209,9 +209,9 @@ if (isset($_POST['recherche'])) {
                     </li>
                     <br>
                     <li>
-                        <a class="nav-link" href="gestion_tuteur.php">
+                        <a class="nav-link" href="validation_offres.php">
                             <div class="sb-nav-link-icon"></div>
-                            Gestion des tuteurs
+                            Validation des offres
                         </a>
                     </li>
                 </div>

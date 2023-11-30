@@ -81,11 +81,11 @@ include('fonctionality/bdd.php');
 
                         <h2>  <?php echo $resultat76['nom'] ?> <?php echo ''?> <?php echo $resultat76['prenom'] ?></h2>
                                <?php
-                            $reponse74 = $bdd->query("SELECT utilisateur.idUtilisateur, etat_recherche, cr_forumM1 FROM utilisateur JOIN postule on utilisateur.idUtilisateur = postule.idUtilisateur WHERE utilisateur.idUtilisateur = '$valid' ");
+                            $reponse74 = $bdd->query("SELECT utilisateur.idUtilisateur, etat_recherche, cr_forumM1 FROM utilisateur JOIN postule_m1 on utilisateur.idUtilisateur = postule_m1.idUtilisateur WHERE utilisateur.idUtilisateur = '$valid' ");
                             //$reponse74->execute(array($valid));
                             $resultat74 = $reponse74->fetch();
 
-                            $reponse72 = $bdd->query("SELECT offre_stage.idOffre, titre, description, nomEntreprise FROM utilisateur JOIN postule on utilisateur.idUtilisateur = postule.idUtilisateur JOIN offre_stage on postule.idOffre = offre_stage.idOffre JOIN site on offre_stage.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE utilisateur.idUtilisateur = '$valid'");
+                            $reponse72 = $bdd->query("SELECT offre.idOffre, titre, description, nomEntreprise FROM utilisateur JOIN postule_m1 on utilisateur.idUtilisateur = postule_m1.idUtilisateur JOIN offre on postule_m1.idOffre = offre.idOffre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE utilisateur.idUtilisateur = '$valid'");
                             //$reponse74->execute(array($valid));
                             $resultat72 = $reponse72->fetch();
                             
@@ -117,7 +117,7 @@ include('fonctionality/bdd.php');
                                         <tbody>
                                             <?php
                                                 //On écrit la requête pour afficher les premiers champs dans le tableau
-                                                $req = $bdd->prepare('SELECT titre, nomEntreprise, nomSite, cr_entretien FROM entreprise JOIN site on entreprise.idEntreprise = site.idEntreprise JOIN offre_stage ON site.idSite = offre_stage.idSite JOIN postule on offre_stage.idOffre = postule.idOffre WHERE postule.idUtilisateur =? ORDER BY offre_stage.idOffre ASC');
+                                                $req = $bdd->prepare('SELECT titre, nomEntreprise, nomSite, cr_entretien FROM entreprise JOIN site on entreprise.idEntreprise = site.idEntreprise JOIN offre ON site.idSite = offre.idSite JOIN postule_m1 on offre.idOffre = postule_m1.idOffre WHERE postule_m1.idUtilisateur =? ORDER BY offre.idOffre ASC');
                                                 $req->execute(array($valid));
                                                 $resultat = $req->fetchAll();
                                                 $count = $req->rowcount();

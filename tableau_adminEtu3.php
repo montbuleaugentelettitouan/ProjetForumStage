@@ -29,8 +29,8 @@ include('fonctionality/annee+promo.php');
                         </thead>
                         <tbody>
                         <?php
-                        /* recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bdd->prepare("select DISTINCT(email), nom, prenom, idUtilisateur from utilisateur where etat = 'en recherche' and promo = ? ; ");
+                        // recupération de la requête et affichage de toutes les données dans un tableau
+                        $req = $bdd->prepare("select DISTINCT(email), nom, prenom, idUtilisateur from utilisateur where etatC = 'en recherche' and promo = ? ; ");
                         $req->execute(array($promo));
                         $resultat = $req->fetchAll();
                         // déclaration d'un compteur pour afficher le nombre d'entrée dans le tableau des etudiants étant encore en recherche
@@ -96,7 +96,7 @@ include('fonctionality/annee+promo.php');
                 if (isset($_POST['validerenvoitous'])) 
                 {
                     // la, ca mets dans la liste tout les etudiants qui sont en recherche (on va les chercher direct dans la bbd)
-                    $req = $bdd->prepare("select DISTINCT(email) from utilisateur where etat = 'en recherche' and promo = ? ; ");
+                    $req = $bdd->prepare("select DISTINCT(email) from utilisateur where etatC = 'en recherche' and promo = ? ; ");
                         $req->execute(array($promo));
                         $resultat = $req->fetchAll();
                         $liste = '';

@@ -79,7 +79,7 @@ include('fonctionality/bdd.php');
                         <?php
 
                         /* Recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bdd->prepare("SELECT idUtilisateur, nom, prenom, email, numtel, nomEntreprise, etat, nomTuteur, prenomTuteur, emailTuteur, numTuteur, nom_tuteur_academique, prenom_tuteur_academique, email_tuteur_academique, num_tuteur_academique FROM utilisateur LEFT JOIN stage USING (idUtilisateur) LEFT JOIN offre_stage USING (idOffre) LEFT JOIN site ON stage.idSite = site.idSite LEFT JOIN entreprise USING (idEntreprise) WHERE statut='etudiant' AND promo = ? AND parcours = ? ORDER BY nom");
+                        $req = $bddd->prepare("SELECT idUtilisateur, nom, prenom, email, numtel, nomEntreprise, etat, nomTuteur, prenomTuteur, emailTuteur, numTuteur, nom_tuteur_academique, prenom_tuteur_academique, email_tuteur_academique, num_tuteur_academique FROM utilisateur LEFT JOIN stage USING (idUtilisateur) LEFT JOIN offre_stage USING (idOffre) LEFT JOIN site ON stage.idSite = site.idSite LEFT JOIN entreprise USING (idEntreprise) WHERE statut='etudiant' AND promo = ? AND parcours = ? ORDER BY nom");
                         $req->execute(array($promo, $parcours));
                         $resultat = $req->fetchAll();
 

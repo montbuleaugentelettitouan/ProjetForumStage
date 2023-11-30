@@ -31,22 +31,22 @@ include('fonctionality/annee+promo.php');
                         </thead>
                         <tbody>
                         <?php
-                            $nbPostes = $bdd->prepare('SELECT sum(NbPoste) AS somme FROM offre_stage where annee = ?');
+                            $nbPostes = $bdd->prepare('SELECT sum(NbPoste) AS somme FROM offre where anneeO = ?');
                             $nbPostes->execute(array($annee));
                             while ($donneesPoste=$nbPostes->fetch())
                             {
 
-                            $nbEnt = $bdd->prepare("select COUNT(distinct idEntreprise) from entreprise join site using (IdEntreprise) join offre_stage using (idSite) where annee = ?;");
+                            $nbEnt = $bdd->prepare("select COUNT(distinct idEntreprise) from entreprise join site using (IdEntreprise) join offre using (idSite) where anneeO = ?;");
                             $nbEnt->execute(array($annee));
                             while ($donneesEnt=$nbEnt->fetch())
                             {
 
-                            $nbSite = $bdd->prepare('SELECT COUNT(distinct idSite) FROM site join offre_stage using (idSite) where annee = ?;');
+                            $nbSite = $bdd->prepare('SELECT COUNT(distinct idSite) FROM site join offre using (idSite) where anneeO = ?;');
                             $nbSite->execute(array($annee));
                             while ($donneesSite=$nbSite->fetch())
                             {
 
-                            $nbOf = $bdd->prepare('SELECT COUNT(*) FROM offre_stage where annee = ?');
+                            $nbOf = $bdd->prepare('SELECT COUNT(*) FROM offre where anneeO = ?');
                             $nbOf->execute(array($annee));
                             while ($donneesOffre=$nbOf->fetch())
                             {
@@ -90,17 +90,17 @@ include('fonctionality/annee+promo.php');
                         </thead>
                         <tbody>
                         <?php
-                        $req = "SELECT idOffre, titre, nomSite, nomEntreprise, NbPoste FROM offre_stage JOIN site on offre_stage.idSite = site.idSite JOIN entreprise on site.idEntreprise=entreprise.idEntreprise where annee = ?";
+                        $req = "SELECT idOffre, titre, nomSite, nomEntreprise, NbPoste FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise=entreprise.idEntreprise where anneeO = ?";
                         $resultat = $bdd->prepare($req);
                         $resultat->execute(array($annee));
                         $resultat = $resultat->fetchAll();
                         foreach ($resultat as $ligne) {
-                            $requete = $bdd->prepare('SELECT COUNT(*) AS NbPostulants FROM postule WHERE idOffre=?');
+                            $requete = $bdd->prepare('SELECT COUNT(*) AS NbPostulants FROM postule_m1 WHERE idOffre=?');
                             $requete->execute(array($ligne['idOffre']));
                             $resultatnbpostulant = $requete->fetch();
                             $requete->closeCursor();
 
-                            $accepte = $bdd->prepare ("SELECT COUNT(idUtilisateur) AS NbAccepte FROM stage WHERE idOffre = ? ");
+                            $accepte = $bdd->prepare ("SELECT COUNT(idUtilisateur) AS NbAccepte FROM convention_contrat WHERE idOffre = ? ");
                             $accepte->execute(array($ligne['idOffre']));
                             $resultatnbaccepte = $accepte->fetch();
                             $accepte->closeCursor();

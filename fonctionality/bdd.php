@@ -1,6 +1,6 @@
 <?php
     //Connexion à la base de données avec le nom de la base
-    $dns = 'mysql:host=localhost;dbname=stage';
+    $dns = 'mysql:host=localhost;dbname=stage2';
 
     try {
     //Nom d'utilisateur et mot de passe pour accéder à la base de données

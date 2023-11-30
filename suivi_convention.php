@@ -69,7 +69,7 @@
 
             <?php
             //requete pour récupérer les données déjà saisie et les afficher dans le formulaire
-                $reqTut = $bdd->prepare('SELECT nom_tuteur_academique, prenom_tuteur_academique, idStage, gratification, format_gratification FROM stage WHERE idUtilisateur = ? LIMIT 1');
+                $reqTut = $bdd->prepare('SELECT nomTA, prenomTA, idConvention, gratification, format_gratification FROM convention_contrat JOIN tuteur_academique USING (idTA) WHERE idUtilisateur = ? LIMIT 1');
                 $reqTut->execute(array($_SESSION['user']));
                 $resultat = $reqTut->fetch();
 
@@ -122,7 +122,7 @@
                 }
 
                 //récupération du dernier état 
-                $reqEtat = $bdd->prepare('SELECT etat_convention FROM convention WHERE idStage = ? order by id DESC LIMIT 1');
+                $reqEtat = $bddd->prepare('SELECT etat_convention FROM convention_contrat WHERE idStage = ? order by idConvention DESC LIMIT 1');
                 $reqEtat->execute(array($stageid));
                 $resultat = $reqEtat->fetchAll();
 
@@ -241,11 +241,11 @@
 
 
                             //update de la ligne correspondant à l'étudiant dans la table stage avec les nouvelles infos du formulaire
-                            $upStage = $bdd->prepare('UPDATE stage SET nom_tuteur_academique = ?, prenom_tuteur_academique = ?, gratification = ?, format_gratification = ? WHERE idUtilisateur = ?');
+                            $upStage = $bddd->prepare('UPDATE stage SET nom_tuteur_academique = ?, prenom_tuteur_academique = ?, gratification = ?, format_gratification = ? WHERE idUtilisateur = ?');
                             $upStage->execute(array($nomTut,$prenomTut, $gratif, $format_gratif, $id));
 
                             //récupération de l'id stage 
-                            $req = $bdd->prepare('SELECT idStage FROM stage WHERE idUtilisateur = ? LIMIT 1');
+                            $req = $bddd->prepare('SELECT idStage FROM stage WHERE idUtilisateur = ? LIMIT 1');
                             $req->execute(array($id));
                             $resultat = $req->fetch();
 
@@ -255,7 +255,7 @@
                             $dateactuelle = date("Y-m-d");
 
                             //insertion d'une ligne dans la table convention pour historiser
-                            $upConv = $bdd->prepare('INSERT into convention (idStage, etat_convention, date) VALUES (?,?,?)');
+                            $upConv = $bddd->prepare('INSERT into convention (idStage, etat_convention, date) VALUES (?,?,?)');
                             $upConv->execute(array($idStage,$etat, $dateactuelle));
                     
 

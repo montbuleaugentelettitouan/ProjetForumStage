@@ -126,7 +126,7 @@ padding-left : 20px;
 
                 //Requete pour vérifier l'existence de l'offre
 
-                $verifOffre = $bdd->prepare("SELECT idEntreprise, nomSite, site.idSite, ville, pays, titre FROM offre_stage JOIN site on offre_stage.idSite = site.idSite WHERE site.idEntreprise = ? and nomSite = ? and ville = ? and pays = ? and titre = ?");
+                $verifOffre = $bdd->prepare("SELECT idEntreprise, nomSite, site.idSite, ville, pays, titre FROM offre JOIN site on offre.idSite = site.idSite WHERE site.idEntreprise = ? and nomSite = ? and ville = ? and pays = ? and titre = ?");
                 $verifOffre->execute(array($idEntreprise,$Site,$ville,$pays,$titre));
                 $resultOffre = $verifOffre->fetch();
                 $compteOf = $verifOffre->rowCount();
@@ -151,7 +151,7 @@ padding-left : 20px;
 
                     if ($compteSi != 0) { //si le site existe alors on ajoute l'offre
 
-                        $insertOffre = $bdd->prepare("INSERT INTO offre_stage (titre, description, NbPoste, idSite, stage_pourvu, annee) VALUES (?,?,?,?,?,?)");
+                        $insertOffre = $bdd->prepare("INSERT INTO offre (titre, description, NbPoste, idSite, stage_pourvu, anneeO) VALUES (?,?,?,?,?,?)");
                         $insertOffre->execute(array($titre,$description,$nbPoste,$idSite, 0, $annee));
                         //$resultInsertOffre = $insertOffre->fetch();
                         echo "L'offre a été ajoutée";

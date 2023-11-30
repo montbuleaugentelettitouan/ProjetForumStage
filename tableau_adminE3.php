@@ -25,13 +25,28 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
                         /* recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bdd->prepare("select * from ( select sum(stage_pourvu) as pourvu , sum(NbPoste) as NbPoste, nomEntreprise, idEntreprise from offre_stage join site using (idSite) join entreprise using (idEntreprise) where annee = ? group by idEntreprise) as T where T.pourvu = 0;");
+                        $req = $bdd->prepare("select * from ( select sum(nbPostePourvu) as pourvu , sum(NbPoste) as NbPoste, nomEntreprise, idEntreprise from offre join site using (idSite) join entreprise using (idEntreprise) where anneeO = ? group by idEntreprise) as T where T.pourvu = 0;");
+                        /*$req = $bdd->prepare("
+                            SELECT nbPoste, nomEntreprise 
+                            FROM (
+                                SELECT DISTINCT(o.idSite) AS idSite, e.nomEntreprise, COUNT(o.idSite) AS nbPoste
+                                FROM offre o
+                                JOIN site s ON o.idSite = s.idSite
+                                JOIN entreprise e ON s.idEntreprise = e.idEntreprise
+                                WHERE o.idSite NOT IN (
+                                    SELECT DISTINCT o.idSite
+                                    FROM offre o
+                                    INNER JOIN convention_contrat c ON o.idOffre = c.idOffre
+                                )
+                                AND anneeO = ?
+                                GROUP BY o.idSite, e.nomEntreprise
+                            ) AS subquery;");*/
                         $req->execute(array($annee));
                         $resultat = $req->fetchAll();
                         foreach ($resultat as $ligne) { ?>
                             <tr>
                                 <td><?php echo $ligne['nomEntreprise']; ?></td>
-                                <td><?php echo $ligne['NbPoste']; ?></td>
+                                <td><?php echo $ligne['nbPoste']; ?></td>
                             </tr>
                         <?php }
 

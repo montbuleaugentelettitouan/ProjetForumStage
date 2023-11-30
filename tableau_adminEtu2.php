@@ -26,7 +26,7 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
                         /* recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bdd->prepare("select DISTINCT(email), nom, prenom, idUtilisateur from utilisateur where etat = 'en attente' AND promo = ?");
+                        $req = $bdd->prepare("select DISTINCT(email), nom, prenom, idUtilisateur from utilisateur where etatC = 'en attente' AND promo = ?");
                         $req->execute(array($promo));
                         $resultat = $req->fetchAll();
                         foreach ($resultat as $ligne) { ?>

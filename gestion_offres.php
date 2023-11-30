@@ -98,7 +98,7 @@ include('fonctionality/bdd.php');
                                 <td>
                                 <select name="nomOffre"  id="nomOffre" required>
                                     <?php
-                                    $SearchOffreT = $bdd->query('SELECT titre FROM offre_stage ORDER BY titre ASC');
+                                    $SearchOffreT = $bdd->query('SELECT titre FROM offre ORDER BY titre ASC');
                                     while ($offreT = $SearchOffreT->fetch()) {
                                         ?>
                                         <option value="<?php echo $offreT['titre']; ?>">

@@ -20,7 +20,7 @@ include('fonctionality/annee+promo.php');
             $resultatNom = $reqNom->fetch();
 
             /* recupération de la requête et affichage de toutes les données dans un tableau */
-            $req = $bdd->prepare("select DISTINCT(email), nom, prenom, nomEntreprise, titre from utilisateur join stage using (idUtilisateur) join offre_stage using (idOffre) join site on stage.idSite = site.idSite join entreprise using (idEntreprise) where statut = 'etudiant' and  promo = ? and idEntreprise = ?;");
+            $req = $bdd->prepare("select DISTINCT(email), nom, prenom, nomEntreprise, titre from utilisateur join convention_contrat using (idUtilisateur) join offre using (idOffre) join site on offre.idSite = site.idSite join entreprise using (idEntreprise) where statut = 'etudiant' and  promo = ? and idEntreprise = ?;");
             $req->execute(array($promo, $idE));
             $resultat = $req->fetchAll();
             ?>
@@ -56,11 +56,11 @@ include('fonctionality/annee+promo.php');
 
                 <?php
                 /* recupération de la requête et affichage de toutes les données dans un tableau */
-                $req = $bdd->prepare(" select * from offre_stage join site using (idSite) join entreprise using (idEntreprise) where idEntreprise = ? and annee = ? and NbPoste>stage_pourvu  ;");
+                $req = $bdd->prepare(" select * from offre join site using (idSite) join entreprise using (idEntreprise) where idEntreprise = ? and anneeO = ? and NbPoste>nbPostePourvu  ;");
                 $req->execute(array($idE, $annee));
                 $resultat = $req->fetchAll();
 
-                $reqN = $bdd->prepare("select count(idOffre) as Nombre from (select * from offre_stage join site using (idSite) join entreprise using (idEntreprise) where idEntreprise = ? and annee = ? and NbPoste>stage_pourvu) as T;");
+                $reqN = $bdd->prepare("select count(idOffre) as Nombre from (select * from offre join site using (idSite) join entreprise using (idEntreprise) where idEntreprise = ? and anneeO = ? and NbPoste>nbPostePourvu) as T;");
                 $reqN->execute(array($idE, $annee));
                 $resultat2 = $reqN->fetch();
 
@@ -81,12 +81,12 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
                         foreach ($resultat as $ligne) {
-                                $restant = $ligne["NbPoste"]-$ligne["stage_pourvu"];
+                                $restant = $ligne["NbPoste"]-$ligne["nbPostePourvu"];
                             ?>
                             <tr>
                                 <td><?php echo $ligne['titre']; ?></td>
                                 <td><?php echo $restant; ?></td>
-                                <td><?php echo $ligne['stage_pourvu']; ?></td>
+                                <td><?php echo $ligne['nbPostePourvu']; ?></td>
                             </tr>
                         <?php }
 

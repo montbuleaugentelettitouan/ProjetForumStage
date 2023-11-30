@@ -46,7 +46,7 @@ include('fonctionality/bdd.php');
                                 <tbody>
                                     <?php
                                         // requête pour afficher les informations des offres que l'id Utilisateur à sélectionné
-                                        $req = $bdd->prepare('SELECT offre_stage.idOffre, nomEntreprise, nomSite, titre, description, proposition_acceptee FROM postule JOIN offre_stage on postule.idOffre = offre_stage.idOffre JOIN site on offre_stage.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE postule.idUtilisateur=? AND postule.entretien_passe = ? AND postule.proposition_recue = ?');
+                                        $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, description, proposition_acceptee FROM postule_m1 JOIN offre on postule_m1.idOffre = offre.idOffre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE postule_m1.idUtilisateur=? AND postule_m1.entretien_passe = ? AND postule_m1.proposition_recue = ?');
                                         $req->execute(array($_SESSION['user'],1,1));
                                         $resultat = $req->fetchAll();
 

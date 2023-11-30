@@ -35,7 +35,7 @@ ini_set('display_errors', '1');
             <select name="annee" id="annee" required>
                 <option value="">Sélectionnez une Promotion... </option>
                 <?php
-                $ReqAnnee = $bdd->prepare('SELECT DISTINCT(annee) from offre_stage;');
+                $ReqAnnee = $bdd->prepare('SELECT DISTINCT(anneeO) from offre;');
                 $ReqAnnee->execute();
                 while ($donnees = $ReqAnnee->fetch()) {
                     $pomo = $donnees['annee'] +1

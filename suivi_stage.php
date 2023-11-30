@@ -82,7 +82,7 @@
                     <tbody>
                         <?php
                             // requête pour afficher les informations de l'offre que l'Utilisateur à acceptée
-                            $req = $bdd->prepare('SELECT nomEntreprise, nomSite, titre, description FROM stage JOIN offre_stage on stage.idOffre = offre_stage.idOffre JOIN site on stage.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE stage.idUtilisateur = ?');
+                            $req = $bdd->prepare('SELECT nomEntreprise, nomSite, titre, description FROM convention_contrat JOIN offre on (idOffre) JOIN site on (idSite) JOIN entreprise on (idEntreprise) WHERE convention_contrat.idUtilisateur = ?');
                             $req->execute(array($_SESSION['user']));
                             $resultat = $req->fetchAll();
 
@@ -105,13 +105,13 @@
 
             <?php
                 // requête pour afficher les informations de l'offre que l'Utilisateur à acceptée
-                $req = $bdd->prepare('SELECT nomEntreprise, nomSite, titre, nomTuteur, prenomTuteur, numTuteur, emailTuteur, type_contrat, description, ville, pays, ville_stage, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale  FROM stage JOIN offre_stage on stage.idOffre = offre_stage.idOffre JOIN site on stage.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE stage.idUtilisateur = ? LIMIT 1');
+                $req = $bdd->prepare('SELECT nomEntreprise, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale  FROM convention_contrat JOIN offre on convention_contrat.idOffre = offre.idOffre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise JOIN maitre_de_stage ON site.idMDS = maitre_de_stage.idMDS WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
                 $req->execute(array($_SESSION['user']));
                 $resultat = $req->fetchAll();
 
                 $countr = $req->rowcount();
 
-                //on initialise toutes les variables dans le cas où il n'y aucune données déja renqeignées
+                //on initialise toutes les variables dans le cas où il n'y aucune données déja renseignées
                 $nomTuteur = "";
                 $prenomTuteur = "";
                 $numTuteur = "";
@@ -124,7 +124,7 @@
                 $selectedContratpro = "";
                 $nomEntreprise = "";
                 $nomSite ="";
-                $ville_stage = "";
+                //$ville_stage = "";
                 $selectedPres = "";
                 $selectedDist = "";
                 $distPres = "";
@@ -149,7 +149,7 @@
                     $nomSite = $ligne['nomSite'];
                     $ville = $ligne['ville'];
                     $pays = $ligne['pays'];
-                    $ville_stage =  $ligne['ville_stage'];
+                    //$ville_stage =  $ligne['ville_stage'];
                     $distPres =  $ligne['presentiel'];
                     $code_postal= $ligne['code_postal'];
                     $secteur =  $ligne['secteur'];
@@ -341,14 +341,15 @@
 
                             $adressePostale = $_POST['Adresse_postale'];
 
-                            $verifStage = $bdd->prepare('SELECT * FROM stage WHERE idUtilisateur = ?');
+                            $verifStage = $bdd->prepare('SELECT * FROM convention_contrat WHERE idUtilisateur = ?');
                             $verifStage->execute(array($id));
                             $resultVerif = $verifStage->fetch();
                             $count = $verifStage->rowcount();
                     
                             if ($count !=0) {
                                 if($DateDeb < $DateFin){
-                                    $upStage = $bdd->prepare('UPDATE stage SET nomTuteur = ?, prenomTuteur = ?, numTuteur = ?, emailTuteur = ?, type_contrat = ?, dateDeb = ?, dateFin = ?, annee_stage = ?, ville_stage = ? , code_postal = ?, presentiel = ? , secteur = ? , adresse_postale = ?  WHERE idUtilisateur = ?');
+                                    //A REFAIRE §!!!§§§§§D§§D§D§1§1§1§!!!
+                                    $upStage = $bddd->prepare('UPDATE maitre_de_stage SET nomMDS = ?, prenomMDS = ?, numMDS = ?, emailMDS = ?, type_contrat = ?, dateDeb = ?, dateFin = ?, annee_stage = ?, ville_stage = ? , code_postal = ?, presentiel = ? , secteur = ? , adresse_postale = ?  WHERE idUtilisateur = ?');
                                     //$upStage = $bdd->prepare('UPDATE stage SET numTuteur = ? WHERE idUtilisateur = ?');
                                     $upStage->execute(array($nomTut,$prenomTut,$numTut,$mailTut,$type,$DateDeb,$DateFin,$annee,$ville, $code_postal, $distPres, $secteur, $adressePostale, $id));
                                     //$upStage->execute(array($numTut,$id));

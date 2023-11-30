@@ -8,9 +8,9 @@
  * @UE : Projet annuel des entreprises Virtuelle
  * @ent : Grp 312
  *
- * @parma : Utilisation de la librairie Boostrap v5.1.3
+ * @param : Utilisation de la librairie Boostrap v5.1.3
  * @param : Template SB Admin - https://github.com/startbootstrap/startbootstrap-sb-admin
- * àparam : PHP v.8.1
+ * @param : PHP v.8.1
  *
  */
 

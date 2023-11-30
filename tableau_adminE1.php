@@ -25,7 +25,7 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
                         /* recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bdd->prepare("select * from ( select sum(stage_pourvu) as pourvu , sum(NbPoste) as NbPoste, nomEntreprise, idEntreprise from offre_stage join site using (idSite) join entreprise using (idEntreprise) where annee = ? group by idEntreprise) as T where T.pourvu != 0;");
+                        $req = $bdd->prepare("select * from ( select sum(nbPostePourvu) as pourvu , sum(NbPoste) as NbPoste, nomEntreprise, idEntreprise from offre join site using (idSite) join entreprise using (idEntreprise) where anneeO = ? group by idEntreprise) as T where T.pourvu != 0;");
                         $req->execute(array($annee));
                         $resultat = $req->fetchAll();
                         foreach ($resultat as $ligne) { ?>

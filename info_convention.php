@@ -29,11 +29,11 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
                         /* recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bdd->prepare("select DISTINCT(idStage), nom, prenom, nomEntreprise, titre from utilisateur join stage using (idUtilisateur) join offre_stage using (idOffre) join site on stage.idSite = site.idSite join entreprise using (idEntreprise) where promo = ?;");
+                        $req = $bddd->prepare("select DISTINCT(idStage), nom, prenom, nomEntreprise, titre from utilisateur join stage using (idUtilisateur) join offre_stage using (idOffre) join site on stage.idSite = site.idSite join entreprise using (idEntreprise) where promo = ?;");
                         $req->execute(array($promo));
                         $resultat = $req->fetchAll();
                         foreach ($resultat as $ligne) {
-                            $req2 = $bdd->prepare("SELECT etat_convention, date FROM convention WHERE idStage = ? order by id DESC LIMIT 1");
+                            $req2 = $bddd->prepare("SELECT etat_convention, date FROM convention WHERE idStage = ? order by id DESC LIMIT 1");
                             $req2->execute(array($ligne['idStage']));
                             $resultat2 = $req2->fetch();
                             $rowcount = $req2->rowCount();

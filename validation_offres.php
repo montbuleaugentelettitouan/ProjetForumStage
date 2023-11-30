@@ -1,29 +1,29 @@
 <?php
 /**
- * Fonctionnalité de login à l'application
  *
- * @autor : Anne SIECA, Victor ALLIOT, Alice Broussely et Audrey CHALAUX
- * @date : Promo GPhy 2022 - Année 2021 : 2022
+ * @autor:  Thibault NIGGEL
+ * @date : Promo Gphy 2025 - Année 2023 - 2024
  *
  */
 include('barre_nav_admin.php');
+include('fonctionality/bdd.php');
 include('fonctionality/annee+promo.php');
 ?>
 
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Gestion des offres</h1>
+            <h1 class="mt-4">Validation des offres</h1>
 
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Vue générale de toutes les offres</li>
+                <li class="breadcrumb-item active">Vue générale de toutes les offres proposées par les entreprises</li>
             </ol>
 
 
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="far fa-file-pdf"></i>
-                    Toutes les offres de l'année <?php echo $annee ?>
+                    Toutes les offres pour l'année <?php echo $annee ?>
                 </div>
 
 
@@ -34,34 +34,39 @@ include('fonctionality/annee+promo.php');
                         <tr>
                             <th>Nom de l'entreprise</th>
                             <th>Nom du site</th>
+                            <th>Ville</th>
                             <th>Intitulé de l'offre</th>
                             <th>Description</th>
+                            <th>Représentant</th>
+                            <th>Mail à contacter</th>
                             <th>Modification</th>
+                            <th>Validation</th>
 
                         </tr>
                         </thead>
                         <tbody>
                         <?php
 
-                        $req = "SELECT offre.idOffre, titre, description, nomSite, nomEntreprise FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise where anneeO = ? ORDER BY offre.idOffre ASC";
+                        $req = "SELECT offre.idOffre, titre, description, nomSite, nomEntreprise, ville, representant, mailContact FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise where anneeO = ? ORDER BY offre.idOffre ASC";
                         $resultat = $bdd->prepare($req);
                         $resultat->execute(array($annee));
                         foreach ($resultat as $ligne) { ?>
                             <tr>
                                 <td><?php echo $ligne['nomEntreprise']; ?></td>
                                 <td><?php echo $ligne['nomSite']; ?></td>
+                                <td><?php echo $ligne['ville']; ?></td>
                                 <td><?php echo $ligne['titre']; ?></td>
                                 <td><?php echo $ligne['description']; ?></td>
+                                <td><?php echo $ligne['representant']; ?></td>
+                                <td><?php echo $ligne['mailContact']; ?></td>
                                 <!--<td><input type="submit" class="btn btn-primary mb-2" name="ModifOffre" value="Modifier"></td>-->
                                 <!--<td><input type="button" value="Modifier" name ="Modifier" href="modif_offres.php"/></td>-->
-                                <td><a href="modif_offres.php?id=<?php echo $ligne['idOffre']; ?>">Modifier</a></td>
+                                <td><a href="modif_valid_offres.php?id=<?php echo $ligne['idOffre']; ?>"class="btn btn-warning">Modifier</a></td>
+                                <td><a href="valid_offres.php?id=<?php echo $ligne['idOffre']; ?>"class="btn btn-warning">Valider</a></td>
                             </tr>
                         <?php } ?>
                         </tbody>
                     </table>
-                    <!--<input type="submit" class="btn btn-warning" name="ModifOffre" value="Ajouter">-->
-                    <p> Pour ajouter une offre, <a href = ajout_offres.php>cliquez ici</a>
-                    <!--<input type="button" class="btn btn-warning" name="ModifOffre" value="Ajouter">-->
                 </div>
             </div>
             <br>

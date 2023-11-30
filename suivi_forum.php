@@ -32,7 +32,7 @@ include('barre_nav_M1.php');
 include('fonctionality/bdd.php');
 
 //Requete pour afficher plus loin les résultats saisis
-$reqetat = $bdd->prepare('SELECT DISTINCT utilisateur.idUtilisateur, idOffre, etat_recherche, cr_forumM1 FROM postule JOIN utilisateur on postule.idUtilisateur = utilisateur.idUtilisateur WHERE utilisateur.idUtilisateur = ?');
+$reqetat = $bdd->prepare('SELECT DISTINCT utilisateur.idUtilisateur, idOffre, etat_recherche, cr_forumM1 FROM postule_m1 JOIN utilisateur on postule_m1.idUtilisateur = utilisateur.idUtilisateur WHERE utilisateur.idUtilisateur = ?');
 $reqetat->execute(array($_SESSION['user']));
 $resultatetat = $reqetat->fetch();
 //compteur pour savoir si la requete renvoie un résultat (= au nombre de lignes)
@@ -102,7 +102,7 @@ else{
                             
                             <br>
                                 <?php
-                                    $req = $bdd->prepare('SELECT offre_stage.idOffre, nomEntreprise, nomSite, titre, entretien_passe, proposition_recue, cr_entretien FROM entreprise JOIN site on entreprise.idEntreprise = site.idEntreprise JOIN offre_stage ON site.idSite = offre_stage.idSite JOIN postule on offre_stage.idOffre = postule.idOffre WHERE postule.idUtilisateur=? ORDER BY priorite ASC');
+                                    $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, entretien_passe, proposition_recue, cr_entretien FROM entreprise JOIN site on entreprise.idEntreprise = site.idEntreprise JOIN offre ON site.idSite = offre.idSite JOIN postule_m1 on offre.idOffre = postule_m1.idOffre WHERE postule_m1.idUtilisateur=? ORDER BY priorite ASC');
                                     $req->execute(array($_SESSION['user']));
                                     $resultat = $req->fetchAll();
                                     
@@ -175,7 +175,7 @@ else{
                             $id = $_SESSION['user'];
                             $idoffre = $i;
         
-                            $req4 = $bdd->prepare('UPDATE postule SET entretien_passe = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
+                            $req4 = $bdd->prepare('UPDATE postule_m1 SET entretien_passe = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
                             $req4->execute(array($entretienpasse, $id, $idoffre));
                             $req4_reponse = $req4->fetch();
         
@@ -185,7 +185,7 @@ else{
                                 $propositionrecue = 1;
                                 $etatrecherche = 'en attente';
 
-                                $req5 = $bdd->prepare('UPDATE postule SET etat_recherche = ? ,proposition_recue = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
+                                $req5 = $bdd->prepare('UPDATE postule_m1 SET etat_recherche = ? ,proposition_recue = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
                                 $req5->execute(array($etatrecherche, $propositionrecue, $id, $idoffre));
                                 $req5_reponse = $req5->fetch();
                                 
@@ -196,7 +196,7 @@ else{
                                 $propositionrecue = 0;
                                 $etatrecherche = 'refuse';
 
-                                $req6 = $bdd->prepare('UPDATE postule SET etat_recherche = ? ,proposition_recue = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
+                                $req6 = $bdd->prepare('UPDATE postule_m1 SET etat_recherche = ? ,proposition_recue = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
                                 $req6->execute(array($etatrecherche ,$propositionrecue,$id,$idoffre));
                                 $req6_reponse = $req6->fetch();
                                 
@@ -213,7 +213,7 @@ else{
                             $etatrecherche = 'refuse';
                             $propositionrecue = 0;
 
-                            $req7 = $bdd->prepare('UPDATE postule SET etat_recherche = ?, entretien_passe = ?, proposition_recue = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
+                            $req7 = $bdd->prepare('UPDATE postule_m1 SET etat_recherche = ?, entretien_passe = ?, proposition_recue = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
                             $req7->execute(array($etatrecherche, $entretienpasse, $propositionrecue,$id,$idoffre));
                             $req7_reponse = $req7->fetch();
                         }
@@ -225,7 +225,7 @@ else{
                             $idoffre = $i;
                             $crentretien = $_POST['textAreaEntretien' . $i];
 
-                            $req8 = $bdd->prepare('UPDATE postule SET  cr_entretien = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
+                            $req8 = $bdd->prepare('UPDATE postule_m1 SET  cr_entretien = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
                             $req8->execute(array($crentretien,$id,$idoffre));
                             $req8_reponse = $req8->fetch();
                         }

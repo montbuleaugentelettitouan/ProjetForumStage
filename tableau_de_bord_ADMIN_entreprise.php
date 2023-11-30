@@ -22,12 +22,36 @@ include('fonctionality/annee+promo.php');
                 <li class="breadcrumb-item active">Vue générale du statut des entreprises</li>
 				<!-- Requete pour récupérer le nombre d'entreprise présente au forum ayant pourvu ou non des stages -->
                 <?php
-                $requetesearch = $bdd->prepare("select count(*) as 'Nombre Entreprise' from ( select sum(stage_pourvu) as pourvu , nomEntreprise from offre_stage join site using (idSite) join entreprise using (idEntreprise) where annee = ? group by idEntreprise) as T where T.pourvu != 0;");
+                $requetesearch = $bdd->prepare("select count(*) as 'Nombre Entreprise' from ( select sum(nbPostePourvu) as pourvu , nomEntreprise from offre join site using (idSite) join entreprise using (idEntreprise) where anneeO = ? group by idEntreprise) as T where T.pourvu != 0;");
+                /*$requetesearch = $bdd->prepare("
+                    SELECT COUNT(*) AS 'Nombre Entreprise'
+                    FROM (
+                        SELECT COUNT(cc.idOffre) AS nombreConventions, e.nomEntreprise
+                        FROM entreprise e
+                        LEFT JOIN site s ON e.idEntreprise = s.idEntreprise
+                        LEFT JOIN offre o ON s.idSite = o.idSite
+                        LEFT JOIN convention_contrat cc ON o.idOffre = cc.idOffre
+                        WHERE anneeO = ?
+                        GROUP BY e.idEntreprise
+                    ) AS T
+                    WHERE T.nombreConventions > 0;");*/
                 $requetesearch->execute(array($annee));
                 $resultatEntrepriseComplet = $requetesearch->fetch();
                 $resultatEntrepriseComplet = $resultatEntrepriseComplet['Nombre Entreprise'];
 
-                $requetesearch = $bdd->prepare("select count(*) as 'Nombre Entreprise' from ( select sum(stage_pourvu) as pourvu , nomEntreprise from offre_stage join site using (idSite) join entreprise using (idEntreprise) where annee = ? group by idEntreprise) as T where T.pourvu = 0;");
+                $requetesearch = $bdd->prepare("select count(*) as 'Nombre Entreprise' from ( select sum(nbPostePourvu) as pourvu , nomEntreprise from offre join site using (idSite) join entreprise using (idEntreprise) where anneeO = ? group by idEntreprise) as T where T.pourvu = 0;");
+                /*$requetesearch = $bdd->prepare("
+                    SELECT COUNT(*) AS 'Nombre Entreprise'
+                    FROM (
+                        SELECT COUNT(cc.idOffre) AS nombreConventions, e.nomEntreprise
+                        FROM entreprise e
+                        LEFT JOIN site s ON e.idEntreprise = s.idEntreprise
+                        LEFT JOIN offre o ON s.idSite = o.idSite
+                        LEFT JOIN convention_contrat cc ON o.idOffre = cc.idOffre
+                        WHERE cc.idOffre IS NULL AND o.anneeO = ?
+                        GROUP BY e.idEntreprise
+                    ) AS T
+                    WHERE T.nombreConventions = 0;");*/
                 $requetesearch->execute(array($annee));
                 $resultatEntrepriseVide = $requetesearch->fetch();
                 $resultatEntrepriseVide = $resultatEntrepriseVide['Nombre Entreprise'];
@@ -40,7 +64,7 @@ include('fonctionality/annee+promo.php');
                 </div>
 
                 <script>
-                    //paramètre du chart entreprise 
+                    //paramètre du chart entreprise
                     const ctx = document.getElementById('myChart').getContext('2d');
                     const myChart = new Chart(ctx, {
                         type: 'pie',
