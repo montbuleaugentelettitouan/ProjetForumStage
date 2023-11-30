@@ -61,20 +61,21 @@ include('fonctionality/bdd.php');
                         </div>
                         <br>
                         <div class="form-group">
-                            <label><h5> Pays <b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" placeholder="Entrez le pays où se déroulera le stage" id="Pays" name="Pays" required>
+                            <label><h5> Pays :</h5></label>
+                            <input type="text" class="form-control" id="Pays" name="Pays" value="FRANCE">
                         </div>
                         <br>
                         <div>
                             <label>
-                                <h5> Missions du stage <b><span style="color: red;">*</span></b> :</h5>
+                                <h5> Missions du stage:</h5>
                             </label>
                             <textarea class="form-control" placeholder="Entrez les missions à effectuer lors du stage" id="Missions" name="Missions" rows="4" style="width: 100%;"></textarea>
+                            <small>(facultatif)</small>
                         </div>
                         <br>
                         <div class="form-group">
-                            <label><h5> Compétences attendues <b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" placeholder="Entrez les compétences attendues pour le stage" id="Competences" name="Competences" required>
+                            <label><h5> Profil recherché :</h5></label>
+                            <input type="text" class="form-control" placeholder="..., ..., ..., ..." id="mailContact" name="mailContact">
                         </div>
                         <br>
                         <div class="form-group">
@@ -198,6 +199,7 @@ include('fonctionality/bdd.php');
                     $countSite = $verifS->rowcount();
                     */
                 }
+                echo "Votre offre de stage a bien été prise en compte."
                 ?>
             </div><!--fin div de section 1 -->
             <!----------------------------Footer------------------------------------------->
