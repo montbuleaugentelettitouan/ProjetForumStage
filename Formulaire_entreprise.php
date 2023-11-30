@@ -95,7 +95,7 @@ include('fonctionality/bdd.php');
                         <br>
                         <div>
                             <label><h5> Mail pour envoi de la confirmation <b><span style="color: red;">*</span></b>:</h5></label>
-                            <input type="text" class="form-control" placeholder="Entrez votre adresse e-mail pour l'envoi d'un mail de confirmation" id="mailConfiramtion" name="mailConfiramtion" required>
+                            <input type="text" class="form-control" placeholder="Entrez votre adresse e-mail pour l'envoi d'un mail de confirmation" id="mailConfirmation" name="mailConfirmation" required>
                         </div>
                         <br>
                         <div class="card mb-4">      <!--div de section 1 -->
@@ -136,9 +136,6 @@ include('fonctionality/bdd.php');
                     $description = $_POST['Missions'];
                     $description = ucfirst($description);
 
-                    $competences = $_POST['Competences'];
-                    $competences = ucfirst($competences);
-
                     $nbPoste = $_POST['nbPoste'];
 
                     $mailContact = $_POST['mailContact'];
@@ -165,8 +162,8 @@ include('fonctionality/bdd.php');
 
                     //On rajoute l'offre dans la BDD
 
-                    $reqinsertS = $bdd -> prepare ('INSERT INTO offre (titre, description, competences, nbPoste, mailContact, representant) values (?,?,?,?,?,?) ');
-                    $reqinsertS -> execute (array($titre, $description, $competences, $nbPoste, $mailContact, $representant));
+                    $reqinsertS = $bdd -> prepare ('INSERT INTO offre (titre, description, nbPoste, mailContact, representant) values (?,?,?,?,?) ');
+                    $reqinsertS -> execute (array($titre, $description, $nbPoste, $mailContact, $representant));
                     $resultatS = $reqinsertS -> fetch();
 
                     //On récupère son id
@@ -198,8 +195,13 @@ include('fonctionality/bdd.php');
                     $resultatSite = $verifS ->fetch();
                     $countSite = $verifS->rowcount();
                     */
+
+                    // Fonction mail : composition : mail(destinataire, l'objet du mail, le message du mail, l'adresse qui envoie le mail) (cest le serveur qui s'occupe du reste)
+                    echo $destinataire;
+                    mail($destinataire, $sujet, $message, "From:forumStageGphy@univ-poitiers.fr");
+
+                    echo "Votre offre de stage a bien été prise en compte.";
                 }
-                echo "Votre offre de stage a bien été prise en compte."
                 ?>
             </div><!--fin div de section 1 -->
             <!----------------------------Footer------------------------------------------->
