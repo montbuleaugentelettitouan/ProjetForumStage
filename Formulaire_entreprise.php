@@ -27,9 +27,9 @@ include('fonctionality/bdd.php');
             <div class="card mb-4">      <!--div de section 1 -->
                 <div class="card-header">
                     <center>
-                    <b>Merci de renseigner dans le formulaire ci-après les informations essentielles concernant le stage que vous proposez.
-                    <br>
-                    Merci de déposer un PDF de cette proposition de stage qui sera mis à disposition des étudiants.</b>
+                        <b>Merci de renseigner dans le formulaire ci-après les informations essentielles concernant le stage que vous proposez.
+                            <br>
+                            Merci de déposer un PDF de cette proposition de stage qui sera mis à disposition des étudiants.</b>
                     </center>
                 </div>
                 <br>
@@ -41,72 +41,63 @@ include('fonctionality/bdd.php');
                 <form method ="post">
                     <div class="card-body"><!--div de tableau 1 -->
                         <div class="form-group">
-                            <label><h5> Nom de l'entreprise<b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" id="Entreprise" name="Entreprise" required>
+                            <label><h5> Nom de l'entreprise <b><span style="color: red;">*</span></b> :</h5></label>
+                            <input type="text" class="form-control" placeholder="Entrez le nom de l'entreprise" id="Entreprise" name="Entreprise" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label><h5> Nom du site :</h5></label>
-                            <input type="text" class="form-control" id="ChoiceSite" name="ChoiceSite">
+                            <input type="text" class="form-control" placeholder="Entrez le site de l'entreprise où se déroulera le stage" id="ChoiceSite" name="ChoiceSite">
                         </div>
                         <br>
                         <div class="form-group">
-                            <label><h5> Intitulé du poste<b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" id="titre" name="titre" required>
+                            <label><h5> Intitulé du poste <b><span style="color: red;">*</span></b> :</h5></label>
+                            <input type="text" class="form-control" placeholder="Entrez l'intitulé du poste proposé" id="titre" name="titre" required>
                         </div>
                         <br>
                         <div class="form-group">
-                            <label><h5> Ville<b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" id="Ville" name="Ville" required>
+                            <label><h5> Ville <b><span style="color: red;">*</span></b> :</h5></label>
+                            <input type="text" class="form-control" placeholder="Entrez la ville où se déroulera le stage" id="Ville" name="Ville" required>
                         </div>
                         <br>
                         <div class="form-group">
-                            <label><h5> Pays<b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" id="Pays" name="Pays" required>
+                            <label><h5> Pays <b><span style="color: red;">*</span></b> :</h5></label>
+                            <input type="text" class="form-control" placeholder="Entrez le pays où se déroulera le stage" id="Pays" name="Pays" required>
                         </div>
                         <br>
-                        <div class="form-group">
-                            <!-- Start: Missions du stage -->
+                        <div>
                             <label>
                                 <h5> Missions du stage <b><span style="color: red;">*</span></b> :</h5>
                             </label>
-                            <!-- Larger textarea for multiline input -->
-                            <textarea class="form-control" id="Missions" name="Missions" rows="4" style="width: 100%;" required></textarea>
-                            <!-- Instructions or additional information can be added here -->
-                            <small class="form-text text-muted">Veuillez fournir une brève description de vos missions de stage.</small>
-                            <!-- End: Missions du stage -->
-                        </div>
-
-
-                        <br>
-                        <div class="form-group">
-                            <label><h5> Compétences attendues<b><span style="color: red;">*</span></b> :</h5></label>
-                            <textarea type="text" class="form-control" id="Competences" name="Competences" rows="4" style="width: 100%;" required></textarea>
+                            <textarea class="form-control" placeholder="Entrez les missions à effectuer lors du stage" id="Missions" name="Missions" rows="4" style="width: 100%;"></textarea>
                         </div>
                         <br>
                         <div class="form-group">
-                            <label><h5> Nombre de stages proposés<b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="number" class="form-control" id="nbPoste" name="nbPoste"  required>
+                            <label><h5> Compétences attendues <b><span style="color: red;">*</span></b> :</h5></label>
+                            <input type="text" class="form-control" placeholder="Entrez les compétences attendues pour le stage" id="Competences" name="Competences" required>
                         </div>
                         <br>
-
                         <div class="form-group">
-                            <label><h5> Mail de la personne à contacter<b><span style="color: red;">*</span></b>:</h5></label>
-                            <input type="text" class="form-control" id="mailContact" name="mailContact" required>
+                            <label><h5> Nombre de stages proposés <b><span style="color: red;">*</span></b> :</h5></label>
+                            <input type="number" class="form-control" placeholder="Entrez le nombre de stages que vous proposez" id="nbPoste" name="nbPoste" required>
                         </div>
                         <br>
-
                         <div class="form-group">
-                            <label><h5> Si connu, représentant au forum stage:</h5></label>
-                            <input type="text" class="form-control" id="Representant" name="Representant">
+                            <label><h5> Mail de la personne à contacter <b><span style="color: red;">*</span></b>:</h5></label>
+                            <input type="text" class="form-control" placeholder="Entrez l'adresse e-mail de la personne à contacter" id="mailContact" name="mailContact" required>
                         </div>
                         <br>
                         <div class="form-group">
-                            <label><h5> Mail pour envoie de la confirmation<b><span style="color: red;">*</span></b>:</h5></label>
-                            <input type="text" class="form-control" id="mailConfiramtion" name="mailConfiramtion" required>
+                            <label><h5> Si connu, représentant au forum stage:</h5></label>
+                            <input type="text" class="form-control" placeholder="Entrez le nom et prénom de la personne physique présente au forum stage" id="Representant" name="Representant">
                         </div>
                         <br>
-                                                <div class="card mb-4">      <!--div de section 1 -->
+                        <div>
+                            <label><h5> Mail pour envoi de la confirmation <b><span style="color: red;">*</span></b>:</h5></label>
+                            <input type="text" class="form-control" placeholder="Entrez votre adresse e-mail pour l'envoi d'un mail de confirmation" id="mailConfiramtion" name="mailConfiramtion" required>
+                        </div>
+                        <br>
+                        <div class="card mb-4">      <!--div de section 1 -->
                             <div class="card-header">
 
                                 <form method="post" enctype="multipart/form-data">
@@ -114,15 +105,15 @@ include('fonctionality/bdd.php');
 
                                     <div class="form-group">
                                         <i class="far fa-file-pdf"></i>
-                                        <label for="pdfFile">Déposer un fichier PDF<b><span style="color: red;">*</span></b> :</label>
+                                        <label for="pdfFile">Déposer un fichier PDF <b><span style="color: red;">*</span></b> :</label>
                                         <input type="file" class="form-control-file" id="pdfFile" name="pdfFile" accept=".pdf" required>
                                     </div>
                                 </form>
                             </div>
                             <br>
-                        <input type="submit" class="btn btn-warning" name="ValidAjoutStage" value="Ajouter">
-                        <br>
-                    </div><!--fin div de tableau 1 -->
+                            <input type="submit" class="btn btn-warning" name="ValidAjoutStage" value="Ajouter">
+                            <br>
+                        </div><!--fin div de tableau 1 -->
                 </form>
                 <?php
                 if (isset($_POST['ValidAjoutStage'])) {
@@ -171,7 +162,7 @@ include('fonctionality/bdd.php');
                     echo $mailContact;
                     echo $Representant;*/
 
-                    //On rajoute le stage dans la BDD
+                    //On rajoute l'offre dans la BDD
 
                     $reqinsertS = $bdd -> prepare ('INSERT INTO offre (titre, description, competences, nbPoste, mailContact, representant) values (?,?,?,?,?,?) ');
                     $reqinsertS -> execute (array($titre, $description, $competences, $nbPoste, $mailContact, $representant));
