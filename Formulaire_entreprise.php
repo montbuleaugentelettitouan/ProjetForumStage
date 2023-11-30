@@ -9,6 +9,7 @@
 
 include('barre_nav_entreprise.php');
 include('fonctionality/bdd.php');
+include('fonctionality/annee+promo.php');
 ?>
 <style>
     p {
@@ -38,7 +39,7 @@ include('fonctionality/bdd.php');
 
                 <!-- Tableau ajout du stage -->
 
-                <form method ="post">
+                <form method ="post" enctype="multipart/form-data">
                     <div class="card-body"><!--div de tableau 1 -->
                         <div class="form-group">
                             <label><h5> Nom de l'entreprise <b><span style="color: red;">*</span></b> :</h5></label>
@@ -75,7 +76,7 @@ include('fonctionality/bdd.php');
                         <br>
                         <div class="form-group">
                             <label><h5> Profil recherché :</h5></label>
-                            <input type="text" class="form-control" placeholder="..., ..., ..., ..." id="mailContact" name="mailContact">
+                            <input type="text" class="form-control" placeholder="Chef de projet, développeur, validation, data management, consultant..." id="mailContact" name="mailContact">
                         </div>
                         <br>
                         <div class="form-group">
@@ -100,21 +101,17 @@ include('fonctionality/bdd.php');
                         <br>
                         <div class="card mb-4">      <!--div de section 1 -->
                             <div class="card-header">
-
-                                <form method="post" enctype="multipart/form-data">
-
-
-                                    <div class="form-group">
-                                        <i class="far fa-file-pdf"></i>
-                                        <label for="pdfFile">Déposer un fichier PDF <b><span style="color: red;">*</span></b> :</label>
-                                        <input type="file" class="form-control-file" id="pdfFile" name="pdfFile" accept=".pdf" required>
-                                    </div>
-                                </form>
+                                <div class="form-group">
+                                    <!--<i class="far fa-file-pdf"></i> -->
+                                    <label for="pdfFile">Déposer un fichier PDF <b><span style="color: red;">*</span></b> :</label>
+                                    <input type="file" class="form-control-file" id="pdfFile" name="pdfFile" accept=".pdf" required>
+                                </div>
                             </div>
                             <br>
                             <input type="submit" class="btn btn-warning" name="ValidAjoutStage" value="Ajouter">
                             <br>
                         </div><!--fin div de tableau 1 -->
+                    </div>
                 </form>
                 <?php
                 if (isset($_POST['ValidAjoutStage'])) {
@@ -122,7 +119,11 @@ include('fonctionality/bdd.php');
                     $nomEntreprise= strtoupper($nomEntreprise);
 
                     $nomSite = $_POST['ChoiceSite'];
-                    $nomSite= strtoupper($nomSite);
+                    if ($nomSite == '') {
+                        $nomSite = $nomEntreprise;
+                    } else {
+                        $nomSite = strtoupper($nomSite);
+                    }
 
                     $titre = $_POST['titre'];
                     $titre= ucfirst($titre);
@@ -147,57 +148,102 @@ include('fonctionality/bdd.php');
                     $sujet = "[Forum stage 2024] Confirmation de proposition d'offre de stage";
                     $message = "Votre proposition de stage $titre a bien été prise en compte.";
 
-                    $pdf = $_FILES['pdfFile'];
+                    // On rajoute les infos dans la BDD : Entreprise, puis site et enfin l'offre
+                    // Entreprise :
+                    $idE = '';
 
-                    //test des variables
-                    /*echo $nomEntreprise;
-                    echo $nomSite;
-                    echo $ville;
-                    echo $pays;
-                    echo $description;
-                    echo $competences;
-                    echo $nbPoste;
-                    echo $mailContact;
-                    echo $Representant;*/
+                    $recupE = $bdd -> prepare ('SELECT * FROM entreprise WHERE nomEntreprise LIKE ?');
+                    $recupE -> execute (array($nomEntreprise));
+                    $resultatE = $recupE -> fetch();
 
-                    //On rajoute l'offre dans la BDD
+                    if ($resultatE != null) {
+                        $idE = $resultatE['idEntreprise'];
+                    } else {
+                        $reqinsertE = $bdd -> prepare ('INSERT INTO entreprise (nomEntreprise) VALUES (?)');
+                        $reqinsertE -> execute (array($nomEntreprise));
 
-                    $reqinsertS = $bdd -> prepare ('INSERT INTO offre (titre, description, nbPoste, mailContact, representant) values (?,?,?,?,?) ');
-                    $reqinsertS -> execute (array($titre, $description, $nbPoste, $mailContact, $representant));
+                        $recupE = $bdd -> prepare ('SELECT idEntreprise FROM entreprise WHERE nomEntreprise LIKE ? ORDER BY idEntreprise DESC');
+                        $recupE -> execute (array($nomEntreprise));
+                        $resultatE = $recupE -> fetch();
+
+                        $idE = $resultatE['idEntreprise'];
+                    }
+
+                    // Site :
+                    $idS = '';
+
+                    $recupS = $bdd -> prepare ('SELECT * FROM site WHERE nomSite LIKE ? AND ville LIKE ?');
+                    $recupS -> execute (array($nomSite, $ville));
+                    $resultatS = $recupS -> fetch();
+
+                    if ($resultatS != null) {
+                        $idS = $resultatS['idSite'];
+                    } else {
+                        $reqinsertS = $bdd -> prepare ('INSERT INTO site (nomSite, ville, pays, idEntreprise) VALUES (?,?,?,?)');
+                        $reqinsertS -> execute (array($nomSite, $ville, $pays, $idE));
+
+                        $recupS = $bdd -> prepare ('SELECT idSite FROM site WHERE nomSite LIKE ? AND ville LIKE ? ORDER BY idSite DESC');
+                        $recupS -> execute (array($nomSite, $ville));
+                        $resultatS = $recupS -> fetch();
+
+                        $idS = $resultatS['idSite'];
+                    }
+
+                    $reqinsertS = $bdd -> prepare ('INSERT INTO offre (titre, description, nbPoste, anneeO, parcours, niveau, mailContact, representant, idSite) values (?,?,?,?,?,?,?,?,?) ');
+                    $reqinsertS -> execute (array($titre, $description, $nbPoste, $annee, 'GPhy', 'M1', $mailContact, $representant, $idS));
                     $resultatS = $reqinsertS -> fetch();
 
                     //On récupère son id
 
-                    $recupE = $bdd->prepare('SELECT * FROM offre WHERE description = ?');
-                    $recupE->execute(array($description));
-                    $resultRecup = $recupE->fetch();
+                    $recupE = $bdd->prepare('SELECT * FROM offre WHERE titre = ? ORDER BY idOffre DESC');
+                    $recupE->execute(array($titre));
+                    $idOffre = $recupE->fetchColumn();
 
-                    $idOffre = !empty($resultRecup['idOffre']) ? $resultRecup['idOffre'] : NULL ;
+                    // Check if a file has been uploaded
+                    if (isset($_FILES['pdfFile'])) {
 
-                    /* A REFAIRE
+                        // Get the details of the uploaded file
+                        $file_name = $_FILES['pdfFile']['name'];
+                        $file_tmp = $_FILES['pdfFile']['tmp_name'];
+                        $file_size = $_FILES['pdfFile']['size'];
+                        $file_error = $_FILES['pdfFile']['error'];
 
-                    //on rajoute dans la bdd et on récupère l'id
+                        // Check if there were any errors uploading the file
+                        if ($file_error === 0) {
 
-                    $reqinsertE = $bdd -> prepare ('INSERT INTO entreprise (nomEntreprise) VALUES (?)');
-                    $reqinsertE -> execute (array($nomEntreprise));
-                    $resultatE = $reqinsertE-> fetch();
+                            // Make sure the uploaded file is a PDF
+                            $file_ext = explode('.', $file_name);
+                            $file_ext = strtolower(end($file_ext));
 
-                    //on récupère l'identifiant du stage qui vient d'être ajouté
+                            if ($file_ext === 'pdf') {
 
-                    $recupE = $bdd->prepare('SELECT * FROM entreprise WHERE nomEntreprise = ?');
-                    $recupE->execute(array($nomEntreprise));
-                    $resultRecup = $recupE->fetch();
+                                // Generate a unique file name
+                                // Id Offre _ Nom entreprise _ intitulé
+                                $unique_file_name = $idOffre . '_' . $nomEntreprise . '_' . $titre . '.' . $file_ext;
 
-                    $idEnt = !empty($resultRecup['idEntreprise']) ? $resultRecup['idEntreprise'] : NULL ;
-                    //on vérifie si le site existe déjà
-                    $verifS = $bdd ->prepare('SELECT * from site WHERE nomSite =? and ville = ? and idEntreprise = ? ');
-                    $verifS->execute(array($Site,$ville,$idEnt));
-                    $resultatSite = $verifS ->fetch();
-                    $countSite = $verifS->rowcount();
-                    */
+                                // Define the destination path for the uploaded file
+                                $destination_path = 'uploads/' . $unique_file_name;
+
+                                // Move the uploaded file to the destination path
+                                if (move_uploaded_file($file_tmp, $destination_path)) {
+                                    echo "Le fichier PDF a été déployé avec succès.";
+                                } else {
+                                    echo "Il y a eu une erreur lors du déplacement du fichier.";
+                                }
+
+                            } else {
+                                echo "Seuls les fichiers PDF sont acceptés.";
+                            }
+
+                        } else {
+                            echo "Il y a eu une erreur lors du téléchargement du fichier.";
+                        }
+
+                    } else {
+                        echo "Aucun fichier n'a été téléchargé.";
+                    }
 
                     // Fonction mail : composition : mail(destinataire, l'objet du mail, le message du mail, l'adresse qui envoie le mail) (cest le serveur qui s'occupe du reste)
-                    echo $destinataire;
                     mail($destinataire, $sujet, $message, "From:forumStageGphy@univ-poitiers.fr");
 
                     echo "Votre offre de stage a bien été prise en compte.";

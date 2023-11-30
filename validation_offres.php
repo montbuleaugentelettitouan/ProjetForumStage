@@ -39,6 +39,7 @@ include('fonctionality/annee+promo.php');
                             <th>Description</th>
                             <th>Représentant</th>
                             <th>Mail à contacter</th>
+                            <th>PDF</th>
                             <th>Modification</th>
                             <th>Validation</th>
 
@@ -59,6 +60,7 @@ include('fonctionality/annee+promo.php');
                                 <td><?php echo $ligne['description']; ?></td>
                                 <td><?php echo $ligne['representant']; ?></td>
                                 <td><?php echo $ligne['mailContact']; ?></td>
+                                <td><a href="telechargement_pdf.php?id=<?php echo $ligne['idOffre']; ?>" class="btn btn-primary">Télécharger le PDF</a></td>
                                 <!--<td><input type="submit" class="btn btn-primary mb-2" name="ModifOffre" value="Modifier"></td>-->
                                 <!--<td><input type="button" value="Modifier" name ="Modifier" href="modif_offres.php"/></td>-->
                                 <td><a href="modif_valid_offres.php?id=<?php echo $ligne['idOffre']; ?>"class="btn btn-warning">Modifier</a></td>
