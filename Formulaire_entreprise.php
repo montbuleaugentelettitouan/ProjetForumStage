@@ -196,8 +196,7 @@ include('fonctionality/bdd.php');
                     $countSite = $verifS->rowcount();
                     */
 
-                    // Fonction mail : composition : mail(destinataire, l'objet du mail, le message du mail, l'adresse qui envoie le mail) (cest le serveur qui s'occupe du reste)
-                    echo $destinataire;
+                    // Fonction mail : composition : mail(destinataire, l'objet du mail, le message du mail, l'adresse qui envoie le mail) (c'est le serveur qui s'occupe du reste)
                     mail($destinataire, $sujet, $message, "From:forumStageGphy@univ-poitiers.fr");
 
                     echo "Votre offre de stage a bien été prise en compte.";
