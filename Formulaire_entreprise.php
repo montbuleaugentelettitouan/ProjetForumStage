@@ -25,6 +25,12 @@ include('fonctionality/annee+promo.php');
             <br>
 
             <!----------------------------Section entreprise------------------------------------------->
+                <center>
+                    <div id="confirmationMessage" style="display: none; font-size: 20px; color: red;">
+                        <b>Votre formulaire a été envoyé avec succès !</b>
+                    </div>
+                <br>
+                </center>
             <div class="card mb-4">      <!--div de section 1 -->
                 <div class="card-header">
                     <center>
@@ -39,16 +45,16 @@ include('fonctionality/annee+promo.php');
 
                 <!-- Tableau ajout du stage -->
 
-                <form method ="post" enctype="multipart/form-data">
+                <form method ="post" enctype="multipart/form-data" action="Formulaire_entreprise.php?success=true">
                     <div class="card-body"><!--div de tableau 1 -->
                         <div class="form-group">
                             <label><h5> Nom de l'entreprise <b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" placeholder="Entrez le nom de l'entreprise" id="Entreprise" name="Entreprise" required>
+                            <input type="text" class="form-control" placeholder="Entrez le nom de l'entreprise" id="Entreprise" name="Entreprise" value="<?php echo isset($_POST['Entreprise']) ? htmlspecialchars($_POST['Entreprise']) : ''; ?>" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label><h5> Nom du site :</h5></label>
-                            <input type="text" class="form-control" placeholder="Entrez le site de l'entreprise où se déroulera le stage" id="ChoiceSite" name="ChoiceSite">
+                            <input type="text" class="form-control" placeholder="Entrez le site de l'entreprise où se déroulera le stage" id="ChoiceSite" name="ChoiceSite" value="<?php echo isset($_POST['ChocieSite']) ? htmlspecialchars($_POST['ChoiceSite']) : ''; ?>">
                         </div>
                         <br>
                         <div class="form-group">
@@ -58,7 +64,7 @@ include('fonctionality/annee+promo.php');
                         <br>
                         <div class="form-group">
                             <label><h5> Ville <b><span style="color: red;">*</span></b> :</h5></label>
-                            <input type="text" class="form-control" placeholder="Entrez la ville où se déroulera le stage" id="Ville" name="Ville" required>
+                            <input type="text" class="form-control" placeholder="Entrez la ville où se déroulera le stage" id="Ville" name="Ville" value="<?php echo isset($_POST['Ville']) ? htmlspecialchars($_POST['Ville']) : ''; ?>" required>
                         </div>
                         <br>
                         <div class="form-group">
@@ -86,17 +92,17 @@ include('fonctionality/annee+promo.php');
                         <br>
                         <div class="form-group">
                             <label><h5> Mail de la personne à contacter <b><span style="color: red;">*</span></b>:</h5></label>
-                            <input type="text" class="form-control" placeholder="Entrez l'adresse e-mail de la personne à contacter" id="mailContact" name="mailContact" required>
+                            <input type="email" class="form-control" placeholder="Entrez l'adresse e-mail de la personne à contacter" id="mailContact" name="mailContact" value="<?php echo isset($_POST['mailContact']) ? htmlspecialchars($_POST['mailContact']) : ''; ?>" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label><h5> Si connu, représentant au forum stage:</h5></label>
-                            <input type="text" class="form-control" placeholder="Entrez le nom et prénom de la personne physique présente au forum stage" id="Representant" name="Representant">
+                            <input type="text" class="form-control" placeholder="Entrez le nom et prénom de la personne physique présente au forum stage" id="Representant" name="Representant" value="<?php echo isset($_POST['Representant']) ? htmlspecialchars($_POST['Representant']) : ''; ?>">
                         </div>
                         <br>
                         <div>
                             <label><h5> Mail pour envoi de la confirmation <b><span style="color: red;">*</span></b>:</h5></label>
-                            <input type="text" class="form-control" placeholder="Entrez votre adresse e-mail pour l'envoi d'un mail de confirmation" id="mailConfirmation" name="mailConfirmation" required>
+                            <input type="email" class="form-control" placeholder="Entrez votre adresse e-mail pour l'envoi d'un mail de confirmation" id="mailConfirmation" name="mailConfirmation" value="<?php echo isset($_POST['mailConfirmation']) ? htmlspecialchars($_POST['mailConfirmation']) : ''; ?>" required>
                         </div>
                         <br>
                         <div class="card mb-4">      <!--div de section 1 -->
@@ -226,7 +232,7 @@ include('fonctionality/annee+promo.php');
 
                                 // Move the uploaded file to the destination path
                                 if (move_uploaded_file($file_tmp, $destination_path)) {
-                                    echo "Le fichier PDF a été déployé avec succès.";
+                                    echo "";
                                 } else {
                                     echo "Il y a eu une erreur lors du déplacement du fichier.";
                                 }
@@ -245,8 +251,6 @@ include('fonctionality/annee+promo.php');
 
                     // Fonction mail : composition : mail(destinataire, l'objet du mail, le message du mail, l'adresse qui envoie le mail) (c'est le serveur qui s'occupe du reste)
                     mail($destinataire, $sujet, $message, "From:forumStageGphy@univ-poitiers.fr");
-
-                    echo "Votre offre de stage a bien été prise en compte.";
                 }
                 ?>
             </div><!--fin div de section 1 -->
@@ -259,3 +263,17 @@ include('fonctionality/annee+promo.php');
 </div><!--fin body de la page -->
 </body>
 </html>
+<script>
+    // Récupérer le paramètre GET de l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+
+    // Vérifier si le paramètre success est présent et égal à true
+    if (success === 'true') {
+        // Afficher la div de confirmation
+        const confirmationDiv = document.getElementById('confirmationMessage');
+        if (confirmationDiv) {
+            confirmationDiv.style.display = 'block';
+        }
+    }
+</script>
