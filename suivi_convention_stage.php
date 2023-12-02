@@ -73,7 +73,7 @@ include('fonctionality/annee+promo.php');
                         <div class="card-body">
                             <h5 class="card-title">Etat de la convention</h5> 
                            <!-- NOTE : ajouter une colonne avec "etat_conv" -> "signé" "en cours de redaction" ou "pas de stage", puis faire afficher ca en dessous -->
-                            <p class="card-text"><?php echo $resultat74['etat'] ?></p>
+                            <p class="card-text"><?php echo $resultat74['etatC'] ?></p>
                         </div>
                     </div>
 

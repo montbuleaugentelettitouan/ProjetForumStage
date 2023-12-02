@@ -108,7 +108,7 @@ include('fonctionality/bdd.php');
                                 </td>
 
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <?php echo $ligne['etat']; ?>
+                                    <?php echo $ligne['etatC']; ?>
                                 </td>
 
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>

@@ -87,7 +87,7 @@ $selectedValue = $_GET['value'];
                 <div class="card" style="width: 100rem;">
                     <div class="card-body">
                         <h5 class="card-title">Etat de la recherche</h5>
-                        <p class="card-text"><?php echo $resultat74['etat'] ?></p>
+                        <p class="card-text"><?php echo $resultat74['etatC'] ?></p>
                         <br>
                         <h5 class="card-title">Compte rendu du Forum </h5>
                         <p class="card-text"><?php echo $resultat74['cr_forumM1'] ?></p>

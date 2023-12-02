@@ -81,7 +81,7 @@ include('fonctionality/annee+promo.php');
                         <td><?php echo $ligne['nom']; ?></td>
                         <td><?php echo $ligne['prenom']; ?></td>
                         <td><?php echo $ligne['nomEntreprise']; ?></td>
-                        <td><?php echo $ligne['etat']; ?></td>
+                        <td><?php echo $ligne['etatC']; ?></td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -114,7 +114,7 @@ include('fonctionality/annee+promo.php');
                     <div class="card" style="width: 100rem;">
                         <div class="card-body">
                             <h5 class="card-title">Etat de la recherche</h5>
-                            <p class="card-text"><?php echo $resultat74['etat'] ?></p>
+                            <p class="card-text"><?php echo $resultat74['etatC'] ?></p>
                         </div>
                     </div>
 

@@ -82,7 +82,7 @@ include('fonctionality/annee+promo.php');
                         <br>
                         <div class="form-group">
                             <label><h5> Profil recherché :</h5></label>
-                            <input type="text" class="form-control" placeholder="Chef de projet, développeur, validation, data management, consultant..." id="mailContact" name="mailContact">
+                            <input type="text" class="form-control" placeholder="Chef de projet, développeur, validation, data management, consultant fonctionnel..." id="profil" name="profil">
                         </div>
                         <br>
                         <div class="form-group">
@@ -143,6 +143,9 @@ include('fonctionality/annee+promo.php');
                     $description = $_POST['Missions'];
                     $description = ucfirst($description);
 
+                    $profil = $_POST['profil'];
+                    $profil = ucfirst($profil);
+
                     $nbPoste = $_POST['nbPoste'];
 
                     $mailContact = $_POST['mailContact'];
@@ -153,6 +156,27 @@ include('fonctionality/annee+promo.php');
                     $destinataire = $_POST['mailConfirmation'];
                     $sujet = "[Forum stage 2024] Confirmation de proposition d'offre de stage";
                     $message = "Votre proposition de stage $titre a bien été prise en compte.";
+                    $message = "Bonjour,
+
+                   Nous vous remercions d'avoir soumis votre proposition de stage concernant $titre.
+                    
+                   Voici les informations que vous avez fournies : 
+                   
+                   Nom de l'entreprise : $nomEntreprise
+                   Nom du site : $nomSite
+                   Intitulé du poste : $titre
+                   Ville : $ville
+                   Pays : $pays
+                   Missions du stage : $description
+                   Profil recherché : $profil
+                   Nombre de stages proposés : $nbPoste
+                   Mail de la personne à contacter : $mailContact
+                   Représentant au forum stage: $representant
+                    
+                   Cordialement,
+                   L'équipe Forum Stage.
+
+                   (Ceci est un message automatique)";
 
                     // On rajoute les infos dans la BDD : Entreprise, puis site et enfin l'offre
                     // Entreprise :
@@ -195,8 +219,8 @@ include('fonctionality/annee+promo.php');
                         $idS = $resultatS['idSite'];
                     }
 
-                    $reqinsertS = $bdd -> prepare ('INSERT INTO offre (titre, description, nbPoste, anneeO, parcours, niveau, mailContact, representant, idSite) values (?,?,?,?,?,?,?,?,?) ');
-                    $reqinsertS -> execute (array($titre, $description, $nbPoste, $annee, 'GPhy', 'M1', $mailContact, $representant, $idS));
+                    $reqinsertS = $bdd -> prepare ('INSERT INTO offre (titre, description, nbPoste, nbPostePourvu, anneeO, secteur, parcours, niveau, mailContact, representant, idSite) values (?,?,?,?,?,?,?,?,?,?,?) ');
+                    $reqinsertS -> execute (array($titre, $description, $nbPoste, 0, $annee, $profil, 'GPhy', 'M1', $mailContact, $representant, $idS));
                     $resultatS = $reqinsertS -> fetch();
 
                     //On récupère son id
@@ -225,7 +249,7 @@ include('fonctionality/annee+promo.php');
 
                                 // Generate a unique file name
                                 // Id Offre _ Nom entreprise _ intitulé
-                                $unique_file_name = $idOffre . '_' . $nomEntreprise . '_' . $titre . '.' . $file_ext;
+                                $unique_file_name = $idOffre . '_' . $nomEntreprise . '_' . $titre . '_' . $ville . '.' .$file_ext;
 
                                 // Define the destination path for the uploaded file
                                 $destination_path = 'uploads/' . $unique_file_name;
