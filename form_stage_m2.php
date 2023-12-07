@@ -24,7 +24,7 @@ $espaces5 = str_repeat('&nbsp;', 5);
 $espaces8 = str_repeat('&nbsp;', 8);
 
 /* Requete pour récuperer les infos de l'étudiant dans la BDD, on se repère grâce à la variable de session "$_SESSION['user'] */
-$req = $bdd->prepare("SELECT * FROM utilisateur LEFT JOIN stage USING (idUtilisateur) WHERE statut='etudiant' AND idUtilisateur=:user");
+$req = $bddd->prepare("SELECT * FROM utilisateur LEFT JOIN stage USING (idUtilisateur) WHERE statut='etudiant' AND idUtilisateur=:user");
 $req->bindParam(':user', $_SESSION['user']);
 $req->execute();
 $resultat = $req->fetch();
