@@ -48,7 +48,7 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
 
-                        $req = "SELECT offre.idOffre, titre, description, nomSite, nomEntreprise, ville, representant, mailContact FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise where anneeO = ? ORDER BY offre.idOffre ASC";
+                        $req = "SELECT offre.idOffre, titre, description, nomSite, nomEntreprise, ville, representant, mailContact, valider FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise where anneeO = ? AND valider = 0 ORDER BY offre.idOffre ASC";
                         $resultat = $bdd->prepare($req);
                         $resultat->execute(array($annee));
                         foreach ($resultat as $ligne) { ?>
@@ -64,9 +64,29 @@ include('fonctionality/annee+promo.php');
                                 <!--<td><input type="submit" class="btn btn-primary mb-2" name="ModifOffre" value="Modifier"></td>-->
                                 <!--<td><input type="button" value="Modifier" name ="Modifier" href="modif_offres.php"/></td>-->
                                 <td><a href="modif_valid_offres.php?id=<?php echo $ligne['idOffre']; ?>"class="btn btn-warning">Modifier</a></td>
-                                <td><a href="valid_offres.php?id=<?php echo $ligne['idOffre']; ?>"class="btn btn-warning">Valider</a></td>
+                                <td>
+                                    <form method="post" action="validation_offres.php">
+                                        <input type="hidden" name="ValidOffre" value="<?php echo $ligne['idOffre']; ?>">
+                                        <input type="submit" class="btn btn-warning" name="submit" value="Valider">
+                                    </form>
+                                </td>
                             </tr>
                         <?php } ?>
+                        <?php
+                        if (isset($_POST['ValidOffre'])) {
+                            $idOffre = $_POST['ValidOffre'];
+
+                            // Mettez à jour la base de données pour marquer l'offre comme validée
+                            $req = "UPDATE offre SET valider = 1 WHERE idOffre = ?";
+                            $resultat = $bdd->prepare($req);
+                            $resultat->execute(array($idOffre));
+
+                        } else {
+                            // Gérer le cas où l'ID n'est pas spécifié ou n'est pas valide
+                            echo "ID d'offre non valide.";
+                        }
+                        ?>
+
                         </tbody>
                     </table>
                 </div>
