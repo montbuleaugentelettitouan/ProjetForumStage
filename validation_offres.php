@@ -22,7 +22,6 @@ include('fonctionality/annee+promo.php');
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="far fa-file-pdf"></i>
                     Toutes les offres pour l'année <?php echo $annee ?>
                 </div>
 

@@ -68,7 +68,7 @@ $representantPrerempli = $resultat['representant'];
 
                 <!-- Tableau ajout du stage -->
 
-                <form method ="post" enctype="multipart/form-data" action="Formulaire_entreprise.php?success=true">
+                <form method ="post" enctype="multipart/form-data" action="modif_valid_offres.php?id=<?php echo $id ?>">
                     <div class="card-body"><!--div de tableau 1 -->
                         <div class="form-group">
                             <label><h5> Nom de l'entreprise <b><span style="color: red;">*</span></b> :</h5></label>
@@ -163,63 +163,26 @@ $representantPrerempli = $resultat['representant'];
                     $representant = $_POST['Representant'];
                     $representant= strtoupper($representant);
 
-
-
-
-
-
-
-                    // On rajoute les infos dans la BDD : Entreprise, puis site et enfin l'offre
+                    // On update les infos dans la BDD : Entreprise, puis site et enfin l'offre
                     // Entreprise :
-                    $idE = '';
+                    // Si le nom de l'entreprise est le même que celui de l'offre à l'origine, on ne fait rien, sinon il faut voir si la nouvelle entreprise existe pour remplacer l'idEntreprise par la nouvelle
 
-                    $recupE = $bdd -> prepare ('SELECT * FROM entreprise WHERE nomEntreprise LIKE ?');
-                    $recupE -> execute (array($nomEntreprise));
-                    $resultatE = $recupE -> fetch();
+                    if ($nomEntreprise != $nomEntreprisePrerempli){
+                        // On regarde si la nouvelle entreprise est déjà dans la base de données
 
-                    if ($resultatE != null) {
-                        $idE = $resultatE['idEntreprise'];
-                    } else {
-                        $reqinsertE = $bdd -> prepare ('INSERT INTO entreprise (nomEntreprise) VALUES (?)');
-                        $reqinsertE -> execute (array($nomEntreprise));
 
-                        $recupE = $bdd -> prepare ('SELECT idEntreprise FROM entreprise WHERE nomEntreprise LIKE ? ORDER BY idEntreprise DESC');
-                        $recupE -> execute (array($nomEntreprise));
-                        $resultatE = $recupE -> fetch();
-
-                        $idE = $resultatE['idEntreprise'];
+                        // Si elle y est, on change l'idEntreprise de la table stage en celle de l'idEntreprise trouvé
                     }
 
-                    // Site :
-                    $idS = '';
+                    if ($nomSite != $nomSitePrerempli){
+                        // On regarde si le nouveau site est déjà dans la base de données
 
-                    $recupS = $bdd -> prepare ('SELECT * FROM site WHERE nomSite LIKE ? AND ville LIKE ?');
-                    $recupS -> execute (array($nomSite, $ville));
-                    $resultatS = $recupS -> fetch();
 
-                    if ($resultatS != null) {
-                        $idS = $resultatS['idSite'];
-                    } else {
-                        $reqinsertS = $bdd -> prepare ('INSERT INTO site (nomSite, ville, pays, idEntreprise) VALUES (?,?,?,?)');
-                        $reqinsertS -> execute (array($nomSite, $ville, $pays, $idE));
-
-                        $recupS = $bdd -> prepare ('SELECT idSite FROM site WHERE nomSite LIKE ? AND ville LIKE ? ORDER BY idSite DESC');
-                        $recupS -> execute (array($nomSite, $ville));
-                        $resultatS = $recupS -> fetch();
-
-                        $idS = $resultatS['idSite'];
+                        // Si il y est, on change l'idSite de la table offre en celle de l'idSite trouvé
                     }
 
-                    $reqinsertS = $bdd -> prepare ('INSERT INTO offre (titre, description, nbPoste, nbPostePourvu, anneeO, secteur, parcours, niveau, mailContact, representant, idSite) values (?,?,?,?,?,?,?,?,?,?,?) ');
-                    $reqinsertS -> execute (array($titre, $description, $nbPoste, 0, $annee, $profil, 'GPhy', 'M1', $mailContact, $representant, $idS));
-                    $resultatS = $reqinsertS -> fetch();
-
-                    //On récupère son id
-
-                    $recupE = $bdd->prepare('SELECT * FROM offre WHERE titre = ? ORDER BY idOffre DESC');
-                    $recupE->execute(array($titre));
-                    $idOffre = $recupE->fetchColumn();
-
+                    $requpdateO = $bdd -> prepare ('UPDATE offre SET titre=?, description=?, nbPoste=?, secteur=?, mailContact=?, representant=? WHERE idOffre = ?');
+                    $requpdateO -> execute (array($titre, $description, $nbPoste, $profil, $mailContact, $representant, $id));
                 }
                 ?>
             </div><!--fin div de section 1 -->
