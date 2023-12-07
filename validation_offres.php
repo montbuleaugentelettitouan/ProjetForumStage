@@ -9,7 +9,15 @@ include('barre_nav_admin.php');
 include('fonctionality/bdd.php');
 include('fonctionality/annee+promo.php');
 ?>
-
+<script>
+    function validerAvecDelai() {
+        // Ajoutez un délai de 0.5 secondes pour s'assurer que la requête ait le temps de s'effectuer
+        setTimeout(function() {
+            // Rechargez la page actuelle après le délai
+            location.reload();
+        }, 500); //
+    }
+</script>
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
@@ -22,7 +30,6 @@ include('fonctionality/annee+promo.php');
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="far fa-file-pdf"></i>
                     Toutes les offres pour l'année <?php echo $annee ?>
                 </div>
 
@@ -65,7 +72,7 @@ include('fonctionality/annee+promo.php');
                                 <!--<td><input type="button" value="Modifier" name ="Modifier" href="modif_offres.php"/></td>-->
                                 <td><a href="modif_valid_offres.php?id=<?php echo $ligne['idOffre']; ?>"class="btn btn-warning">Modifier</a></td>
                                 <td>
-                                    <form method="post" action="validation_offres.php">
+                                    <form method="post" action="validation_offres.php" onsubmit="validerAvecDelai()">
                                         <input type="hidden" name="ValidOffre" value="<?php echo $ligne['idOffre']; ?>">
                                         <input type="submit" class="btn btn-warning" name="submit" value="Valider">
                                     </form>
