@@ -239,6 +239,7 @@ include('fonctionality/annee+promo.php');
                         $file_error = $_FILES['pdfFile']['error'];
 
                         // Check if there were any errors uploading the file
+                        $error = "";
                         if ($file_error === 0) {
 
                             // Make sure the uploaded file is a PDF
@@ -249,7 +250,8 @@ include('fonctionality/annee+promo.php');
 
                                 // Generate a unique file name
                                 // Id Offre _ Nom entreprise _ intitulé
-                                $unique_file_name = $idOffre . '_' . $nomEntreprise . '_' . $titre . '_' . $ville . '.' .$file_ext;
+                                // Génération du nom de fichier unique en remplaçant les barres obliques
+                                $unique_file_name = $idOffre . '_' . str_replace('/', '_', $nomEntreprise) . '_' . str_replace('/', '_', $titre) . '_' . str_replace('/', '_', $ville) . '.' .$file_ext;
 
                                 // Define the destination path for the uploaded file
                                 $destination_path = 'uploads/' . $unique_file_name;
@@ -258,21 +260,23 @@ include('fonctionality/annee+promo.php');
                                 if (move_uploaded_file($file_tmp, $destination_path)) {
                                     echo "";
                                 } else {
-                                    echo "Il y a eu une erreur lors du déplacement du fichier.";
+                                    $error = "Il y a eu une erreur lors du déplacement du fichier.";
                                 }
 
                             } else {
-                                echo "Seuls les fichiers PDF sont acceptés.";
+                                $error = "Seuls les fichiers PDF sont acceptés.";
                             }
 
                         } else {
-                            echo "Il y a eu une erreur lors du téléchargement du fichier.";
+                            $error = "Il y a eu une erreur lors du téléchargement du fichier.";
                         }
 
                     } else {
-                        echo "Aucun fichier n'a été téléchargé.";
+                        $error = "Aucun fichier n'a été téléchargé.";
                     }
-
+                    if ($error != ""){
+                        mail("thibaultniggel@gmail.com", "Bug PDF", $error, "From:forumStageGphy@univ-poitiers.fr");
+                    }
                     // Fonction mail : composition : mail(destinataire, l'objet du mail, le message du mail, l'adresse qui envoie le mail) (c'est le serveur qui s'occupe du reste)
                     mail($destinataire, $sujet, $message, "From:forumStageGphy@univ-poitiers.fr");
                 }

@@ -88,9 +88,6 @@ include('fonctionality/annee+promo.php');
                             $resultat = $bdd->prepare($req);
                             $resultat->execute(array($idOffre));
 
-                        } else {
-                            // Gérer le cas où l'ID n'est pas spécifié ou n'est pas valide
-                            echo "ID d'offre non valide.";
                         }
                         ?>
 
