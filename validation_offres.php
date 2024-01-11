@@ -44,6 +44,7 @@ include('fonctionality/annee+promo.php');
                             <th>Ville</th>
                             <th>Intitulé de l'offre</th>
                             <th>Description</th>
+                            <th>Postes</th>
                             <th>Représentant</th>
                             <th>Mail à contacter</th>
                             <th>PDF</th>
@@ -55,7 +56,7 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
 
-                        $req = "SELECT offre.idOffre, titre, description, nomSite, nomEntreprise, ville, representant, mailContact, valider FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise where anneeO = ? AND valider = 0 ORDER BY offre.idOffre ASC";
+                        $req = "SELECT offre.idOffre, titre, description, nomSite, nomEntreprise, ville, representant, mailContact, valider, nbPoste FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise where anneeO = ? AND valider = 0 ORDER BY offre.idOffre ASC";
                         $resultat = $bdd->prepare($req);
                         $resultat->execute(array($annee));
                         foreach ($resultat as $ligne) { ?>
@@ -65,6 +66,7 @@ include('fonctionality/annee+promo.php');
                                 <td><?php echo $ligne['ville']; ?></td>
                                 <td><?php echo $ligne['titre']; ?></td>
                                 <td><?php echo $ligne['description']; ?></td>
+                                <td><?php echo $ligne['nbPoste']; ?></td>
                                 <td><?php echo $ligne['representant']; ?></td>
                                 <td><?php echo $ligne['mailContact']; ?></td>
                                 <td><a href="telechargement_pdf.php?id=<?php echo $ligne['idOffre']; ?>" class="btn btn-primary">Télécharger le PDF</a></td>
