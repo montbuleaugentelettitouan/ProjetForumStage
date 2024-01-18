@@ -52,7 +52,7 @@ ini_set('display_errors', '1');
                             <!--Execution d'une requête permettant d'afficher les différentes offres inscrites dans la base de données en fonction d'un utilisateur-->
 
                                 <?php
-                                    $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, description, priorite FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise LEFT JOIN postule_m1 on offre.idOffre = postule_m1.idOffre AND postule_m1.idUtilisateur = ? where offre.anneeO = ? AND offre.valider = 1 ORDER BY offre.idOffre ASC');
+                                    $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, description, priorite FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise LEFT JOIN postule_m1 on offre.idOffre = postule_m1.idOffre AND postule_m1.idUtilisateur = ? where offre.anneeO = ? AND offre.valider = 1 ORDER BY entreprise.nomEntreprise ASC');
                                     $req->execute(array($_SESSION['user'], $annee));
                                     //$resultat = $bdd->query($req);
                                     $resultat = $req->fetchAll();
