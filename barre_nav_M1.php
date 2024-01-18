@@ -70,8 +70,9 @@ ini_set('display_errors', '1');
                         Toutes les offres
                     </a>
 
+                    <!--
                     <a class="nav-link" href="suivi_forum.php">
-                        <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
+                        <div class="sb-nav-link-icon"></div>
                         Suivi Post Forum Stage
                     </a>
 
@@ -88,8 +89,8 @@ ini_set('display_errors', '1');
                      <a class="nav-link" href="suivi_convention.php">
                         <div class="sb-nav-link-icon"></div>
                         Informations de la convention
-                    </a> 
-
+                    </a>
+                    -->
 
 <!--                    <a class="nav-link" href="test.php">
                         <div class="sb-nav-link-icon"></div>

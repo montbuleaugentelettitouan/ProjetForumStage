@@ -16,14 +16,13 @@ include('fonctionality/bdd.php');
 
         <!-- Affichage des paramètres de session de l'utilisateur -->
 
-        <h1 class="mt-4">Tableau de bord de <?php echo $_SESSION['nom']; ?> <?php echo $_SESSION['prenom']; ?></h1>
+        <h1 class="mt-4">Ordre de priorité de <?php echo $_SESSION['nom']; ?> <?php echo $_SESSION['prenom']; ?></h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Vue de mes choix</li>
             </ol>
 
             <div class="card mb-4"> <!--div de section 1 -->
                 <div class="card-header"> <!--div de encadré 1 -->
-                    <i class="far fa-file-pdf"></i>
                     Mes offres
                 </div> <!--fin div de encadré 1 -->
 
@@ -34,12 +33,12 @@ include('fonctionality/bdd.php');
                         <table class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
+                                    <th>Priorité enregistrée</th>
                                     <th>Entreprise</th>
                                     <th>Site</th>
                                     <th>Intitulé de l'offre</th>
                                     <th>Description</th>
                                     <th>Priorité</th>
-                                    <th>Priorité enregistrée</th>
                                     <th>Compte-rendu de l'entretien</th>
                                 </tr>
                             </thead>
@@ -60,6 +59,7 @@ include('fonctionality/bdd.php');
                                     foreach ($resultat as $ligne) { ?>
 
                                 <tr>
+                                    <td><?php echo $ligne['priorite']; ?></td>
                                     <td><?php echo $ligne['nomEntreprise']; ?></td>
                                     <td><?php echo $ligne['nomSite']; ?></td>
                                     <td><?php echo $ligne['titre']; ?></td>
@@ -79,7 +79,6 @@ include('fonctionality/bdd.php');
                                             ?>
                                         </select>
                                     </td>
-                                    <td><?php echo $ligne['priorite']; ?></td>
                                     <td><?php echo $ligne['cr_entretien']; ?></td>
                                 </tr>
                                 <?php } ?>

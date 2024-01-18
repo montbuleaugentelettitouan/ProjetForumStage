@@ -19,15 +19,14 @@ ini_set('display_errors', '1');
 
         <!--Récupération du nom et du prenom grâce à la page de connexion utilisateur et affichage du nom et du prénom de la personne connectée -->
 
-        <h1 class="mt-4">Dashboard <?php echo $_SESSION['nom']; ?> <?php echo $_SESSION['prenom']; ?></h1>
+        <h1 class="mt-4">Offres <?php echo $annee; ?></h1>
 
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">Vue générale de toutes les offres</li>
+            <li class="breadcrumb-item active"><b>Vue générale de toutes les offres</b></li>
         </ol>
 
             <div class="card mb-4"> <!--div de section 1 -->
                 <div class="card-header"> <!--div de encadré 1 -->
-                    <i class="far fa-file-pdf"></i>
                     Les offres
                 </div> <!-- fin div de encadré 1 -->
 
@@ -53,7 +52,7 @@ ini_set('display_errors', '1');
                             <!--Execution d'une requête permettant d'afficher les différentes offres inscrites dans la base de données en fonction d'un utilisateur-->
 
                                 <?php
-                                    $req = $bddd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, description, priorite FROM postule_m1 JOIN offre USING (idOffre) JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise AND postule.idUtilisateur = ? where offre_stage.annee = ? ORDER BY offre_stage.idOffre ASC');
+                                    $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, description, priorite FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise LEFT JOIN postule_m1 on offre.idOffre = postule_m1.idOffre AND postule_m1.idUtilisateur = ? where offre.anneeO = ? AND offre.valider = 1 ORDER BY offre.idOffre ASC');
                                     $req->execute(array($_SESSION['user'], $annee));
                                     //$resultat = $bdd->query($req);
                                     $resultat = $req->fetchAll();
