@@ -122,7 +122,7 @@
                 }
 
                 //récupération du dernier état 
-                $reqEtat = $bddd->prepare('SELECT etat_convention FROM convention_contrat WHERE idStage = ? order by idConvention DESC LIMIT 1');
+                $reqEtat = $bdd->prepare('SELECT etat_convention FROM convention_contrat WHERE idStage = ? order by idConvention DESC LIMIT 1');
                 $reqEtat->execute(array($stageid));
                 $resultat = $reqEtat->fetchAll();
 
@@ -245,7 +245,7 @@
                             $upStage->execute(array($nomTut,$prenomTut, $gratif, $format_gratif, $id));
 
                             //récupération de l'id stage 
-                            $req = $bddd->prepare('SELECT idStage FROM stage WHERE idUtilisateur = ? LIMIT 1');
+                            $req = $bddd->prepare('SELECT idOffre FROM offre WHERE idUtilisateur = ? LIMIT 1');
                             $req->execute(array($id));
                             $resultat = $req->fetch();
 
@@ -255,7 +255,7 @@
                             $dateactuelle = date("Y-m-d");
 
                             //insertion d'une ligne dans la table convention pour historiser
-                            $upConv = $bddd->prepare('INSERT into convention (idStage, etat_convention, date) VALUES (?,?,?)');
+                            $upConv = $bddd->prepare('INSERT into convention_contrat (idOffre, etat_convention, date) VALUES (?,?,?)');
                             $upConv->execute(array($idStage,$etat, $dateactuelle));
                     
 

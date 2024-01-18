@@ -79,7 +79,32 @@ include('fonctionality/bdd.php');
                         <?php
 
                         /* Recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bddd->prepare("SELECT idUtilisateur, nom, prenom, email, numtel, nomEntreprise, etat, nomTuteur, prenomTuteur, emailTuteur, numTuteur, nom_tuteur_academique, prenom_tuteur_academique, email_tuteur_academique, num_tuteur_academique FROM utilisateur LEFT JOIN stage USING (idUtilisateur) LEFT JOIN offre_stage USING (idOffre) LEFT JOIN site ON stage.idSite = site.idSite LEFT JOIN entreprise USING (idEntreprise) WHERE statut='etudiant' AND promo = ? AND parcours = ? ORDER BY nom");
+                        $req = $bdd->prepare("SELECT
+                            utilisateur.idUtilisateur,
+                            utilisateur.nom,
+                            utilisateur.prenom,
+                            utilisateur.email,
+                            utilisateur.numTel,
+                            utilisateur.etatC,
+                            tuteur_academique.nomTA,
+                            tuteur_academique.prenomTA,
+                            tuteur_academique.emailTA,
+                            tuteur_academique.numTA,
+                            maitre_de_stage.nomMDS,
+                            maitre_de_stage.prenomMDS,
+                            maitre_de_stage.emailMDS,
+                            maitre_de_stage.numMDS,
+                            entreprise.nomEntreprise
+                        FROM
+                            utilisateur
+                        LEFT JOIN convention_contrat ON utilisateur.idUtilisateur = convention_contrat.idUtilisateur
+                        LEFT JOIN tuteur_academique ON convention_contrat.idTA = tuteur_academique.idTA
+                        LEFT JOIN maitre_de_stage ON convention_contrat.idMDS = maitre_de_stage.idMDS
+                        LEFT JOIN site ON maitre_de_stage.idSite = site.idSite
+                        LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise 
+                        WHERE statut='etudiant' AND promo = ? AND parcours = ? ORDER BY nom");
+
+                        //$req = $bddd->prepare("SELECT idUtilisateur, nom, prenom, email, numtel, nomEntreprise, etat, nomTuteur, prenomTuteur, emailTuteur, numTuteur, nom_tuteur_academique, prenom_tuteur_academique, email_tuteur_academique, num_tuteur_academique FROM utilisateur LEFT JOIN stage USING (idUtilisateur) LEFT JOIN offre_stage USING (idOffre) LEFT JOIN site ON stage.idSite = site.idSite LEFT JOIN entreprise USING (idEntreprise) WHERE statut='etudiant' AND promo = ? AND parcours = ? ORDER BY nom");
                         $req->execute(array($promo, $parcours));
                         $resultat = $req->fetchAll();
 
@@ -98,7 +123,7 @@ include('fonctionality/bdd.php');
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <a href="Send_mail_etu.php?mail=<?php echo $ligne['email']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
                                     <div class="popup" id="icon">
-                                        <?php if ($ligne['numtel'] == Null) {
+                                        <?php if ($ligne['numTel'] == Null) {
                                             ?><?php
                                         } else {
                                             ?> <img src="assets/img/Tel.png" alt="Icône"> <?php
@@ -116,36 +141,36 @@ include('fonctionality/bdd.php');
                                 </td>
 
                                 <td style="border-left : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;"'; } ?>">
-                                    <?php echo $ligne['nomTuteur']; echo " "; echo $ligne['prenomTuteur']; ?>
+                                    <?php echo $ligne['nomMDS']; echo " "; echo $ligne['prenomMDS']; ?>
                                 </td>
 
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <?php if ($ligne['nomTuteur'] != '') {
-                                        if ($ligne['emailTuteur'] != Null) { ?>
-                                            <a href="Send_mail_etu.php?mail=<?php echo $ligne['emailTuteur']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
+                                    <?php if ($ligne['nomMDS'] != '') {
+                                        if ($ligne['emailMDS'] != Null) { ?>
+                                            <a href="Send_mail_etu.php?mail=<?php echo $ligne['emailMDS']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
                                         <?php }
-                                        if ($ligne['numTuteur'] != Null) { ?>
+                                        if ($ligne['numMDS'] != Null) { ?>
                                         <div class="popup" id="icon">
                                             <img src="assets/img/Tel.png" alt="Icône">
-                                            <span class="popup-content"> Tel : <?php echo $ligne['numTuteur']; ?></span>
+                                            <span class="popup-content"> Tel : <?php echo $ligne['numMDS']; ?></span>
                                         </div>
                                         <?php }
                                     } ?>
                                 </td>
 
                                 <td style="border-left : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;"'; } ?>">
-                                    <?php echo $ligne['nom_tuteur_academique']; echo " "; echo $ligne['prenom_tuteur_academique']; ?>
+                                    <?php echo $ligne['nomTA']; echo " "; echo $ligne['prenomTA']; ?>
                                 </td>
 
                                 <td style="border-right : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;'; } ?>">
-                                    <?php if ($ligne['nom_tuteur_academique'] != '') {
-                                        if ($ligne['email_tuteur_academique'] != Null) { ?>
-                                            <a href="Send_mail_etu.php?mail=<?php echo $ligne['email_tuteur_academique']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
+                                    <?php if ($ligne['nomTA'] != '') {
+                                        if ($ligne['emailTA'] != Null) { ?>
+                                            <a href="Send_mail_etu.php?mail=<?php echo $ligne['emailTA']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
                                         <?php }
-                                        if ($ligne['num_tuteur_academique'] != Null) { ?>
+                                        if ($ligne['numTA'] != Null) { ?>
                                         <div class="popup" id="icon">
                                             <img src="assets/img/Tel.png" alt="Icône">
-                                            <span class="popup-content"> Tel : <?php echo $ligne['num_tuteur_academique']; ?></span>
+                                            <span class="popup-content"> Tel : <?php echo $ligne['numTA']; ?></span>
                                         </div>
                                         <?php }
                                     } ?>

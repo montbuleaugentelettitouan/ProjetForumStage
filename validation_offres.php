@@ -39,6 +39,7 @@ include('fonctionality/annee+promo.php');
                         <thead>
 
                         <tr>
+                            <th>ID Offre</th>
                             <th>Nom de l'entreprise</th>
                             <th>Nom du site</th>
                             <th>Ville</th>
@@ -61,6 +62,7 @@ include('fonctionality/annee+promo.php');
                         $resultat->execute(array($annee));
                         foreach ($resultat as $ligne) { ?>
                             <tr>
+                                <td><?php echo $ligne['idOffre']; ?></td>
                                 <td><?php echo $ligne['nomEntreprise']; ?></td>
                                 <td><?php echo $ligne['nomSite']; ?></td>
                                 <td><?php echo $ligne['ville']; ?></td>
