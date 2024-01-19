@@ -28,7 +28,7 @@ include('fonctionality/annee+promo.php');
 
             <div class="card mb-4"> <!--div de section 1 -->
                 <div class="card-header"> <!--div de encadré 1 -->
-                    <i class="far fa-file-pdf"></i>
+
                     Suivi des entretiens passés par les étudiants de la promo <?php echo $promo ?>
                 </div> <!--fin div de encadré 1 -->
 

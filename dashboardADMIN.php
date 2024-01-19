@@ -25,7 +25,7 @@ include('fonctionality/annee+promo.php');
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="far fa-file-pdf"></i>
+
                     Analyse M1
                 </div>
 
@@ -72,7 +72,7 @@ include('fonctionality/annee+promo.php');
             <!-- Affichage des noms des étudiants n'ayant réalisés aucun choix -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="far fa-file-pdf"></i>
+
                     Qui n'a pas postulé ?
                 </div>
 
