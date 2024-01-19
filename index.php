@@ -88,7 +88,7 @@ if (!empty($_SESSION["user"])) {
                                     </div>
 
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="password.php">Forgot Password ?</a>
+                                        <!-- <a class="small" href="password.php">Forgot Password ?</a> -->
 
                                         <button class="btn btn-primary" type="submit">Login</button>
                                     </div>
