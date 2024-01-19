@@ -87,8 +87,9 @@ ini_set('display_errors', '1');
                             </tbody>
                         </table>
                     </div> <!--fin div de tableau 1 -->
-                    <input type="submit" class="btn btn-warning" name="Valider" value="Valider">
-                    <br>
+                    <div class="card mb-4">
+                    <input type="submit" class="btn btn-warning" name="Valider" value="Valider mes choix">
+                    </div>
                 </form>
                 <?php
                     if (isset($_POST['Valider'])) {
