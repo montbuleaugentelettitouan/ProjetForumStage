@@ -8,9 +8,7 @@
  */
 // ajout des fonctionnalités php
 include('barre_nav_M1.php');
-include('fonctionality/bdd.php');
 include('fonctionality/annee+promo.php');
-include('fonctionality/logged.php');
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 ?>
