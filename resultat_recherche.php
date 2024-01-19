@@ -80,20 +80,22 @@ if (isset($_GET['query'])) {
                         de l'étudiant et si il y a des doublons (même nom et prénom), la recherche prendra celui qui à la promo la plus
                         élevée.
                         */
-                        $req = $bddd->prepare("
-                        SELECT DISTINCT u.idUtilisateur, u.nom, u.prenom, u.email, u.numTel, e.nomEntreprise, u.etatC, s.nomMDS, s.prenomMDS, s.emailMDS, s.numMDS, s.nomTA, s.prenomTA, s.emailTA, s.numTA 
+                        /*bddd(placeholder pour retrouver cette requete, bddd = Requete SQL malfonctionnelle)*/
+                        $req = $bdd->prepare("
+                        SELECT DISTINCT u.idUtilisateur, u.nom, u.prenom, u.email, u.numTel, e.nomEntreprise, u.etatC, mds.nomMDS, mds.prenomMDS, mds.emailMDS, mds.numMDS, ta.nomTA, ta.prenomTA, ta.emailTA, ta.numTA 
                         FROM utilisateur u
-                        LEFT JOIN stage s USING (idUtilisateur)
-                        LEFT JOIN offre_stage os USING (idOffre)
-                        LEFT JOIN site ON s.idSite = site.idSite
-                        LEFT JOIN entreprise e USING (idEntreprise)
+                        LEFT JOIN convention_contrat cc ON u.idUtilisateur = cc.idUtilisateur
+                        LEFT JOIN tuteur_academique ta ON cc.idTA = ta.idTA
+                        LEFT JOIN maitre_de_stage mds ON cc.idMDS = mds.idMDS
+                        LEFT JOIN site s ON mds.idSite = s.idSite
+                        LEFT JOIN entreprise e ON s.idEntreprise = e.idEntreprise 
                         WHERE u.statut='etudiant' AND (
                             u.nom LIKE CONCAT('%', ?, '%') OR
                             u.prenom LIKE CONCAT('%', ?, '%') OR
                             u.nom IN (
                                 SELECT nom
                                 FROM utilisateur
-                                WHERE prenom <> u.prenom
+                                WHERE nom = u.nom AND prenom <> u.prenom
                                 GROUP BY nom
                                 HAVING COUNT(DISTINCT prenom) > 1
                             )
@@ -102,9 +104,10 @@ if (isset($_GET['query'])) {
                             u.promo = (SELECT MAX(promo) FROM utilisateur WHERE nom = u.nom AND prenom = u.prenom) OR
                             NOT EXISTS (SELECT 1 FROM utilisateur WHERE nom = u.nom AND prenom = u.prenom AND promo > u.promo)
                         )
+                        AND promo = ? AND parcours = ?
                         ORDER BY u.nom;");
 
-                        $req->execute(array($searchQuery, $searchQuery));
+                        $req->execute(array($searchQuery, $searchQuery, $promo, $parcours));
                         $resultat = $req->fetchAll();
 
                         /* Ces deux variables permettent de mettre la dernière ligne du tableau en gras */
@@ -122,7 +125,7 @@ if (isset($_GET['query'])) {
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <a href="Send_mail_etu.php?mail=<?php echo $ligne['email']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
                                     <div class="popup" id="icon">
-                                        <?php if ($ligne['numtel'] == Null) {
+                                        <?php if ($ligne['numTel'] == Null) {
                                             ?><?php
                                         } else {
                                             ?> <img src="assets/img/Tel.png" alt="Icône"> <?php
@@ -140,36 +143,36 @@ if (isset($_GET['query'])) {
                                 </td>
 
                                 <td style="border-left : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;"'; } ?>">
-                                    <?php echo $ligne['nomTuteur']; echo " "; echo $ligne['prenomTuteur']; ?>
+                                    <?php echo $ligne['nomMDS']; echo " "; echo $ligne['prenomMDS']; ?>
                                 </td>
 
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <?php if ($ligne['nomTuteur'] != '') {
-                                        if ($ligne['emailTuteur'] != Null) { ?>
-                                            <a href="Send_mail_etu.php?mail=<?php echo $ligne['emailTuteur']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
+                                    <?php if ($ligne['nomMDS'] != '') {
+                                        if ($ligne['emailMDS'] != Null) { ?>
+                                            <a href="Send_mail_etu.php?mail=<?php echo $ligne['emailMDS']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
                                         <?php }
-                                        if ($ligne['numTuteur'] != Null) { ?>
+                                        if ($ligne['numMDS'] != Null) { ?>
                                         <div class="popup" id="icon">
                                             <img src="assets/img/Tel.png" alt="Icône">
-                                            <span class="popup-content"> Tel : <?php echo $ligne['numTuteur']; ?></span>
+                                            <span class="popup-content"> Tel : <?php echo $ligne['numMDS']; ?></span>
                                         </div>
                                         <?php }
                                     } ?>
                                 </td>
 
                                 <td style="border-left : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;"'; } ?>">
-                                    <?php echo $ligne['nom_tuteur_academique']; echo " "; echo $ligne['prenom_tuteur_academique']; ?>
+                                    <?php echo $ligne['nomTA']; echo " "; echo $ligne['prenomTA']; ?>
                                 </td>
 
                                 <td style="border-right : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;'; } ?>">
-                                    <?php if ($ligne['nom_tuteur_academique'] != '') {
-                                        if ($ligne['email_tuteur_academique'] != Null) { ?>
-                                            <a href="Send_mail_etu.php?mail=<?php echo $ligne['email_tuteur_academique']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
+                                    <?php if ($ligne['nomTA'] != '') {
+                                        if ($ligne['emailTA'] != Null) { ?>
+                                            <a href="Send_mail_etu.php?mail=<?php echo $ligne['emailTA']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
                                         <?php }
-                                        if ($ligne['num_tuteur_academique'] != Null) { ?>
+                                        if ($ligne['numTA'] != Null) { ?>
                                         <div class="popup" id="icon">
                                             <img src="assets/img/Tel.png" alt="Icône">
-                                            <span class="popup-content"> Tel : <?php echo $ligne['num_tuteur_academique']; ?></span>
+                                            <span class="popup-content"> Tel : <?php echo $ligne['numTA']; ?></span>
                                         </div>
                                         <?php }
                                     } ?>

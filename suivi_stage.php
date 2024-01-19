@@ -112,10 +112,10 @@
                 $countr = $req->rowcount();
 
                 //on initialise toutes les variables dans le cas où il n'y aucune données déja renseignées
-                $nomTuteur = "";
-                $prenomTuteur = "";
-                $numTuteur = "";
-                $emailTuteur = "";
+                $nomMDS = "";
+                $prenomMDS = "";
+                $numMDS = "";
+                $emailMDS = "";
                 $typeContrat = "";
                 $ville = "";
                 $pays = "";
@@ -140,16 +140,15 @@
 
                     //récupération des valeurs lignes par lignes
                     foreach ($resultat as $ligne ){
-                    $nomTuteur = $ligne['nomTuteur'];
-                    $prenomTuteur = $ligne['prenomTuteur'];
-                    $numTuteur = $ligne['numTuteur'];
-                    $emailTuteur = $ligne['emailTuteur'];
+                    $nomMDS = $ligne['nomMDS'];
+                    $prenomMDS = $ligne['prenomMDS'];
+                    $numMDS = $ligne['numMDS'];
+                    $emailMDS = $ligne['emailMDS'];
                     $typeContrat = $ligne['type_contrat'];
                     $nomEntreprise = $ligne['nomEntreprise'];
                     $nomSite = $ligne['nomSite'];
                     $ville = $ligne['ville'];
                     $pays = $ligne['pays'];
-                    //$ville_stage =  $ligne['ville_stage'];
                     $distPres =  $ligne['presentiel'];
                     $code_postal= $ligne['code_postal'];
                     $secteur =  $ligne['secteur'];
@@ -198,22 +197,22 @@
                 <p>* : Saisie obligatoire</p>
                     <form id="formulaireinscription" method="post">
                         <div class="card-body"> <!--div de tableau 1 -->
-                            <label for="NomTuteur"><b>Nom du tuteur* : </b></label>
+                            <label for="NomMDS"><b>Nom du maître de stage* : </b></label>
                                 <br>
-						        <input type="text" id="NomTuteur" name="NomTuteur" value= "<?php echo($nomTuteur)?>" required>
+						        <input type="text" id="NomMDS" name="NomMDS" value= "<?php echo($nomMDS)?>" required>
 						        <br>
-                            <label for="PrenomTuteur"><b>Prénom du tuteur* : </b></label>
+                            <label for="PrenomMDS"><b>Prénom du maître de stage* : </b></label>
 						        <br>
-						        <input type="text" id="PrenomTuteur" name="PrenomTuteur" value= "<?php echo($prenomTuteur)?>" required>
+						        <input type="text" id="PrenomMDS" name="PrenomMDS" value= "<?php echo($prenomMDS)?>" required>
 						        <br>
-                            <label for="NumTuteur"><b>Numéro de téléphone du tuteur : </b></label>
+                            <label for="NumMDS"><b>Numéro de téléphone du maître de stage : </b></label>
                                 <br>
-						        <!--<input type="tel" id="NumTuteur" name="NumTuteur" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}|[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}|[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}">-->
-                                <input type="text" id="NumTuteur" name="NumTuteur" value= "<?php echo($numTuteur)?>">
+						        <!--<input type="tel" id="NumMDS" name="NumMDS" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}|[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}|[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}">-->
+                                <input type="text" id="NumMDS" name="NumMDS" value= "<?php echo($numMDS)?>">
                                 <br>
-                            <label for="emailTuteur"><b>Adresse mail du tuteur* : </b></label>
+                            <label for="emailMDS"><b>Adresse mail du maître de stage* : </b></label>
                                 <br>
-						        <input type="email" id="emailTuteur" name="emailTuteur" value= "<?php echo($emailTuteur)?>" required>
+						        <input type="email" id="emailMDS" name="emailMDS" value= "<?php echo($emailMDS)?>" required>
 						        <br>
                             <label for="nomEntreprise"><b>Nom de l'entreprise* : </b></label>
 						        <br>
@@ -249,7 +248,7 @@
                                 <br>
                             <label for="Ville"><b>Ville* : </b></label>
 						        <br>
-						        <input type="text" id="Ville" name="Ville" value = "<?php echo $ville_stage ?>" required>
+						        <input type="text" id="Ville" name="Ville" value = "<?php echo $ville ?>" required>
 						        <br>
                             <label for="Postal"><b>Code Postal* : </b></label>
                                 <br>
@@ -309,14 +308,14 @@
                             //données du formulaire sous forme de variables
                             $id=$_SESSION['user'];
                     
-                            $nomTut = $_POST['NomTuteur'];
-                            $nomTut=strtoupper($nomTut);
+                            $nomMS = $_POST['NomMDS'];
+                            $nomMS=strtoupper($nomTut);
                     
-                            $prenomTut = $_POST['PrenomTuteur'];
-                            $prenomTut=strtoupper($prenomTut);
+                            $prenomMS = $_POST['PrenomMDS'];
+                            $prenomMS=strtoupper($prenomTut);
                     
-                            $numTut = $_POST['NumTuteur'];
-                            $mailTut = $_POST['emailTuteur'];
+                            $numMS = $_POST['NumMDS'];
+                            $mailMS = $_POST['emailMDS'];
                     
                             $ville = $_POST['Ville'];
                             $ville=ucfirst($ville);
@@ -349,10 +348,20 @@
                             if ($count !=0) {
                                 if($DateDeb < $DateFin){
                                     //A REFAIRE §!!!§§§§§D§§D§D§1§1§1§!!!
-                                    $upStage = $bddd->prepare('UPDATE maitre_de_stage SET nomMDS = ?, prenomMDS = ?, numMDS = ?, emailMDS = ?, type_contrat = ?, dateDeb = ?, dateFin = ?, annee_stage = ?, ville_stage = ? , code_postal = ?, presentiel = ? , secteur = ? , adresse_postale = ?  WHERE idUtilisateur = ?');
-                                    //$upStage = $bdd->prepare('UPDATE stage SET numTuteur = ? WHERE idUtilisateur = ?');
-                                    $upStage->execute(array($nomTut,$prenomTut,$numTut,$mailTut,$type,$DateDeb,$DateFin,$annee,$ville, $code_postal, $distPres, $secteur, $adressePostale, $id));
-                                    //$upStage->execute(array($numTut,$id));
+                                    $upStage = $bddd->prepare('UPDATE convention_contrat SET nomMDS = ?, prenomMDS = ?, numMDS = ?, emailMDS = ?, type_contrat = ?, dateDeb = ?, dateFin = ?, annee_stage = ?, ville_stage = ? , code_postal = ?, presentiel = ? , secteur = ? , adresse_postale = ?  WHERE idUtilisateur = ?');
+                                    $upStage->execute(array($nomMS,$prenomMS,$numMS,$mailMS,$type,$DateDeb,$DateFin,$annee,$ville, $code_postal, $distPres, $secteur, $adressePostale, $id));
+
+                                    maitre_de_stage : nomMDS, prenomMDS, numMDS, emailMDS
+                                    offre :
+                                    site :
+                                    convention_contrat : type_contrat, dateDeb, dateFin
+                                    annee_stage, ville_stage, code_postal, presentiel, secteur, adresse_postale
+
+
+
+
+                                    $upStage = $bdd->prepare('UPDATE stage SET nomTuteur = ?, prenomTuteur = ?, numTuteur = ?, emailTuteur = ?, type_contrat = ?, dateDeb = ?, dateFin = ?, annee_stage = ?, ville_stage = ? , code_postal = ?, presentiel = ? , secteur = ? , adresse_postale = ?  WHERE idUtilisateur = ?');
+                                    $upStage->execute(array($nomTut,$prenomTut,$numTut,$mailTut,$type,$DateDeb,$DateFin,$ville, $code_postal, $distPres, $secteur, $adressePostale, $id));
                                 }
                                 else { echo "Les dates saisies sont incohérentes.";}
                             }
