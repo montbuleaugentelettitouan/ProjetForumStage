@@ -19,8 +19,8 @@
 // On initialise la session si elle existe (on redirige l'utilisateur s'il est déjà connecté)
 session_start();
 
-$_SESSION['annee'] = 2023;
-$_SESSION['promo'] = 2024;
+$_SESSION['annee'] = 2024;
+$_SESSION['promo'] = 2025;
 
 include('fonctionality/bdd.php');
 
