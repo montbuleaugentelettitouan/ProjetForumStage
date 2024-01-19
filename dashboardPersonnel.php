@@ -23,7 +23,7 @@ include('fonctionality/bdd.php');
 
             <div class="card mb-4"> <!--div de section 1 -->
                 <div class="card-header"> <!--div de encadré 1 -->
-                    Mes offres
+
                 </div> <!--fin div de encadré 1 -->
 
                 <!----Affichage des offres sélectionnées------>

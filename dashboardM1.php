@@ -26,7 +26,7 @@ ini_set('display_errors', '1');
 
             <div class="card mb-4"> <!--div de section 1 -->
                 <div class="card-header"> <!--div de encadré 1 -->
-                    Les offres
+                    
                 </div> <!-- fin div de encadré 1 -->
 
                 <form id="dataglobal" method="post">
