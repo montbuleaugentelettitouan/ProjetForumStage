@@ -22,7 +22,7 @@ ini_set('display_errors', '1');
         <h1 class="mt-4">Offres <?php echo $annee; ?></h1>
 
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active"><b>Vue générale de toutes les offres</b></li>
+            <li class="breadcrumb-item active">Vue générale de toutes les offres</li>
         </ol>
 
             <div class="card mb-4"> <!--div de section 1 -->
@@ -39,14 +39,14 @@ ini_set('display_errors', '1');
                                     <th>Site</th>
                                     <th>Intitulé de l'offre</th>
                                     <th>Description</th>
+                                    <th>PDF</th>
                                     <th>Priorité</th>
-                                    <th>Ordre</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                             <div class="form-group">
-                            <p>Veuillez ne pas mettre la même priorité sur 2 offres distinctes ! </p>
+                                <p><b>Veuillez ne pas mettre la même priorité sur 2 offres distinctes ! </b></p>
                             </div>
 
                             <!--Execution d'une requête permettant d'afficher les différentes offres inscrites dans la base de données en fonction d'un utilisateur-->
@@ -64,6 +64,7 @@ ini_set('display_errors', '1');
                                     <td><?php echo $ligne['nomSite']; ?></td>
                                     <td><?php echo $ligne['titre']; ?></td>
                                     <td><?php echo $ligne['description']; ?></td>
+                                    <td><a href="telechargement_pdf.php?id=<?php echo $ligne['idOffre']; ?>" class="btn btn-primary">Télécharger le PDF</a></td>
                                     <td>
                                         <select class="form-select modif" aria-label="Default select example"
                                                 name="offre<?php echo $ligne['idOffre']; ?>">
@@ -80,8 +81,6 @@ ini_set('display_errors', '1');
                                             ?>
                                         </select>
                                     </td>
-                                    <!--Affichage de la priorité dans la ligne priorité-->
-                                    <td><?php echo $ligne['priorite']; ?></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>
