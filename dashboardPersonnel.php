@@ -7,6 +7,7 @@
  *
  */
 // ajout des fonctionnalités php
+include('fonctionality/logged.php');
 include('barre_nav_M1.php');
 include('fonctionality/bdd.php');
 ?>
