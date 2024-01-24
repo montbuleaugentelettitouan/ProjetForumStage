@@ -22,8 +22,8 @@ include('fonctionality/bdd.php');
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="far fa-file-pdf"></i>
-                    Sites et entreprises
+
+                    Entreprises et sites
                 </div>
 
 

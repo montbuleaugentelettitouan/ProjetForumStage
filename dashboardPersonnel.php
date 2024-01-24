@@ -85,7 +85,7 @@ include('fonctionality/bdd.php');
                             </tbody>
                         </table>
                     </div> <!--fin div de tableau 1 -->
-                    <input type="submit" class="btn btn-warning" name="Valider" value="Valider">
+                    <input type="submit" class="btn btn-warning" name="Valider" value="Valider (si modification des priorités)">
                     <br>
                 </form>
                 <?php

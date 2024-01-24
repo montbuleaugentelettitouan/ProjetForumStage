@@ -14,7 +14,7 @@ include('fonctionality/annee+promo.php');
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="far fa-file-pdf"></i>
+
                     Tableau récapitulatif des postes proposés au Forum <?php echo $annee ?>
                 </div>
 
@@ -72,7 +72,7 @@ include('fonctionality/annee+promo.php');
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="far fa-file-pdf"></i>
+
                     Suivi des postes
                 </div>
 
