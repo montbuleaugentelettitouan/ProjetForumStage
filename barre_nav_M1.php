@@ -17,6 +17,7 @@ ini_set('display_errors', '1');
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
     <link href="css/styles.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.1/datatables.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -69,6 +70,12 @@ ini_set('display_errors', '1');
                         <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
                         Toutes les offres
                     </a>
+
+                    <a class="nav-link" href="nombres_postulations_offresM1.php">
+                        <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
+                        Récapitulatif
+                    </a>
+
 
                     <!--
                     <a class="nav-link" href="suivi_forum.php">

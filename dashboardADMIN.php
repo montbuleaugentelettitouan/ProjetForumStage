@@ -36,6 +36,7 @@ include('fonctionality/annee+promo.php');
                         <tr>
                             <th>Nom</th>
                             <th>Prenom</th>
+                            <th>Numéro d'offre</th>
                             <th>Intitulé de l'offre</th>
                             <th>Entreprise</th>
                             <th>Priorité</th>
@@ -47,7 +48,7 @@ include('fonctionality/annee+promo.php');
                         <?php
                         $val = 'null';
                         /* recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bdd->prepare("SELECT nom, prenom, titre, nomSite, nomEntreprise, priorite FROM utilisateur
+                        $req = $bdd->prepare("SELECT nom, prenom, titre, offre.idOffre, nomEntreprise, priorite FROM utilisateur
                         LEFT JOIN postule_m1 on utilisateur.idUtilisateur = postule_m1.idutilisateur
                         LEFT JOIN offre ON postule_m1.idOffre = offre.idOffre
                         LEFT JOIN site on offre.idSite = site.idSite
@@ -59,6 +60,7 @@ include('fonctionality/annee+promo.php');
                             <tr>
                                 <td><?php echo $ligne['nom']; ?></td>
                                 <td><?php echo $ligne['prenom']; ?></td>
+                                <td><?php echo $ligne['idOffre']; ?></td>
                                 <td><?php echo $ligne['titre']; ?></td>
                                 <td><?php echo $ligne['nomEntreprise']; ?></td>
                                 <td align ="right"><?php echo $ligne['priorite']; ?></td>
