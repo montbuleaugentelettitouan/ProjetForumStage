@@ -114,7 +114,7 @@ ini_set('display_errors', '1');
     
                                 //Sinon on ajoute une nouvelle information dans la table choix_offre
                                 else{
-                                    $req2 = "INSERT INTO postule_m1 (idUtilisateur, idOffre, priorite) VALUES ('$id','$i','$prio')";
+                                    $req2 = "INSERT INTO postule_m1 (idUtilisateur, idOffre, priorite, anneeP) VALUES ('$id','$i','$prio','$annee')";
                                     $result = $bdd->query($req2);
                                     $result = $result->fetchAll();
                                 }
