@@ -6,7 +6,7 @@ include('fonctionality/annee+promo.php');
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Les Offres de Stages</h1>
+            <h1 class="mt-4">Récapitulatif</h1>
 
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Récapitulatif du nombre de postulants par offre en <?php echo $annee ?></li>
