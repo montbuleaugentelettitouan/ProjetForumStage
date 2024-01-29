@@ -117,27 +117,36 @@ $selectedValue = $_GET['value'];
                 <table class="table table-striped" >
                     <?php
 					// récupération de toutes les informations a affiché dans le dernier tableau
-                    $req = $bddd->prepare("SELECT nomMDS, prenomMDS,adresse_postale, pays, ville_stage, numTuteur, emailTuteur, type_contrat, dateDeb, dateFin, annee_stage, code_postal, secteur, presentiel, nom_tuteur_academique, prenom_tuteur_academique, gratification, format_gratification FROM stage JOIN site on stage.idSite = site.idSite WHERE stage.idUtilisateur = ?");
+                    $req = $bdd->prepare("
+                    SELECT s.adresse_postale, s.pays, s.ville, s.code_postal, cc.type_contrat, cc.dateDeb, cc.dateFin, o.anneeO, o.secteur, o.presentiel, cc.gratification, cc.format_gratification, mds.nomMDS, mds.prenomMDS, mds.numMDS, mds.emailMDS, ta.nomTA, ta.prenomTA, ta.numTA, ta.emailTA
+                        FROM offre o
+                        LEFT JOIN convention_contrat cc ON o.idOffre = cc.idOffre
+                        LEFT JOIN tuteur_academique ta ON cc.idTA = ta.idTA
+                        LEFT JOIN maitre_de_stage mds ON cc.idMDS = mds.idMDS
+                        LEFT JOIN site s ON mds.idSite = s.idSite
+                        WHERE cc.idUtilisateur = ?");
                     $req->execute(array($valid));
                     $resultat = $req->fetch();
 
 					// initialisation des résultats à nul s'il n'y a pas de résultat retourné, comme ça pas d'erreur d'affichage
-                    $nomT = !empty($resultat['nomTuteur']) ? $resultat['nomTuteur'] : NULL ;
-                    $prenomT = !empty($resultat['prenomTuteur']) ? $resultat['prenomTuteur'] : NULL ;
-                    $numT = !empty($resultat['numTuteur']) ? $resultat['numTuteur'] : NULL ;
-                    $mailT = !empty($resultat['emailTuteur']) ? $resultat['emailTuteur'] : NULL ;
+                    $nomMDS = !empty($resultat['nomMDS']) ? $resultat['nomMDS'] : NULL ;
+                    $prenomMDS = !empty($resultat['prenomMDS']) ? $resultat['prenomMDS'] : NULL ;
+                    $numMDS = !empty($resultat['numMDS']) ? $resultat['numMDS'] : NULL ;
+                    $mailMDS = !empty($resultat['emailMDS']) ? $resultat['emailMDS'] : NULL ;
                     $pays = !empty($resultat['pays']) ? $resultat['pays'] : NULL ;
-                    $ville = !empty($resultat['ville_stage']) ? $resultat['ville_stage'] : NULL ;
+                    $ville = !empty($resultat['ville']) ? $resultat['ville'] : NULL ;
                     $contrat = !empty($resultat['type_contrat']) ? $resultat['type_contrat'] : NULL ;
                     $deb = !empty($resultat['dateDeb']) ? $resultat['dateDeb'] : NULL ;
                     $fin = !empty($resultat['dateFin']) ? $resultat['dateFin'] : NULL ;
-                    $year = !empty($resultat['annee_stage']) ? $resultat['annee_stage'] : NULL ;
+                    $year = !empty($resultat['anneeO']) ? $resultat['anneeO'] : NULL ;
                     $code_postal = !empty($resultat['code_postal']) ? $resultat['code_postal'] : NULL ;
 					$adresse_postale = !empty($resultat['adresse_postale']) ? $resultat['adresse_postale'] : NULL ;
                     $presentiel = !empty($resultat['presentiel']) ? $resultat['presentiel'] : NULL ;
                     $secteur = !empty($resultat['secteur']) ? $resultat['secteur'] : NULL ;
-                    $nomtuteuraca = !empty($resultat['nom_tuteur_academique']) ? $resultat['nom_tuteur_academique'] : NULL ;
-                    $prenomtuteuraca = !empty($resultat['prenom_tuteur_academique']) ? $resultat['prenom_tuteur_academique'] : NULL ;
+                    $nomTA = !empty($resultat['nomTA']) ? $resultat['nomTA'] : NULL ;
+                    $prenomTA = !empty($resultat['prenomTA']) ? $resultat['prenomTA'] : NULL ;
+                    $numTA = !empty($resultat['numTA']) ? $resultat['numTA'] : NULL ;
+                    $mailTA = !empty($resultat['emailTA']) ? $resultat['emailTA'] : NULL ;
 					$gratif = !empty($resultat['gratification']) ? $resultat['gratification'] : NULL ;
                     $formatGratif = !empty($resultat['format_gratification']) ? $resultat['format_gratification'] : NULL ;
                     ?>
@@ -145,15 +154,15 @@ $selectedValue = $_GET['value'];
 					<!-- affichage du tableau des informations de stage de l'étudiant -->
                     <tr>
                         <th>Tuteur professionnel</th>
-                        <td><?php echo $nomT; ?> <?php echo " "?><?php echo $prenomT; ?></td>
+                        <td><?php echo $nomMDS; ?> <?php echo " "?><?php echo $prenomMDS; ?></td>
                     </tr>
                     <tr>
                         <th>Numéro du tuteur professionnel</th>
-                        <td><?php echo $numT; ?></td>
+                        <td><?php echo $numMDS; ?></td>
                     </tr>
                     <tr>
                         <th>Mail du tuteur professionnel</th>
-                        <td><?php echo $mailT; ?></td>
+                        <td><?php echo $mailMDS; ?></td>
                     </tr>
                     <tr>
                         <th>Pays</th>
@@ -197,7 +206,15 @@ $selectedValue = $_GET['value'];
                     </tr>
                     <tr>
                         <th>Tuteur académique </th>
-                        <td> <?php echo $prenomtuteuraca; ?> <?php echo " "?> <?php echo $nomtuteuraca; ?></td>
+                        <td> <?php echo $prenomTA; ?> <?php echo " "?> <?php echo $nomTA; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Numéro du tuteur académique</th>
+                        <td><?php echo $numTA; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Mail du tuteur académique</th>
+                        <td><?php echo $mailTA; ?></td>
                     </tr>
 					<tr>
                         <th>Gratification </th>
