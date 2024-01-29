@@ -92,7 +92,7 @@ $selectedValue = $_GET['value'];
                     </thead>
                     <tbody>
                     <?php
-                    $verif = $bdd->prepare('SELECT titre, nomSite, nomEntreprise FROM convention_contrat JOIN offre ON (idOffre) JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE convention_contrat.idUtilisateur =?');
+                    $verif = $bdd->prepare('SELECT titre, nomSite, nomEntreprise FROM convention_contrat JOIN offre USING (idOffre) JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE convention_contrat.idUtilisateur =?');
                     $verif->execute(array($valid));
                     $result = $verif->fetch();
 

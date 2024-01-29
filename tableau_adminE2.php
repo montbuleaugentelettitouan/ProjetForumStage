@@ -81,7 +81,7 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
                         foreach ($resultat as $ligne) {
-                                $restant = $ligne["NbPoste"]-$ligne["nbPostePourvu"];
+                                $restant = $ligne["nbPoste"]-$ligne["nbPostePourvu"];
                             ?>
                             <tr>
                                 <td><?php echo $ligne['titre']; ?></td>

@@ -35,7 +35,6 @@ $selectedValue = $_GET['value'];
 
             <div class="card mb-4"> <!--div de section 1 -->
                 <div class="card-header"> <!--div de encadré 1 -->
-                    <i class="far fa-file-pdf"></i>
                     Suivi des entretiens passés par les étudiants de la promo <?php echo $promo ?>
                 </div> <!--fin div de encadré 1 -->
 
@@ -98,7 +97,6 @@ $selectedValue = $_GET['value'];
 
                 <div class="card mb-4"> <!--div de section 2 -->
                     <div class="card-header"> <!--div de encadré 2 -->
-                        <i class="far fa-file-pdf"></i>
                         Affichage du détail des entretiens
                     </div> <!--div de encadré 2 -->
                 </div> <!--fin div de section 2 -->

@@ -17,17 +17,41 @@
 include('barre_nav_M1.php');
 include('fonctionality/bdd.php');
 ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fonction pour gérer la visibilité du formulaire
+        function toggleAutreFormVisibility() {
+            var autreRadio = document.getElementById('new');
+            var autreForm = document.getElementById('autreForm');
+
+            // Affiche ou masque le formulaire en fonction de la sélection de l'utilisateur
+            autreForm.style.display = autreRadio.checked ? 'block' : 'none';
+        }
+
+        // Ajoutez un écouteur d'événements pour le changement de la sélection radio "autre"
+        var autreRadio = document.getElementById('new');
+        autreRadio.addEventListener('change', toggleAutreFormVisibility);
+
+        // Ajoutez des écouteurs d'événements pour les autres options radio
+        var autreRadioOptions = document.querySelectorAll('input[name="inlineRadioOptions"]');
+        autreRadioOptions.forEach(function(radio) {
+            radio.addEventListener('change', toggleAutreFormVisibility);
+        });
+
+        // Appelez la fonction une fois au chargement de la page pour initialiser la visibilité
+        toggleAutreFormVisibility();
+    });
+</script>
 <div id="layoutSidenav_content"> <!-- body de page-->
     <main>
         <div class="container-fluid px-4"> <!-- div de page-->
-            <h1 class="mt-4">Vous avez accepté une offre de stage </h1>
+            <h1 class="mt-4">Acceptation d'une proposition</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Sélectionner l'offre que vous avez accepté</li>
+                    <li class="breadcrumb-item active">Sélectionner l'offre que vous acceptez</li>
                 </ol>
 
                 <div class="card mb-4"> <!--div de section 1 -->
                     <div class="card-header"> <!--div de encadré 1 -->
-                        <i class="far fa-file-pdf"></i>
                         Vos offres
                     </div> <!--fin div de encadré 1 -->
 
@@ -110,7 +134,7 @@ include('fonctionality/bdd.php');
                                 }
                             ?>
                         </div>
-
+                        <div id="autreForm">
                         <!-- zone nom entreprise si autre-->
 
                         <br>
@@ -152,8 +176,11 @@ include('fonctionality/bdd.php');
                         </div>
 
                         <br>
-                        <input type="submit" class="btn btn-warning" name="Valideraccepte" value="Valider">
+                        </div>
                         <!--<input type="button" onclick="window.location.href = 'suivi_stage.php';" class="btn btn-primary" name="stage" value="Informations sur le stage">-->
+                        <div class="card mb-4">
+                            <input type="submit" class="btn btn-warning" name="Valideraccepte" value="Valider">
+                        </div>
                     </form>
                     <?php
                         include('fonctionality/insert_bdd_stage_accepte.php');

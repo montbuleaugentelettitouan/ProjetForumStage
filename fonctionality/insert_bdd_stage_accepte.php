@@ -11,23 +11,26 @@ function debug_to_console($data) {
 
 
 
-    if (isset($_POST['Valideraccepte'])) {
-        //Partie Utilisateur
+if (isset($_POST['Valideraccepte'])) {
+    //Partie Utilisateur
 
-        //on récupère l'id et d'autres variables utiles pour la suite
-        $id = $_SESSION['user'];
-        $accepte = "accepte";
+    //on récupère l'id et d'autres variables utiles pour la suite
+    $id = $_SESSION['user'];
+    $accepte = "accepte";
 
-        //On modifie l'état de l'utilisateur à "accepte"
-        //On regarde en premier si l'état de l'utilisateur est déjà à accepté ou pas 
-        $req = $bdd->prepare('SELECT etatC FROM utilisateur WHERE idUtilisateur = ?');
-        $req->execute(array($id));
-        $resultReq = $req->fetch();
-        //Si l'état n'est pas à "accepte" alors on le change sinon on le laisse 
-        if($resultReq != $accepte){
+    //On modifie l'état de l'utilisateur à "accepte"
+    //On regarde en premier si l'état de l'utilisateur est déjà à accepté ou pas
+    $req = $bdd->prepare('SELECT etatC FROM utilisateur WHERE idUtilisateur = ? AND etatC = "accepte"');
+    $req->execute(array($id));
+    $resultReq = $req->fetch();
+    //Si l'état n'est pas à "accepte" alors on le change sinon on le laisse
+    if($resultReq) {
+        // Si l'état n'est pas à "accepte", alors on le change
+        if ($resultReq->num_rows = 0) {
             $req = $bdd->prepare('UPDATE utilisateur SET etatC = ? WHERE idUtilisateur = ?');
             $req->execute(array($accepte, $id));
-            }
+        }
+    }
 
 
         //section avec offres pré-sélectionnées
