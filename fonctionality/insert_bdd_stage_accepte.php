@@ -1,13 +1,7 @@
 <?php
+session_start();
 include('annee+promo.php');
-
-function debug_to_console($data) {
-    $output = $data;
-    if (is_array($output))
-        $output = implode(',', $output);
-
-    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-}
+include('bdd.php');
 
 if (isset($_POST['Valideraccepte'])) {
     //Partie Utilisateur
@@ -21,6 +15,7 @@ if (isset($_POST['Valideraccepte'])) {
     $req = $bdd->prepare('SELECT etatC FROM utilisateur WHERE idUtilisateur = ? AND etatC = "accepte"');
     $req->execute(array($id));
     $resultReq = $req->fetch();
+
     //Si l'état n'est pas à "accepte" alors on le change sinon on le laisse
     if(!$resultReq) {
         // Si l'état n'est pas à "accepte", alors on le change
@@ -122,7 +117,7 @@ if ($_POST['inlineRadioOptions'] != "new") {
     $req3->execute(array(1,$id, $offre));
 
     //on met à jour l'état de la recherche dans la table postule en fonction du stage accepté
-    include('fonctionality/majetat.php');
+    include('majetat.php');
 }
 
         //AUTRE QUE FORUM STAGE
@@ -235,7 +230,7 @@ else {
 
             // on vérifie si le site existe
             $requetesearch5 = $bdd->prepare('SELECT * FROM site WHERE nomSite =? and ville =? and idEntreprise = ?');
-            $requetesearch5->execute(array($newidEnt));
+            $requetesearch5->execute(array($newsite,$newville,$newidEnt));
             $resultat5 = $requetesearch5->fetch();
             $count5 = $requetesearch5->rowCount();
 
@@ -436,7 +431,7 @@ else {
 
             //ajout dans la table offre et récupération de l'id
 
-            $requeinsert10 = $bdd->prepare("INSERT INTO offre (titre, description, NbPoste, idSite, nbPostePourvu, anneeO) VALUES (?,?,?,?)");
+            $requeinsert10 = $bdd->prepare("INSERT INTO offre (titre, description, nbPoste, idSite, nbPostePourvu, anneeO) VALUES (?,?,?,?)");
             $requeinsert10->execute(array($newposte,$newdescription,1,$newidSite,0, $annee));
 
             $requetesearch13 = $bdd->prepare('SELECT * FROM offre WHERE titre = ? and idSite = ?');
@@ -516,5 +511,5 @@ else {
         }
     }
 }
-echo "<script>window.location.replace(\"stage_accepte.php\")</script>";
-?>
+header("Location: ../stage_accepte.php");
+exit();

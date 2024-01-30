@@ -31,7 +31,7 @@ include('fonctionality/annee+promo.php');
                         </thead>
                         <tbody>
                         <?php
-                            $nbPostes = $bdd->prepare('SELECT sum(NbPoste) AS somme FROM offre where anneeO = ?');
+                            $nbPostes = $bdd->prepare('SELECT sum(nbPoste) AS somme FROM offre where anneeO = ?');
                             $nbPostes->execute(array($annee));
                             while ($donneesPoste=$nbPostes->fetch())
                             {
@@ -90,7 +90,7 @@ include('fonctionality/annee+promo.php');
                         </thead>
                         <tbody>
                         <?php
-                        $req = "SELECT idOffre, titre, nomSite, nomEntreprise, NbPoste FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise=entreprise.idEntreprise where anneeO = ?";
+                        $req = "SELECT idOffre, titre, nomSite, nomEntreprise, nbPoste FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise=entreprise.idEntreprise where anneeO = ?";
                         $resultat = $bdd->prepare($req);
                         $resultat->execute(array($annee));
                         $resultat = $resultat->fetchAll();
@@ -110,7 +110,7 @@ include('fonctionality/annee+promo.php');
                                 <td><?php echo $ligne['nomSite']; ?></td>
                                 <td><?php echo $ligne['titre']; ?></td>
                                 <td align ="right"><?php echo $resultatnbpostulant['NbPostulants']; ?></td>
-                                <td align ="right"><?php echo $ligne['NbPoste']; ?></td>
+                                <td align ="right"><?php echo $ligne['nbPoste']; ?></td>
                                 <td align ="right"><?php echo $resultatnbaccepte['NbAccepte']; ?></td>
                             </tr>
                         <?php } ?>

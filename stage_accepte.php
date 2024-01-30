@@ -110,6 +110,8 @@ include('fonctionality/bdd.php');
 
                         <!--Début de la zone Autre -->
 
+                        <!-- Formulaire 'autre' commenté en attendant -->
+                        <?php /*
                         <br>
                         <div class="form-check">
                             <label><h4> Autre : </h4></label>
@@ -134,6 +136,7 @@ include('fonctionality/bdd.php');
                                 }
                             ?>
                         </div>
+
                         <div id="autreForm">
                         <!-- zone nom entreprise si autre-->
 
@@ -177,11 +180,13 @@ include('fonctionality/bdd.php');
 
                         <br>
                         </div>
+                        */ ?>
                         <!--<input type="button" onclick="window.location.href = 'suivi_stage.php';" class="btn btn-primary" name="stage" value="Informations sur le stage">-->
                         <div class="card mb-4">
                             <input type="submit" class="btn btn-warning" name="Valideraccepte" value="Valider">
                         </div>
                     </form>
+
                 </div> <!-- fin div de section 1 -->
 
 <!----------------------------Footer------------------------------------------->
