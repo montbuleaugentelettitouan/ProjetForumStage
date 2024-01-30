@@ -93,9 +93,9 @@
                 //s'il y a des données déjà renseignées
                 if($countr1 != 0){
 
-                    $nomTuteur = $resultat['nom_tuteur_academique'];
-                    $prenomTuteur = $resultat['prenom_tuteur_academique'];
-                    $stageid = $resultat['idStage'];
+                    $nomTuteur = $resultat['nomTA'];
+                    $prenomTuteur = $resultat['prenomTA'];
+                    $stageid = $resultat['idConvention'];
                     $gratification = $resultat['gratification'];
                     $format = $resultat['format_gratification'];
 
@@ -122,7 +122,7 @@
                 }
 
                 //récupération du dernier état 
-                $reqEtat = $bdd->prepare('SELECT etat_convention FROM convention_contrat WHERE idStage = ? order by idConvention DESC LIMIT 1');
+                $reqEtat = $bdd->prepare('SELECT etat_convention FROM convention_contrat WHERE idConvention = ? order by idConvention DESC LIMIT 1');
                 $reqEtat->execute(array($stageid));
                 $resultat = $reqEtat->fetchAll();
 
@@ -210,6 +210,7 @@
                                     <?php echo $selectedformat5?>
                                     value = "smc">% du SMC</option>                                             
                                 </select>
+                            <!--
 						        <br>
                                 <label for="nomtuteur"><b>Nom du Tuteur Académique : </b></label>
                                 <br>
@@ -217,7 +218,7 @@
                                 <label for="prenomtuteur"><b>Prénom du Tuteur Académique : </b></label>
                                 <br>
                                 <input type="text" id="prenomtuteur" name="prenomtuteur" value = "<?php echo $prenomTuteur ?>">
-
+                            -->
 
                                 <br>                        </div> <!--fin div de tableau 1 -->
                         <br>
@@ -234,18 +235,24 @@
 
                             $format_gratif = $_POST['format_gratification'];
 
+                            /*
                             $nomTut = $_POST['nomtuteur'];
                             $nomTut=strtoupper($nomTut);
                             $prenomTut = $_POST['prenomtuteur'];
                             $prenomTut=strtoupper($prenomTut);
+                            */
 
 
                             //update de la ligne correspondant à l'étudiant dans la table stage avec les nouvelles infos du formulaire
-                            $upStage = $bddd->prepare('UPDATE stage SET nom_tuteur_academique = ?, prenom_tuteur_academique = ?, gratification = ?, format_gratification = ? WHERE idUtilisateur = ?');
-                            $upStage->execute(array($nomTut,$prenomTut, $gratif, $format_gratif, $id));
+                            //$upStage = $bddd->prepare('UPDATE stage SET nom_tuteur_academique = ?, prenom_tuteur_academique = ?, gratification = ?, format_gratification = ? WHERE idUtilisateur = ?');
+                            //$upStage->execute(array($nomTut,$prenomTut, $gratif, $format_gratif, $id));
 
+                            $upStage = $bdd->prepare('UPDATE convention_contrat SET gratification = ?, format_gratification = ? WHERE idUtilisateur = ?');
+                            $upStage->execute(array($gratif, $format_gratif, $id));
+
+                            /*
                             //récupération de l'id stage 
-                            $req = $bddd->prepare('SELECT idOffre FROM offre WHERE idUtilisateur = ? LIMIT 1');
+                            $req = $bdd->prepare('SELECT idConvention FROM convention_contrat WHERE idUtilisateur = ? LIMIT 1');
                             $req->execute(array($id));
                             $resultat = $req->fetch();
 
@@ -255,8 +262,9 @@
                             $dateactuelle = date("Y-m-d");
 
                             //insertion d'une ligne dans la table convention pour historiser
-                            $upConv = $bddd->prepare('INSERT into convention_contrat (idOffre, etat_convention, date) VALUES (?,?,?)');
+                            $upConv = $bdd->prepare('INSERT into convention_contrat (idOffre, etat_convention, date) VALUES (?,?,?)');
                             $upConv->execute(array($idStage,$etat, $dateactuelle));
+                            */
                     
 
                             //on actualise automatiquement la page pour ré-afficher les nouvelles données 

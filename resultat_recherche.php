@@ -80,7 +80,6 @@ if (isset($_GET['query'])) {
                         de l'étudiant et si il y a des doublons (même nom et prénom), la recherche prendra celui qui à la promo la plus
                         élevée.
                         */
-                        /*bddd(placeholder pour retrouver cette requete, bddd = Requete SQL malfonctionnelle)*/
                         $req = $bdd->prepare("
                         SELECT DISTINCT u.idUtilisateur, u.nom, u.prenom, u.email, u.numTel, e.nomEntreprise, u.etatC, mds.nomMDS, mds.prenomMDS, mds.emailMDS, mds.numMDS, ta.nomTA, ta.prenomTA, ta.emailTA, ta.numTA 
                         FROM utilisateur u

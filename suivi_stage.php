@@ -82,7 +82,7 @@
                     <tbody>
                         <?php
                             // requête pour afficher les informations de l'offre que l'Utilisateur à acceptée
-                            $req = $bdd->prepare('SELECT nomEntreprise, nomSite, titre, description FROM convention_contrat JOIN offre on (idOffre) JOIN site on (idSite) JOIN entreprise on (idEntreprise) WHERE convention_contrat.idUtilisateur = ?');
+                            $req = $bdd->prepare('SELECT nomEntreprise, nomSite, titre, description FROM convention_contrat JOIN offre USING (idOffre) JOIN site USING (idSite) JOIN entreprise USING (idEntreprise) WHERE convention_contrat.idUtilisateur = ?');
                             $req->execute(array($_SESSION['user']));
                             $resultat = $req->fetchAll();
 
@@ -105,7 +105,7 @@
 
             <?php
                 // requête pour afficher les informations de l'offre que l'Utilisateur à acceptée
-                $req = $bdd->prepare('SELECT nomEntreprise, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale  FROM convention_contrat JOIN offre on convention_contrat.idOffre = offre.idOffre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise JOIN maitre_de_stage ON site.idMDS = maitre_de_stage.idMDS WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
+                $req = $bdd->prepare('SELECT nomEntreprise, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale, offre.idOffre FROM convention_contrat JOIN offre on convention_contrat.idOffre = offre.idOffre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise JOIN maitre_de_stage ON site.idSite = maitre_de_stage.idSite WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
                 $req->execute(array($_SESSION['user']));
                 $resultat = $req->fetchAll();
 
@@ -124,7 +124,6 @@
                 $selectedContratpro = "";
                 $nomEntreprise = "";
                 $nomSite ="";
-                //$ville_stage = "";
                 $selectedPres = "";
                 $selectedDist = "";
                 $distPres = "";
@@ -134,7 +133,9 @@
                 //récupération de la date actuelle au cas où aucune date n'est rentré en base 
                 $DateDeb = date('Y-m-d');
                 $DateFin = date('Y-m-d');
-                
+
+                $idOffre = "";
+                $idSite = "";
 
                 if($countr != 0){
 
@@ -155,6 +156,9 @@
                     $DateDeb = $ligne['dateDeb'];
                     $DateFin = $ligne['dateFin'];
                     $adressePostale = $ligne['adresse_postale'];
+
+                    $idOffre = $ligne['idOffre'];
+                    $idSite = $ligne['idSite'];
 
                     }
 
@@ -214,6 +218,7 @@
                                 <br>
 						        <input type="email" id="emailMDS" name="emailMDS" value= "<?php echo($emailMDS)?>" required>
 						        <br>
+                            <!--<?php /*
                             <label for="nomEntreprise"><b>Nom de l'entreprise* : </b></label>
 						        <br>
                                 <select name="nomEntreprise"  id="nomEntreprise" required>
@@ -250,14 +255,15 @@
 						        <br>
 						        <input type="text" id="Ville" name="Ville" value = "<?php echo $ville ?>" required>
 						        <br>
-                            <label for="Postal"><b>Code Postal* : </b></label>
-                                <br>
-                                <input type="text" id="Postal" name="Postal" value = "<?php echo $code_postal ?>"required>
-                                <br>
                             <label for="Pays"><b>Pays* : </b></label>
 						        <br>
 						        <input type="text" id="Pays" name="Pays" value = "<?php echo $pays ?>" required>
 						        <br>
+                            */ ?>-->
+                            <label for="Postal"><b>Code Postal* : </b></label>
+                                <br>
+                                <input type="text" id="Postal" name="Postal" value = "<?php echo $code_postal ?>"required>
+                                <br>
                             <label for="Adresse_postale"><b>Adresse postale * (adresse correspondant au lieu de stage) : </b></label>
 						        <br>
 						        <input type="text" id="Adresse_postale" name="Adresse_postale" value = "<?php echo $adressePostale ?>" required>
@@ -271,22 +277,6 @@
                                     <?php echo $selectedDist?>
                                         value = "distanciel">Distanciel</option>
                             </select>
-                            <label for="Type_contrat"><b>Type de contrat (stage, alternance ...)* : </b></label>
-                                <select  name="Type_contrat">
-                                    <option 
-                                    <?php echo $selectedContratstage?>
-                                    value = "stage">Stage</option>
-                                    <option 
-                                    <?php echo $selectedContratapp?>
-                                    value = "apprentissage">Apprentissage</option>
-                                    <option 
-                                    <?php echo $selectedContratpro?>
-                                    value = "pro">Pro</option>                                        
-                                </select>
-                            <label for="Secteur"><b>Secteur d'activité : </b></label>
-                                <br>
-                                <input type="text" id="secteur" name="secteur" value = "<?php echo $secteur ?>">
-                                <br>
                             <label for="DateDeb"><b>Date de début de stage* : </b></label>
 						        <br>
 						        <input type="date" id="DateDeb" name="DateDeb" min= "2020-31-12" max= "2050-31-12" value = "<?php echo date('Y-m-d', strtotime($DateDeb)); ?>" required>
@@ -294,10 +284,6 @@
                             <label for="DateFin"><b>Date de fin de stage* : </b></label>
                                 <br>
 						        <input type="date" id="DateFin" name="DateFin" min= "2020-31-12" max= "2050-31-12" value = "<?php echo $DateFin ?>" required>
-						        <br>
-                            <label for="annee_stage"><b>Année du stage* : </b></label>
-						        <br>
-						        <input type="number" id="annee_stage" name="annee_stage" min= "2020" max= "2090" value= "<?php echo $annee; ?>" required>
 						        <br>
                         </div> <!--fin div de tableau 1 -->
                         <br>
@@ -309,34 +295,22 @@
                             $id=$_SESSION['user'];
                     
                             $nomMS = $_POST['NomMDS'];
-                            $nomMS=strtoupper($nomTut);
+                            $nomMS=strtoupper($nomMS);
                     
                             $prenomMS = $_POST['PrenomMDS'];
-                            $prenomMS=strtoupper($prenomTut);
+                            $prenomMS=strtoupper($prenomMS);
                     
                             $numMS = $_POST['NumMDS'];
                             $mailMS = $_POST['emailMDS'];
-                    
-                            $ville = $_POST['Ville'];
-                            $ville=ucfirst($ville);
 
                             $code_postal = $_POST['Postal'];
-
-                            $pays = $_POST['Pays'];
-                            $pays=strtoupper($pays);
-                    
-                            $type = $_POST['Type_contrat'];
-                            $type=strtolower($type);
 
                             $distPres = $_POST['dist_pres'];
                             $distPres=strtolower($distPres);
 
-                            $secteur = $_POST['secteur'];
-                            $secteur=ucfirst($secteur);
                     
                             $DateDeb = $_POST['DateDeb'];
                             $DateFin = $_POST['DateFin'];
-                            $annee = $_POST['annee_stage'];
 
                             $adressePostale = $_POST['Adresse_postale'];
 
@@ -347,21 +321,44 @@
                     
                             if ($count !=0) {
                                 if($DateDeb < $DateFin){
-                                    //A REFAIRE §!!!§§§§§D§§D§D§1§1§1§!!!
-                                    $upStage = $bddd->prepare('UPDATE convention_contrat SET nomMDS = ?, prenomMDS = ?, numMDS = ?, emailMDS = ?, type_contrat = ?, dateDeb = ?, dateFin = ?, annee_stage = ?, ville_stage = ? , code_postal = ?, presentiel = ? , secteur = ? , adresse_postale = ?  WHERE idUtilisateur = ?');
-                                    $upStage->execute(array($nomMS,$prenomMS,$numMS,$mailMS,$type,$DateDeb,$DateFin,$annee,$ville, $code_postal, $distPres, $secteur, $adressePostale, $id));
 
-                                    maitre_de_stage : nomMDS, prenomMDS, numMDS, emailMDS
-                                    offre :
-                                    site :
-                                    convention_contrat : type_contrat, dateDeb, dateFin
-                                    annee_stage, ville_stage, code_postal, presentiel, secteur, adresse_postale
+                                    $idMDS = "";
 
+                                    // On regarde d'abord si un maître de stage avec le nom et prénom rentrés existe déjà
+                                    $reqIdMDS = $bdd->prepare('SELECT idMDS FROM maitre_de_stage WHERE nom = ? AND prenom = ?');
+                                    $reqIdMDS->execute(array($nomMS,$prenomMS));
 
+                                    // On vérifie le nombre de lignes retournées par la requête
+                                    $nombreResultats = $reqIdMDS->rowCount();
 
+                                    // Si aucun maître de stage est trouvé, on l'ajoute puis on récupère son ID, sinon on a déjà son ID
+                                    if ($nombreResultats == 0) {
+                                        $upMDS = $bdd->prepare('INSERT INTO maitre_de_stage (nomMDS, prenomMDS, numMDS, emailMDS) VALUES (?,?,?,?)');
+                                        $upMDS->execute(array($nomMS,$prenomMS,$numMS,$mailMS));
 
-                                    $upStage = $bdd->prepare('UPDATE stage SET nomTuteur = ?, prenomTuteur = ?, numTuteur = ?, emailTuteur = ?, type_contrat = ?, dateDeb = ?, dateFin = ?, annee_stage = ?, ville_stage = ? , code_postal = ?, presentiel = ? , secteur = ? , adresse_postale = ?  WHERE idUtilisateur = ?');
-                                    $upStage->execute(array($nomTut,$prenomTut,$numTut,$mailTut,$type,$DateDeb,$DateFin,$ville, $code_postal, $distPres, $secteur, $adressePostale, $id));
+                                        // On récupère l'ID du nouveau maître de stage
+                                        $reqIdMDS2 = $bdd->prepare('SELECT idMDS FROM maitre_de_stage WHERE nom = ? AND prenom = ?');
+                                        $reqIdMDS2->execute(array($nomMS,$prenomMS));
+
+                                        $resultat = $reqIdMDS2->fetch();
+                                        $idMDS = $resultat['idMDS'];
+                                    } else {
+                                        // Si la 1ère requête a retourné un résultat, on prend l'ID
+                                        $resultat = $reqIdMDS->fetch();
+                                        $idMDS = $resultat['idMDS'];
+                                    }
+
+                                    // On met à jour les informations de la table 'offre'
+                                    $upOffre = $bdd->prepare('UPDATE offre SET presentiel = ? WHERE idOffre = ?');
+                                    $upOffre->execute(array($distPres, $idOffre));
+
+                                    // On met à jour les informations de la table 'site'
+                                    $upSite = $bdd->prepare('UPDATE site SET adresse_postale = ?, code_postal = ? WHERE idSite = ?');
+                                    $upSite->execute(array($code_postal, $adressePostale, $idSite));
+
+                                    // On met à jour les informations de la table 'convention_contrat'
+                                    $upCC = $bdd->prepare('UPDATE convention_contrat SET dateDeb = ?, dateFin = ?, idMDS = ? WHERE idUtilisateur = ?');
+                                    $upCC->execute(array($DateDeb,$DateFin, $idMDS, $id));
                                 }
                                 else { echo "Les dates saisies sont incohérentes.";}
                             }

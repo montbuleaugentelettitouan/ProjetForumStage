@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('fonctionality/bdd.php');
-include('fonctionality/logged.php');
+include('fonctionality/loggedAdmin.php');
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 

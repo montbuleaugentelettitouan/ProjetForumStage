@@ -214,7 +214,7 @@ $selectedValue = $_GET['value'];
                     </tr>
                     <tr>
                         <th>Mail du tuteur académique</th>
-                        <td><?php echo $mailTA; ?></td>
+                        <td><?php echo $mailTAF; ?></td>
                     </tr>
 					<tr>
                         <th>Gratification </th>

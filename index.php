@@ -26,7 +26,7 @@ include('fonctionality/bdd.php');
 
 // permet de rediriger si l'utilisateur c'est déjà connecté, on regarde si la SESSION est vide (présence d'un ID ou non)
 if (!empty($_SESSION["user"])) {
-    if ($_SESSION['user'] == "admin1" || $_SESSION['user'] == "admin2") {
+    if ($_SESSION['statut'] == "administrateur") {
         // si l'utilisateur est un admin alors on redirige vers la page admin
         header('Location: ../nombres_postulations_offres.php');
         exit();

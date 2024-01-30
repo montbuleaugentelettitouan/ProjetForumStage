@@ -52,7 +52,7 @@ include('fonctionality/bdd.php');
                             <?php
                             // requète pour sélectionner les offres de la table OFFRES inscrites dans la table MES CHOIX (jointure)
                             // OPn ajoute une autre jointure pour limliter la sélection des offres ou l'ID utilisateur correspond à MES CHOIX
-                            $req = $bddd->prepare('select idOf, nomOf, entreprise, description, priorite, CR_entretien FROM choix_offre JOIN offres_stages ON choix_offre.idOffre = offres_stages.idOf WHERE choix_offre.idUtilisateur=?');
+                            $req = $bddancien->prepare('select idOf, nomOf, entreprise, description, priorite, CR_entretien FROM choix_offre JOIN offres_stages ON choix_offre.idOffre = offres_stages.idOf WHERE choix_offre.idUtilisateur=?');
                             $req->execute(array($_SESSION['user']));
                             $resultat = $req->fetchAll();
 
@@ -109,18 +109,18 @@ include('fonctionality/bdd.php');
                         $id = $_SESSION['user'];
                         $prio = $_POST['offre' . $i];
 
-                        $req4 = $bddd->prepare('Select * from choix_offre where idUtilisateur=? AND idOffre =?');
+                        $req4 = $bddancien->prepare('Select * from choix_offre where idUtilisateur=? AND idOffre =?');
                         $req4->execute(array($id, $i));
                         $req4_reponse = $req4->fetch();
                         $count = $req4->rowcount();
 
                         if ($count !== 0) {
-                            $req3 = $bddd->prepare('UPDATE choix_offre SET priorite= ? WHERE idUtilisateur=? AND idOffre=?');
+                            $req3 = $bddancien->prepare('UPDATE choix_offre SET priorite= ? WHERE idUtilisateur=? AND idOffre=?');
                             $req3->execute(array($prio, $id, $i));
                             $update = $req3->fetch();
                         } else {
                             $req2 = "insert into choix_offre (idUtilisateur, idOffre, priorite) values('$id','$i','$prio')";
-                            $result = $bddd->query($req2);
+                            $result = $bddancien->query($req2);
                             $result = $result->fetch();
                         }
                         
@@ -129,13 +129,13 @@ include('fonctionality/bdd.php');
                         $id = $_SESSION['user'];
                         $prio = Null;
                         
-                        $req8 = $bddd->prepare('Select * from choix_offre where idUtilisateur=? AND idOffre =?');
+                        $req8 = $bddancien->prepare('Select * from choix_offre where idUtilisateur=? AND idOffre =?');
                         $req8->execute(array($id, $i));
                         $req8_reponse = $req8->fetchAll();
                         $count8 = $req8->rowcount();
 
                         if ($count8 !== 0) {
-                            $req7 = $bddd->prepare('DELETE FROM choix_offre WHERE idUtilisateur=? AND idOffre=?');
+                            $req7 = $bddancien->prepare('DELETE FROM choix_offre WHERE idUtilisateur=? AND idOffre=?');
                             $req7->execute(array($id, $i));
                             $update = $req7->fetchAll();
                         }
@@ -147,7 +147,7 @@ include('fonctionality/bdd.php');
                     if (isset($_POST['textAreaEntretien'.$i])) {
                         $entretien = $_POST['textAreaEntretien'.$i];
 
-                        $reque = $bddd->prepare('UPDATE choix_offre SET CR_entretien=? WHERE idUtilisateur=? and idOffre=?');
+                        $reque = $bddancien->prepare('UPDATE choix_offre SET CR_entretien=? WHERE idUtilisateur=? and idOffre=?');
                         $reque->execute(array($entretien,$id,$i));
                         $update = $reque->fetchAll();
                     }

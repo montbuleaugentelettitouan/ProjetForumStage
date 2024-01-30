@@ -40,7 +40,7 @@ include('fonctionality/bdd.php');
                             
                             // requête pour sélectionner les offres de la table OFFRES inscrites dans la table MES CHOIX (jointure)
                             // On ajoute une autre jointure pour limiter la sélection des offres ou l'ID utilisateur correspond à MES CHOIX + jointure pour integrer cr de l'entretien
-                            $req = $bddd->prepare('select idOf, nomOf, entreprise, CR_entretien from suivi_forum join choix_offre on suivi_forum.idU = choix_offre.idUtilisateur join offres_stages on choix_offre.idOffre = offres_stages.idOf where choix_offre.idUtilisateur=?');
+                            $req = $bddancien->prepare('select idOf, nomOf, entreprise, CR_entretien from suivi_forum join choix_offre on suivi_forum.idU = choix_offre.idUtilisateur join offres_stages on choix_offre.idOffre = offres_stages.idOf where choix_offre.idUtilisateur=?');
                             $req->execute(array($_SESSION['user']));
                             $resultat = $req->fetchAll();
 
