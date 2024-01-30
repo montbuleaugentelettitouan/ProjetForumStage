@@ -55,7 +55,7 @@ include('fonctionality/bdd.php');
                         Vos offres
                     </div> <!--fin div de encadré 1 -->
 
-                    <form id="choixaccepte" method="post">
+                    <form id="choixaccepte" method="post" action="fonctionality/insert_bdd_stage_accepte.php">
                         <div class="card-body"> <!--div de tableau 1 -->
                             <table class="table table-bordered">
                                 <thead class="thead-dark">
@@ -182,9 +182,6 @@ include('fonctionality/bdd.php');
                             <input type="submit" class="btn btn-warning" name="Valideraccepte" value="Valider">
                         </div>
                     </form>
-                    <?php
-                        include('fonctionality/insert_bdd_stage_accepte.php');
-                    ?>
                 </div> <!-- fin div de section 1 -->
 
 <!----------------------------Footer------------------------------------------->
