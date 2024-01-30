@@ -22,7 +22,7 @@ if (isset($_POST['Valideraccepte'])) {
     $req->execute(array($id));
     $resultReq = $req->fetch();
     //Si l'état n'est pas à "accepte" alors on le change sinon on le laisse
-    if($resultReq) {
+    if(!$resultReq) {
         // Si l'état n'est pas à "accepte", alors on le change
         $req = $bdd->prepare('UPDATE utilisateur SET etatC = ? WHERE idUtilisateur = ?');
         $req->execute(array($accepte, $id));
