@@ -77,7 +77,7 @@ ini_set('display_errors', '1');
                     </a>
 
 
-                    <!--
+
                     <a class="nav-link" href="suivi_forum.php">
                         <div class="sb-nav-link-icon"></div>
                         Suivi Post Forum Stage
@@ -85,9 +85,9 @@ ini_set('display_errors', '1');
 
                     <a class="nav-link" href="stage_accepte.php">
                         <div class="sb-nav-link-icon"></div>
-                        Stage Accepté
+                        Choix du stage
                     </a>
-
+                    <!--
                     <a class="nav-link" href="suivi_stage.php">
                         <div class="sb-nav-link-icon"></div>
                         Informations du stage

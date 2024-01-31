@@ -2,6 +2,7 @@
 session_start();
 include('fonctionality/bdd.php');
 include('fonctionality/loggedAdmin.php');
+include('fonctionality/annee+promo.php');
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -76,16 +77,9 @@ if (isset($_POST['recherche'])) {
         echo "<script>window.location.replace('" . $_SERVER['PHP_SELF'] . "')</script>";
     }
     else{
-        if (!isset($_SESSION['compt'])){
-            $annee = 2023;
-            $promo = 2024;
-            $parcours = 'GPhy';
-        }
-        else {
-            $annee = $_SESSION['annee'];
-            $promo = $_SESSION['promo'];
-            $parcours = $_SESSION['parcours'];
-        }
+        $annee = $_SESSION['annee'];
+        $promo = $_SESSION['promo'];
+        $parcours = $_SESSION['parcours'];
     }
     ?>
     <!-- Navbar Search-->
