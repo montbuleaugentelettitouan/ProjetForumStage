@@ -194,7 +194,7 @@ else{
                             elseif(isset($_POST['proposition' . $i]) && $_POST['proposition' . $i] == 'non'){
             
                                 $propositionrecue = 0;
-                                $etatrecherche = 'refuse';
+                                $etatrecherche = 'pas de proposition';
 
                                 $req6 = $bdd->prepare('UPDATE postule_m1 SET etat_recherche = ? ,proposition_recue = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
                                 $req6->execute(array($etatrecherche ,$propositionrecue,$id,$idoffre));
@@ -225,7 +225,7 @@ else{
                             $idoffre = $i;
                             $crentretien = $_POST['textAreaEntretien' . $i];
 
-                            $req8 = $bdd->prepare('UPDATE postule_m1 SET  cr_entretien = ?  WHERE idUtilisateur = ? AND idOffre = ? ');
+                            $req8 = $bdd->prepare('UPDATE postule_m1 SET cr_entretien = ? WHERE idUtilisateur = ? AND idOffre = ? ');
                             $req8->execute(array($crentretien,$id,$idoffre));
                             $req8_reponse = $req8->fetch();
                         }
