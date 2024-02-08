@@ -108,86 +108,85 @@ include('fonctionality/bdd.php');
                             </table>
                         </div> <!--fin div de tableau 1 -->
 
-                        <!--Début de la zone Autre -->
+  <!--Début de la zone Autre -->
 
-                        <!-- Formulaire 'autre' commenté en attendant -->
-                        <?php /*
-                        <br>
-                        <div class="form-check">
-                            <label><h4> Autre : </h4></label>
-                            <?php
-                                $accepte = 'accepte';
+        <!-- Formulaire 'autre' -->
 
-                                    $nomE = '';
-                                    $nomO = '';
-                                    $nomS = '';
-                                    $nomV = '';
-                                    $nomD = '';
-                                
-                                $autre = false;
-                            
-                                //$count5=$req5->rowCount();// a supp ?
+        <br>
+        <div class="form-check">
+            <label><h4> Autre : </h4></label>
+            <?php
+            $accepte = 'accepte';
 
-                                if ($autre == true) {
+            $nomE = '';
+            $nomO = '';
+            $nomS = '';
+            $nomV = '';
+            $nomD = '';
 
-                                    echo '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="new" value="new" checked="checked" required>';
-                                } else {
-                                    echo '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="new" value="new" required>';
-                                }
-                            ?>
-                        </div>
+            $autre = false;
 
-                        <div id="autreForm">
-                        <!-- zone nom entreprise si autre-->
+            //$count5=$req5->rowCount();// a supp ?
 
-                        <br>
-                        <div class="form-group">
-                            <label><h5> Nom de l'entreprise :</h5></label>
-                            <input type="text" class="form-control" id="nomEnt" name="nomentreprise"  = <?php echo $nomE?> >
-                        </div>
+            if ($autre == true) {
+                echo '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="new" value="new" checked="checked" required>';
+            } else {
+                echo '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="new" value="new" required>';
+            }
+            ?>
+        </div>
 
-                        <!-- zone nom site si autre-->
+        <div id="autreForm">
+            <!-- zone nom entreprise si autre-->
 
-                        <br>
-                        <div class="form-group">
-                            <label><h5> Nom du site :</h5></label>
-                            <input type="text" class="form-control" id="nomSite" name="nomsite"  = <?php echo $nomS?> >
-                        </div>
+            <br>
+            <div class="form-group">
+                <label><h5> Nom de l'entreprise :</h5></label>
+                <input type="text" class="form-control" id="nomEnt" name="nomentreprise" value="<?php echo $nomE ?>" >
+            </div>
 
-                        <!-- zone ville du site si autre-->
+            <!-- zone nom site si autre-->
 
-                        <br>
-                        <div class="form-group">
-                            <label><h5> Ville du site :</h5></label>
-                            <input type="text" class="form-control" id="Ville" name="Ville"  = <?php echo $nomV?> >
-                        </div>
+            <br>
+            <div class="form-group">
+                <label><h5> Nom du site :</h5></label>
+                <input type="text" class="form-control" id="nomSite" name="nomsite" value="<?php echo $nomS ?>" >
+            </div>
 
-                        <!-- zone intitulé poste (nomOffre) si autre-->
+            <!-- zone ville du site si autre-->
 
-                        <br>
-                        <div class="form-group">
-                            <label><h5> Intitulé du poste :</h5></label>
-                            <input type="text" class="form-control" id="nomPoste" name="nomposte"  = <?php echo $nomO?> >
-                        </div>
+            <br>
+            <div class="form-group">
+                <label><h5> Ville du site :</h5></label>
+                <input type="text" class="form-control" id="Ville" name="Ville" value="<?php echo $nomV ?>" >
+            </div>
 
-                        <!-- zone intitulé poste (description) si autre-->
+            <!-- zone intitulé poste (nomOffre) si autre-->
 
-                        <br>
-                        <div class="form-group">
-                            <label><h5> Description du poste :</h5></label>
-                            <input type="text" class="form-control" id="nomDesc" name="nomdescription"  = <?php echo $nomD?>>
-                        </div>
+            <br>
+            <div class="form-group">
+                <label><h5> Intitulé du poste :</h5></label>
+                <input type="text" class="form-control" id="nomPoste" name="nomposte" value="<?php echo $nomO ?>" >
+            </div>
 
-                        <br>
-                        </div>
-                        */ ?>
-                        <!--<input type="button" onclick="window.location.href = 'suivi_stage.php';" class="btn btn-primary" name="stage" value="Informations sur le stage">-->
-                        <div class="card mb-4">
-                            <input type="submit" class="btn btn-warning" name="Valideraccepte" value="Valider">
-                        </div>
-                    </form>
+            <!-- zone intitulé poste (description) si autre-->
 
-                </div> <!-- fin div de section 1 -->
+            <br>
+            <div class="form-group">
+                <label><h5> Description du poste :</h5></label>
+                <input type="text" class="form-control" id="nomDesc" name="nomdescription" value="<?php echo $nomD ?>">
+            </div>
+
+            <br>
+        </div>
+        <!--<input type="button" onclick="window.location.href = 'suivi_stage.php';" class="btn btn-primary" name="stage" value="Informations sur le stage">-->
+        <div class="card mb-4">
+            <input type="submit" class="btn btn-warning" name="Valideraccepte" value="Valider">
+        </div>
+        </form>
+
+        </div> <!-- fin div de section 1 -->
+
 
 <!----------------------------Footer------------------------------------------->
 
