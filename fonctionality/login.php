@@ -12,7 +12,7 @@ session_destroy();
 session_start();
 
 // paramètres DNS pour connecter à la base de données - test
-    $dns = 'mysql:host=localhost;dbname=stage';
+    $dns = 'mysql:host=localhost;dbname=dbs9769312';
 
 // on tente d'établir une connexion avec la BDD
 try {
