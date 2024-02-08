@@ -52,7 +52,7 @@ if ($_POST['inlineRadioOptions'] != "new") {
         $resultatStagePourvu1 = $resultatStagePourvu['nbPostePourvu'];
         $newresultatStagePourvu1 = $resultatStagePourvu1 - 1;
 
-        $requetesearch16 =$bdd->prepare("select idOffre from offre_stage join convention_contrat using (idOffre) where idUtilisateur = ?");
+        $requetesearch16 =$bdd->prepare("select idOffre from offre join convention_contrat using (idOffre) where idUtilisateur = ?");
         $requetesearch16->execute(array($id));
         $AncienneOffreAccepte = $requetesearch16->fetch();
         $AncienneOffreAccepte = $AncienneOffreAccepte['idOffre'];
@@ -138,6 +138,14 @@ else {
 
     $newville = $_POST['Ville'];
     $newville = ucfirst($newville);
+
+    $newpays = $_POST['Pays'];
+    $newpays=strtoupper($newsite);
+
+    $newmail = $_POST['contact'];
+
+    $newsecteur = $_POST['Secteur'];
+    $newsite=strtoupper($newsite);
 
     //on cherche si l'offre est déjà dans la table 'Offre'
     $requetesearch2 = $bdd->prepare('SELECT offre.idOffre, titre, offre.idSite FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE titre=? and nomSite=? and nomEntreprise = ?');
@@ -230,8 +238,8 @@ else {
 
             if ($count5 ==0 ) {
                 //s'il n'existe pas on l'ajoute et on récupère l'id
-                $requeinsert3 = $bdd->prepare("INSERT INTO site (nomsite, ville, idEntreprise) VALUES (?,?,?)");
-                $requeinsert3->execute(array($newsite,$newville,$newidEnt));
+                $requeinsert3 = $bdd->prepare("INSERT INTO site (nomsite, ville, idEntreprise, pays) VALUES (?,?,?,?)");
+                $requeinsert3->execute(array($newsite,$newville,$newidEnt,$newpays));
 
                 $requetesearch6 = $bdd->prepare('SELECT * FROM site WHERE nomSite = ? and ville = ? and idEntreprise = ?');
                 $requetesearch6->execute(array($newsite,$newville,$newidEnt));
@@ -241,8 +249,8 @@ else {
 
                 //ajout dans la table offre et récupération de l'id
 
-                $requeinsert4 = $bdd->prepare("INSERT INTO offre (titre, description, nbPoste, idSite, nbPostePourvu, anneeO, parcours, niveau) VALUES (?,?,?,?,?,?,?,?)");
-                $requeinsert4->execute(array($newposte,$newdescription,1,$newidSite,0,$annee,'GPhy','M1'));
+                $requeinsert4 = $bdd->prepare("INSERT INTO offre (titre, description, nbPoste, idSite, nbPostePourvu, anneeO, parcours, niveau, mailContact, secteur, valider) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                $requeinsert4->execute(array($newposte,$newdescription,1,$newidSite,0,$annee,'GPhy','M1',$newmail,$newsecteur,1));
 
                 $requetesearch7 = $bdd->prepare('SELECT * FROM offre WHERE titre = ? and idSite = ?');
                 $requetesearch7->execute(array($newposte,$newidSite));
@@ -323,8 +331,8 @@ else {
 
                 //ajout dans la table offre et récupération de l'id
 
-                $requeinsert6 = $bdd->prepare("INSERT INTO offre (titre, description, nbPoste, idSite, nbPostePourvu, anneeO, parcours, niveau) VALUES (?,?,?,?,?,?,?,?)");
-                $requeinsert6->execute(array($newposte,$newdescription,1,$newidSite,0,$annee,'GPhy','M1'));
+                $requeinsert6 = $bdd->prepare("INSERT INTO offre (titre, description, nbPoste, idSite, nbPostePourvu, anneeO, parcours, niveau, mailContact, secteur, valider) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                $requeinsert6->execute(array($newposte,$newdescription,1,$newidSite,0,$annee,'GPhy','M1',$newmail,$newsecteur,1));
 
                 $requetesearch9 = $bdd->prepare('SELECT * FROM offre WHERE titre = ? and idSite = ?');
                 $requetesearch9->execute(array($newposte,$newidSite));
@@ -414,8 +422,8 @@ else {
             $newidEnt = !empty($resultat11['idEntreprise']) ? $resultat11['idEntreprise'] : NULL ;
 
             //ajout du site et récupération de l'id
-            $requeinsert9 = $bdd->prepare("INSERT INTO site (nomsite, ville, idEntreprise) VALUES (?,?,?)");
-            $requeinsert9->execute(array($newsite,$newville,$newidEnt));
+            $requeinsert9 = $bdd->prepare("INSERT INTO site (nomsite, ville, idEntreprise,pays) VALUES (?,?,?,?)");
+            $requeinsert9->execute(array($newsite,$newville,$newidEnt,$newpays));
 
             $requetesearch12 = $bdd->prepare('SELECT * FROM site WHERE nomSite = ? and ville = ? and idEntreprise = ?');
             $requetesearch12->execute(array($newsite,$newville,$newidEnt));
@@ -425,8 +433,8 @@ else {
 
             //ajout dans la table offre et récupération de l'id
 
-            $requeinsert10 = $bdd->prepare("INSERT INTO offre (titre, description, nbPoste, idSite, nbPostePourvu, anneeO, parcours, niveau) VALUES (?,?,?,?,?,?,?,?)");
-            $requeinsert10->execute(array($newposte,$newdescription,1,$newidSite,0,$annee,'GPhy','M1'));
+            $requeinsert10 = $bdd->prepare("INSERT INTO offre (titre, description, nbPoste, idSite, nbPostePourvu, anneeO, parcours, niveau, mailContact, secteur, valider) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+            $requeinsert10->execute(array($newposte,$newdescription,1,$newidSite,0,$annee,'GPhy','M1',$newmail,$newsecteur,1));
 
             $requetesearch13 = $bdd->prepare('SELECT * FROM offre WHERE titre = ? and idSite = ?');
             $requetesearch13->execute(array($newposte,$newidSite));
@@ -504,6 +512,9 @@ else {
             }
         }
     }
+    // Au cas où ces éléments sont importants pour visionner les données du côté admin
+    $requetePostule =$bdd->prepare("UPDATE postule_m1 SET entretien_passe = 1, proposition_recue = 1, proposition_acceptee = 1 WHERE idUtilisateur = ?");
+    $requetePostule->execute(array($id));
 }
 header("Location: ../stage_accepte.php");
 exit();
