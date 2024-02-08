@@ -52,7 +52,7 @@ if ($_POST['inlineRadioOptions'] != "new") {
         $resultatStagePourvu1 = $resultatStagePourvu['nbPostePourvu'];
         $newresultatStagePourvu1 = $resultatStagePourvu1 - 1;
 
-        $requetesearch16 =$bdd->prepare("select idOffre from offre_stage join convention_contrat using (idOffre) where idUtilisateur = ?");
+        $requetesearch16 =$bdd->prepare("select idOffre from offre join convention_contrat using (idOffre) where idUtilisateur = ?");
         $requetesearch16->execute(array($id));
         $AncienneOffreAccepte = $requetesearch16->fetch();
         $AncienneOffreAccepte = $AncienneOffreAccepte['idOffre'];
