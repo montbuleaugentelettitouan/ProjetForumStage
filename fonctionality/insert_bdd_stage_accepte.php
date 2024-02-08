@@ -174,13 +174,13 @@ else {
             $requeteupdate3 = $bdd->prepare("UPDATE offre set nbPostePourvu = ? where idOffre = ?");
             $requeteupdate3->execute(array($newresultatStagePourvu1, $AncienneOffreAccepte));
 
-            $requeteupdate4 = $bdd->prepare("UPDATE convention_contrat SET idOffre = ?, idSite = ? WHERE idUtilisateur = ?");
-            $requeteupdate4->execute(array($newidOffre,$newidSite,$id));
+            $requeteupdate4 = $bdd->prepare("UPDATE convention_contrat SET idOffre = ? WHERE idUtilisateur = ?");
+            $requeteupdate4->execute(array($newidOffre,$id));
 
             //$requeteupdate5 = $bdd->prepare("UPDATE utilisateur SET etat = ? WHERE idUtilisateur = ?");
             //$requeteupdate5->execute(array($accepte,$id));
 
-            $requetesearch17 =$bdd->prepare("select nbPostePourvu from offre join convetion_contrat using (idOffre) where idUtilisateur = ?");
+            $requetesearch17 =$bdd->prepare("select nbPostePourvu from offre join convention_contrat using (idOffre) where idUtilisateur = ?");
             $requetesearch17->execute(array($id));
             $resultatStagePourvu =$requetesearch17->fetch();
             // mise a jour du stage pourvu en ajoutant 1 pour celui qui été nouvellement sélctionné.
@@ -477,7 +477,7 @@ else {
                 $resultatStagePourvu2 = $resultatStagePourvu['nbStagePourvu'];
                 $newresultatStagePourvu2 = $resultatStagePourvu2 + 1;
 
-                $requetesearch16 =$bdd->prepare("select idOffre from offre join covnention_contrat using (idOffre) where idUtilisateur = ?");
+                $requetesearch16 =$bdd->prepare("select idOffre from offre join convention_contrat using (idOffre) where idUtilisateur = ?");
                 $requetesearch16->execute(array($id));
                 $NouvelleOffreAccepte = $requetesearch16->fetch();
                 $NouvelleOffreAccepte = $NouvelleOffreAccepte['idOffre'];
