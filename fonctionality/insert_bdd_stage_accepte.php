@@ -431,7 +431,7 @@ else {
 
             //ajout dans la table offre et récupération de l'id
 
-            $requeinsert10 = $bdd->prepare("INSERT INTO offre (titre, description, nbPoste, idSite, nbPostePourvu, anneeO) VALUES (?,?,?,?)");
+            $requeinsert10 = $bdd->prepare("INSERT INTO offre (titre, description, nbPoste, idSite, nbPostePourvu, anneeO) VALUES (?,?,?,?,?,?)");
             $requeinsert10->execute(array($newposte,$newdescription,1,$newidSite,0, $annee));
 
             $requetesearch13 = $bdd->prepare('SELECT * FROM offre WHERE titre = ? and idSite = ?');
