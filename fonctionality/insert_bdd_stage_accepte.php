@@ -513,8 +513,8 @@ else {
         }
     }
     // Au cas où ces éléments sont importants pour visionner les données du côté admin
-    $requetePostule =$bdd->prepare("UPDATE postule_m1 SET entretien_passe = 1, proposition_recue = 1, proposition_acceptee = 1 WHERE idUtilisateur = ?");
-    $requetePostule->execute(array($id));
+    $requetePostule =$bdd->prepare("UPDATE postule_m1 SET entretien_passe = 1, proposition_recue = 1, proposition_acceptee = 1 WHERE idUtilisateur = ? AND idOffre = ?");
+    $requetePostule->execute(array($id,$newidOffre));
 }
 header("Location: ../stage_accepte.php");
 exit();
