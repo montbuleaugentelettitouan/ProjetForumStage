@@ -476,7 +476,7 @@ else {
                 $requetesearch17->execute(array($id));
                 $resultatStagePourvu =$requetesearch17->fetch();
                 // mise a jour du stage pourvu en ajoutant 1 pour celui qui été nouvellement sélctionné.
-                $resultatStagePourvu2 = $resultatStagePourvu['nbStagePourvu'];
+                $resultatStagePourvu2 = $resultatStagePourvu['nbPostePourvu'];
                 $newresultatStagePourvu2 = $resultatStagePourvu2 + 1;
 
                 $requetesearch16 =$bdd->prepare("select idOffre from offre join convention_contrat using (idOffre) where idUtilisateur = ?");
