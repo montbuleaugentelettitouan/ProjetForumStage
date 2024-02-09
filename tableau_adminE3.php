@@ -12,7 +12,7 @@ include('fonctionality/annee+promo.php');
 <div id="layoutSidenav_content"> <!-- body de page-->
     <main>
         <div class="container-fluid px-4"> <!-- div de page-->
-            <h1 class="mt-4">Entreprises n'ayant pas pourvues de stages</h1>
+            <h1 class="mt-4">Entreprises n'ayant pas pourvu de stages</h1>
             <form id="choixaccepte" method="post">
                 <div class="card-body"> <!--div de tableau 1 -->
                     <table class="table table-bordered table-striped " id="datatablesSimple">
