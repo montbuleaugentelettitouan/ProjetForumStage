@@ -69,15 +69,15 @@
 
             <?php
             //requete pour récupérer les données déjà saisie et les afficher dans le formulaire
-                $reqTut = $bdd->prepare('SELECT nomTA, prenomTA, idConvention, gratification, format_gratification FROM convention_contrat JOIN tuteur_academique USING (idTA) WHERE idUtilisateur = ? LIMIT 1');
+                $reqTut = $bdd->prepare('SELECT nomTA, prenomTA, idConvention, gratification, format_gratification FROM convention_contrat LEFT JOIN tuteur_academique USING (idTA) WHERE idUtilisateur = ? LIMIT 1');
                 $reqTut->execute(array($_SESSION['user']));
                 $resultat = $reqTut->fetch();
 
                 $countr1 = $reqTut->rowcount();
 
                 //initialisation des variables pour la récupération des valeurs
-                $nomTuteur = "";
-                $prenomTuteur = "";
+                //$nomTuteur = "";
+                //$prenomTuteur = "";
                 $gratification = "";
                 $format = "";
 
@@ -93,8 +93,8 @@
                 //s'il y a des données déjà renseignées
                 if($countr1 != 0){
 
-                    $nomTuteur = $resultat['nomTA'];
-                    $prenomTuteur = $resultat['prenomTA'];
+                    //$nomTuteur = $resultat['nomTA'];
+                    //$prenomTuteur = $resultat['prenomTA'];
                     $stageid = $resultat['idConvention'];
                     $gratification = $resultat['gratification'];
                     $format = $resultat['format_gratification'];
@@ -128,15 +128,12 @@
 
                 $countr2 = $reqEtat->rowcount();
 
-
                 $etat_convention = "";
-                
 
                 $selectedetat1 ="";
                 $selectedetat2 ="";
                 $selectedetat3 ="";
                 $selectedetat4 ="";
-
 
                 //si il y a déjà des informations de saisies on récupère la valeur et on initialise la variable pour pré-selectionner la valeur
 
@@ -169,7 +166,7 @@
             ?>
 
                 <div class="card mb-4"> <!--div de section 1 -->
-                <p>* : Saisie obligatoire</p>
+                <p>* : Saisie obligatoire<?php echo $countr1?></p>
                     <form id="formulaireinscription" method="post">
                         <div class="card-body"> <!--div de tableau 1 -->
                             <label for="Etat_convention"><b>État de la convention de stage * : </b></label>
@@ -228,12 +225,10 @@
                         if (isset($_POST['Validersuivi'])) {
                             //données du formulaire sous forme de variables
                             $id=$_SESSION['user'];
-                    
                             $etat = $_POST['Etat_convention'];
-
                             $gratif = $_POST['gratification'];
-
                             $format_gratif = $_POST['format_gratification'];
+                            $dateactuelle = date("Y-m-d");
 
                             /*
                             $nomTut = $_POST['nomtuteur'];
@@ -242,13 +237,8 @@
                             $prenomTut=strtoupper($prenomTut);
                             */
 
-
-                            //update de la ligne correspondant à l'étudiant dans la table stage avec les nouvelles infos du formulaire
-                            //$upStage = $bddd->prepare('UPDATE stage SET nom_tuteur_academique = ?, prenom_tuteur_academique = ?, gratification = ?, format_gratification = ? WHERE idUtilisateur = ?');
-                            //$upStage->execute(array($nomTut,$prenomTut, $gratif, $format_gratif, $id));
-
-                            $upStage = $bdd->prepare('UPDATE convention_contrat SET gratification = ?, format_gratification = ? WHERE idUtilisateur = ?');
-                            $upStage->execute(array($gratif, $format_gratif, $id));
+                            $upStage = $bdd->prepare('UPDATE convention_contrat SET gratification = ?, format_gratification = ?, etat_convention = ?, date = ? WHERE idUtilisateur = ?');
+                            $upStage->execute(array($gratif, $format_gratif, $etat, $dateactuelle, $id));
 
                             /*
                             //récupération de l'id stage 
@@ -258,8 +248,6 @@
 
                             $idStage = "";
                             $idStage = $resultat['idStage'];
-
-                            $dateactuelle = date("Y-m-d");
 
                             //insertion d'une ligne dans la table convention pour historiser
                             $upConv = $bdd->prepare('INSERT into convention_contrat (idOffre, etat_convention, date) VALUES (?,?,?)');

@@ -105,7 +105,7 @@
 
             <?php
                 // requête pour afficher les informations de l'offre que l'Utilisateur à acceptée
-                $req = $bdd->prepare('SELECT nomEntreprise, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale, offre.idOffre FROM convention_contrat JOIN offre on convention_contrat.idOffre = offre.idOffre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise JOIN maitre_de_stage ON site.idSite = maitre_de_stage.idSite WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
+                $req = $bdd->prepare('SELECT nomEntreprise, site.idSite, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale, offre.idOffre FROM convention_contrat LEFT JOIN offre on convention_contrat.idOffre = offre.idOffre LEFT JOIN site on offre.idSite = site.idSite LEFT JOIN entreprise on site.idEntreprise = entreprise.idEntreprise LEFT JOIN maitre_de_stage ON site.idSite = maitre_de_stage.idSite WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
                 $req->execute(array($_SESSION['user']));
                 $resultat = $req->fetchAll();
 
@@ -212,7 +212,7 @@
                             <label for="NumMDS"><b>Numéro de téléphone du maître de stage : </b></label>
                                 <br>
 						        <!--<input type="tel" id="NumMDS" name="NumMDS" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}|[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}|[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}">-->
-                                <input type="text" id="NumMDS" name="NumMDS" value= "<?php echo($numMDS)?>">
+                                <input type="text" id="NumMDS" name="NumMDS" value= "<?php echo($numMDS)?>" required>
                                 <br>
                             <label for="emailMDS"><b>Adresse mail du maître de stage* : </b></label>
                                 <br>
@@ -264,7 +264,7 @@
                                 <br>
                                 <input type="text" id="Postal" name="Postal" value = "<?php echo $code_postal ?>"required>
                                 <br>
-                            <label for="Adresse_postale"><b>Adresse postale * (adresse correspondant au lieu de stage) : </b></label>
+                            <label for="Adresse_postale"><b>Adresse postale* (adresse correspondant au lieu de stage) : </b></label>
 						        <br>
 						        <input type="text" id="Adresse_postale" name="Adresse_postale" value = "<?php echo $adressePostale ?>" required>
 						        <br>
@@ -325,7 +325,7 @@
                                     $idMDS = "";
 
                                     // On regarde d'abord si un maître de stage avec le nom et prénom rentrés existe déjà
-                                    $reqIdMDS = $bdd->prepare('SELECT idMDS FROM maitre_de_stage WHERE nom = ? AND prenom = ?');
+                                    $reqIdMDS = $bdd->prepare('SELECT idMDS FROM maitre_de_stage WHERE nomMDS = ? AND prenomMDS = ?');
                                     $reqIdMDS->execute(array($nomMS,$prenomMS));
 
                                     // On vérifie le nombre de lignes retournées par la requête
@@ -333,11 +333,11 @@
 
                                     // Si aucun maître de stage est trouvé, on l'ajoute puis on récupère son ID, sinon on a déjà son ID
                                     if ($nombreResultats == 0) {
-                                        $upMDS = $bdd->prepare('INSERT INTO maitre_de_stage (nomMDS, prenomMDS, numMDS, emailMDS) VALUES (?,?,?,?)');
-                                        $upMDS->execute(array($nomMS,$prenomMS,$numMS,$mailMS));
+                                        $upMDS = $bdd->prepare('INSERT INTO maitre_de_stage (nomMDS, prenomMDS, numMDS, emailMDS, idSite) VALUES (?,?,?,?,?)');
+                                        $upMDS->execute(array($nomMS,$prenomMS,$numMS,$mailMS,$idSite));
 
                                         // On récupère l'ID du nouveau maître de stage
-                                        $reqIdMDS2 = $bdd->prepare('SELECT idMDS FROM maitre_de_stage WHERE nom = ? AND prenom = ?');
+                                        $reqIdMDS2 = $bdd->prepare('SELECT idMDS FROM maitre_de_stage WHERE nomMDS = ? AND prenomMDS = ?');
                                         $reqIdMDS2->execute(array($nomMS,$prenomMS));
 
                                         $resultat = $reqIdMDS2->fetch();
@@ -354,7 +354,7 @@
 
                                     // On met à jour les informations de la table 'site'
                                     $upSite = $bdd->prepare('UPDATE site SET adresse_postale = ?, code_postal = ? WHERE idSite = ?');
-                                    $upSite->execute(array($code_postal, $adressePostale, $idSite));
+                                    $upSite->execute(array($adressePostale, $code_postal, $idSite));
 
                                     // On met à jour les informations de la table 'convention_contrat'
                                     $upCC = $bdd->prepare('UPDATE convention_contrat SET dateDeb = ?, dateFin = ?, idMDS = ? WHERE idUtilisateur = ?');
