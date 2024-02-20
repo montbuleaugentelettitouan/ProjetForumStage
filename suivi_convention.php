@@ -166,11 +166,12 @@
             ?>
 
                 <div class="card mb-4"> <!--div de section 1 -->
-                <p>* : Saisie obligatoire<?php echo $countr1?></p>
+                    <br>
+                <p><b><span style="color: red;">*</span></b> : Saisie obligatoire
                     <form id="formulaireinscription" method="post">
                         <div class="card-body"> <!--div de tableau 1 -->
-                            <label for="Etat_convention"><b>État de la convention de stage * : </b></label>
-                                <select  name="Etat_convention">
+                            <label for="Etat_convention"><b>État de la convention de stage <b><span style="color: red;">*</span></b> : </b></label>
+                                <select  name="Etat_convention" required>
                                     <option 
                                     <?php echo $selectedetat1?>
                                     value = "preconventionEnvoyee">Pré-convention envoyée</option>
@@ -187,10 +188,10 @@
                                 <!--<br>
 						        <input type="text" id="Type_contrat" name="Type_contrat" required>
 						        <br>-->
-                            <label for="gratification"><b>Gratification (si aucune gratification mettre 0): </b></label>
+                            <label for="gratification"><b>Gratification (si aucune gratification mettre 0) <b><span style="color: red;">*</span></b>: </b></label>
                                 <br>
-                                <input type="text" id="gratification" name="gratification" value = "<?php echo $gratification ?>">
-                                <select  name="format_gratification">
+                                <input type="text" id="gratification" name="gratification" value = "<?php echo $gratification ?>" required>
+                                <select  name="format_gratification" required>
                                     <option 
                                     <?php echo $selectedformat1?>
                                     value = "horairebrut">Taux horaire EUR Brut</option>
