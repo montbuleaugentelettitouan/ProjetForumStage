@@ -23,7 +23,7 @@ include('fonctionality/annee+promo.php');
 
             <?php
             $idS = $_GET['id'];
-            $req2 = $bdd->prepare("SELECT etat_convention, date FROM convention_contrat WHERE idConvention = ? order by idConvention");
+            $req2 = $bdd->prepare("SELECT etat_convention, date, dateDeb, dateFin, gratification FROM convention_contrat WHERE idConvention = ? order by idConvention");
             $req2->execute(array($idS));
             $resultat2 = $req2->fetchAll();
             ?>
@@ -36,27 +36,33 @@ include('fonctionality/annee+promo.php');
                         <thead class="thead-dark">
                         <tr>
                             <th>Etat de la convention</th>
+                            <th>Date début</th>
+                            <th>Date fin</th>
+                            <th>Gratification</th>
                             <th>Date du changement d'état</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
 						// permet l'affichage correcte de l'état d'avancement de la convention 
-                        foreach ($resultat2 as $ligne) { 
-						$val="";
-						if ($ligne['etat_convention']== "preconventionEnvoyee"){
-							$val = "Préconvention envoyée";}
-						elseif ($ligne['etat_convention']== "preconventionRecue"){
-							$val= "Préconvention reçue"; }
-						elseif ($ligne['etat_convention']== "conventionEditee"){
-							$val= "Convention éditée"; }
-                        elseif ($ligne['etat_convention']== "conventionEnvoyee"){
-                            $val= "Convention envoyée"; }
-                        else {
-                            $val= "Pas de convention pour le moment"; }
+                        foreach ($resultat2 as $ligne) {
+                            $val="";
+                            if ($ligne['etat_convention']== "preconventionEnvoyee"){
+							    $val = "Préconvention envoyée";}
+						    elseif ($ligne['etat_convention']== "preconventionRecue"){
+                                $val= "Préconvention reçue"; }
+                            elseif ($ligne['etat_convention']== "conventionEditee"){
+                                $val= "Convention éditée"; }
+                            elseif ($ligne['etat_convention']== "conventionEnvoyee"){
+                                $val= "Convention envoyée"; }
+                            else {
+                                $val= "Pas de convention pour le moment"; }
 							?>
                             <tr>
                                 <td><?php echo $val; ?></td>
+                                <td><?php echo $ligne['dateDeb']; ?></td>
+                                <td><?php echo $ligne['dateFin']; ?></td>
+                                <td><?php echo $ligne['gratification']; ?></td>
                                 <td><?php echo $ligne['date']; ?></td>
                             </tr>
                         <?php }
