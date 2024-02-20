@@ -198,14 +198,15 @@
             </ol>
 
                 <div class="card mb-4"> <!--div de section 1 -->
-                <p>* : Saisie obligatoire</p>
+                    <br>
+                <p><b><span style="color: red;">*</span></b> : Saisie obligatoire</p>
                     <form id="formulaireinscription" method="post">
                         <div class="card-body"> <!--div de tableau 1 -->
-                            <label for="NomMDS"><b>Nom du maître de stage* : </b></label>
+                            <label for="NomMDS"><b>Nom du maître de stage <b><span style="color: red;">*</span></b> : </b></label>
                                 <br>
 						        <input type="text" id="NomMDS" name="NomMDS" value= "<?php echo($nomMDS)?>" required>
 						        <br>
-                            <label for="PrenomMDS"><b>Prénom du maître de stage* : </b></label>
+                            <label for="PrenomMDS"><b>Prénom du maître de stage <b><span style="color: red;">*</span></b> : </b></label>
 						        <br>
 						        <input type="text" id="PrenomMDS" name="PrenomMDS" value= "<?php echo($prenomMDS)?>" required>
 						        <br>
@@ -214,7 +215,7 @@
 						        <!--<input type="tel" id="NumMDS" name="NumMDS" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}|[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}|[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}">-->
                                 <input type="text" id="NumMDS" name="NumMDS" value= "<?php echo($numMDS)?>" required>
                                 <br>
-                            <label for="emailMDS"><b>Adresse mail du maître de stage* : </b></label>
+                            <label for="emailMDS"><b>Adresse mail du maître de stage <b><span style="color: red;">*</span></b> : </b></label>
                                 <br>
 						        <input type="email" id="emailMDS" name="emailMDS" value= "<?php echo($emailMDS)?>" required>
 						        <br>
@@ -260,15 +261,15 @@
 						        <input type="text" id="Pays" name="Pays" value = "<?php echo $pays ?>" required>
 						        <br>
                             */ ?>-->
-                            <label for="Postal"><b>Code Postal* : </b></label>
+                            <label for="Postal"><b>Code Postal <b><span style="color: red;">*</span></b> : </b></label>
                                 <br>
                                 <input type="text" id="Postal" name="Postal" value = "<?php echo $code_postal ?>"required>
                                 <br>
-                            <label for="Adresse_postale"><b>Adresse postale* (adresse correspondant au lieu de stage) : </b></label>
+                            <label for="Adresse_postale"><b>Adresse postale <b><span style="color: red;">*</span></b> (adresse correspondant au lieu de stage) : </b></label>
 						        <br>
 						        <input type="text" id="Adresse_postale" name="Adresse_postale" value = "<?php echo $adressePostale ?>" required>
 						        <br>
-                            <label for="dist_pres"><b>Distanciel ou Présentiel* : </b></label>
+                            <label for="dist_pres"><b>Distanciel ou Présentiel <b><span style="color: red;">*</span></b> : </b></label>
                             <select  name="dist_pres">
                                 <option
                                     <?php echo $selectedPres?>
@@ -277,11 +278,11 @@
                                     <?php echo $selectedDist?>
                                         value = "distanciel">Distanciel</option>
                             </select>
-                            <label for="DateDeb"><b>Date de début de stage* : </b></label>
+                            <label for="DateDeb"><b>Date de début de stage <b><span style="color: red;">*</span></b> : </b></label>
 						        <br>
 						        <input type="date" id="DateDeb" name="DateDeb" min= "2020-31-12" max= "2050-31-12" value = "<?php echo date('Y-m-d', strtotime($DateDeb)); ?>" required>
 						        <br>
-                            <label for="DateFin"><b>Date de fin de stage* : </b></label>
+                            <label for="DateFin"><b>Date de fin de stage <b><span style="color: red;">*</span></b> : </b></label>
                                 <br>
 						        <input type="date" id="DateFin" name="DateFin" min= "2020-31-12" max= "2050-31-12" value = "<?php echo $DateFin ?>" required>
 						        <br>
