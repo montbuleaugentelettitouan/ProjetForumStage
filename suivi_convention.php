@@ -59,9 +59,15 @@
         <div class="container-fluid px-4"> <!-- div de page-->
 
             <!--Récupération du nom et du prenom grâce à la page de connexion utilisateur et affichage des informations -->
-            <h1 class="mt-4">Suivi du stage de <?php echo $_SESSION['nom']; ?> <?php echo $_SESSION['prenom']; ?></h1>
-
-
+            <h1 class="mt-4">État de la convention de <?php echo $_SESSION['nom']; ?> <?php echo $_SESSION['prenom']; ?></h1>
+            <br>
+            <center>
+            <div class="card mb-4"> <!--div de section 1 -->
+                <div id="confirmationMessage" style="display: none; font-size: 20px; color: mediumseagreen;">
+                    <b>Informations enregistrées avec succès !</b>
+                </div>
+            </div>
+            </center>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Veuillez remplir les informations concernant la convention de stage.</li>
             </ol>
@@ -257,10 +263,24 @@
                     
 
                             //on actualise automatiquement la page pour ré-afficher les nouvelles données 
-                            echo "<script>window.location.replace(\"suivi_convention.php\")</script>";
+                            echo "<script>window.location.replace(\"suivi_convention.php?success=true\")</script>";
                         }
                       
-                    ?> 
+                    ?>
+                    <script>
+                        // Récupérer le paramètre GET de l'URL
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const success = urlParams.get('success');
+
+                        // Vérifier si le paramètre success est présent et égal à true
+                        if (success === 'true') {
+                            // Afficher la div de confirmation
+                            const confirmationDiv = document.getElementById('confirmationMessage');
+                            if (confirmationDiv) {
+                                confirmationDiv.style.display = 'block';
+                            }
+                        }
+                    </script>
                 </div> <!--fin div de section 1 -->
 
 <!----------------------------Footer------------------------------------------->

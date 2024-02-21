@@ -63,7 +63,7 @@ include('fonctionality/annee+promo.php');
                             <tr>
                                 <td><?php echo $val; ?></td>
                                 <td><?php echo $ligne['nomMDS']; echo " "; echo $ligne['prenomMDS']; ?></td>
-                                <td><?php echo $ligne['prenomTA']; ?></td>
+                                <td><?php echo $ligne['nomTA']; echo " "; echo $ligne['prenomTA']; ?></td>
                                 <td><?php echo $ligne['dateDeb']; ?></td>
                                 <td><?php echo $ligne['dateFin']; ?></td>
                                 <td><?php echo $ligne['gratification']; ?></td>
