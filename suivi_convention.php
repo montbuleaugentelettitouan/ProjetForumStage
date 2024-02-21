@@ -194,10 +194,10 @@
                                 <!--<br>
 						        <input type="text" id="Type_contrat" name="Type_contrat" required>
 						        <br>-->
-                            <label for="gratification"><b>Gratification (si aucune gratification mettre 0) <b><span style="color: red;">*</span></b>: </b></label>
+                            <label for="gratification"><b>Gratification (si aucune gratification mettre 0) : </b></label>
                                 <br>
-                                <input type="text" id="gratification" name="gratification" value = "<?php echo $gratification ?>" required>
-                                <select  name="format_gratification" required>
+                                <input type="text" id="gratification" name="gratification" value = "<?php echo $gratification ?>" >
+                                <select  name="format_gratification" >
                                     <option 
                                     <?php echo $selectedformat1?>
                                     value = "horairebrut">Taux horaire EUR Brut</option>

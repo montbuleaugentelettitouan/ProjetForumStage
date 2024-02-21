@@ -105,7 +105,7 @@
 
             <?php
                 // requête pour afficher les informations de l'offre que l'Utilisateur à acceptée
-                $req = $bdd->prepare('SELECT nomEntreprise, site.idSite, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, convention_contrat.idTA, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale, offre.idOffre FROM convention_contrat LEFT JOIN tuteur_academique on tuteur_academique.idTA = convention_contrat.idTA LEFT JOIN offre on convention_contrat.idOffre = offre.idOffre LEFT JOIN site on offre.idSite = site.idSite LEFT JOIN entreprise on site.idEntreprise = entreprise.idEntreprise LEFT JOIN maitre_de_stage ON site.idSite = maitre_de_stage.idSite WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
+                $req = $bdd->prepare('SELECT nomEntreprise, site.idSite, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, convention_contrat.idTA, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale, offre.idOffre FROM convention_contrat LEFT JOIN tuteur_academique on tuteur_academique.idTA = convention_contrat.idTA LEFT JOIN maitre_de_stage ON maitre_de_stage.idMDS = convention_contrat.idMDS LEFT JOIN offre on convention_contrat.idOffre = offre.idOffre LEFT JOIN site on offre.idSite = site.idSite LEFT JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
                 $req->execute(array($_SESSION['user']));
                 $resultat = $req->fetchAll();
 
@@ -240,13 +240,13 @@
                             <label for="NumMDS"><b>Numéro de téléphone du maître de stage : </b></label>
                                 <br>
 						        <!--<input type="tel" id="NumMDS" name="NumMDS" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}|[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}|[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}">-->
-                                <input type="text" id="NumMDS" name="NumMDS" value= "<?php echo($numMDS)?>" required>
+                                <input type="text" id="NumMDS" name="NumMDS" value= "<?php echo($numMDS)?>" >
                                 <br>
                             <label for="emailMDS"><b>Adresse mail du maître de stage <b><span style="color: red;">*</span></b> : </b></label>
                                 <br>
 						        <input type="email" id="emailMDS" name="emailMDS" value= "<?php echo($emailMDS)?>" required>
 						        <br>
-                            <label for="nomTA"><b>Tuteur académique <b><span style="color: red;">*</span></b> : </b></label>
+                            <label for="nomTA"><b>Tuteur académique (si vous ne le connaissez pas encore vous pourrez revenir pour le modifier) <b><span style="color: red;">*</span></b> : </b></label>
                             <select  name="nomTA" required>
                                 <option
                                     <?php echo $selectedetat1?>
