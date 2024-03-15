@@ -83,8 +83,8 @@ if (isset($_POST['recherche'])) {
     }
     ?>
     <!-- Navbar Alternance-->
-    <a href="form_stage_m2.php">
-        <input type="button" class="btn btn-warning" name="Alternances" value="Alternances" style="margin-left: 200px; background-color: orange;" href="form_stage_m2.php"> <!--chemin accès a la page alternance-->
+    <a href="Vierge_alternance.php">
+        <input type="button" class="btn btn-warning" name="Alternances" value="Alternances" style="margin-left: 200px; background-color: orange;"> <!--chemin accès a la page alternance-->
     </a>
 
     <!-- Navbar Search-->
