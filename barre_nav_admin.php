@@ -38,7 +38,7 @@ if (isset($_POST['recherche'])) {
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-red">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="nombres_postulations_offres.php"><?php echo $_SESSION['parcours'] ?> Promo <?php echo $_SESSION['promo'] ?></a>
+    <a class="navbar-brand ps-3" href="nombres_postulations_offres.php">Stages <?php echo $_SESSION['parcours'] ?> Promo <?php echo $_SESSION['promo'] ?></a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -82,6 +82,11 @@ if (isset($_POST['recherche'])) {
         $parcours = $_SESSION['parcours'];
     }
     ?>
+    <!-- Navbar Alternance-->
+    <a href="form_stage_m2.php">
+        <input type="button" class="btn btn-warning" name="Alternances" value="Alternances" style="margin-left: 200px; background-color: orange;" href="form_stage_m2.php"> <!--chemin accès a la page alternance-->
+    </a>
+
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="" method="POST">
         <input type="text" name="recherche" placeholder="Rechercher...">
