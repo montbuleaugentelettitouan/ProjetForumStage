@@ -67,7 +67,7 @@
         <div class="container-fluid px-4"> <!-- div de page-->
 
             <!--Récupération du nom et du prenom grâce à la page de connexion utilisateur et affichage des informations -->
-            <h1 class="mt-4">Suivi du stage de <?php echo $_SESSION['nom']; ?> <?php echo $_SESSION['prenom']; ?></h1>
+            <h1 class="mt-4">Informations du stage de <?php echo $_SESSION['nom']; ?> <?php echo $_SESSION['prenom']; ?></h1>
             <h4 class="mt-4">Vous avez accepté le stage suivant : </h4>
             <div class="card-body"> <!--div de tableau 1 -->
                 <table class="table table-bordered">
@@ -105,7 +105,7 @@
 
             <?php
                 // requête pour afficher les informations de l'offre que l'Utilisateur à acceptée
-                $req = $bdd->prepare('SELECT nomEntreprise, site.idSite, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale, offre.idOffre FROM convention_contrat LEFT JOIN offre on convention_contrat.idOffre = offre.idOffre LEFT JOIN site on offre.idSite = site.idSite LEFT JOIN entreprise on site.idEntreprise = entreprise.idEntreprise LEFT JOIN maitre_de_stage ON site.idSite = maitre_de_stage.idSite WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
+                $req = $bdd->prepare('SELECT nomEntreprise, site.idSite, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, convention_contrat.idTA, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale, offre.idOffre FROM convention_contrat LEFT JOIN tuteur_academique on tuteur_academique.idTA = convention_contrat.idTA LEFT JOIN maitre_de_stage ON maitre_de_stage.idMDS = convention_contrat.idMDS LEFT JOIN offre on convention_contrat.idOffre = offre.idOffre LEFT JOIN site on offre.idSite = site.idSite LEFT JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
                 $req->execute(array($_SESSION['user']));
                 $resultat = $req->fetchAll();
 
@@ -116,8 +116,6 @@
                 $prenomMDS = "";
                 $numMDS = "";
                 $emailMDS = "";
-                //$nomTA = "";
-                //$prenomTA = "";
                 $typeContrat = "";
                 $ville = "";
                 $pays = "";
@@ -126,6 +124,11 @@
                 $selectedContratpro = "";
                 $nomEntreprise = "";
                 $nomSite ="";
+                $idTA ="";
+                $selectedetat1 ="";
+                $selectedetat2 ="";
+                $selectedetat3 ="";
+                $selectedetat4 ="";
                 $selectedPres = "";
                 $selectedDist = "";
                 $distPres = "";
@@ -147,8 +150,7 @@
                     $prenomMDS = $ligne['prenomMDS'];
                     $numMDS = $ligne['numMDS'];
                     $emailMDS = $ligne['emailMDS'];
-                    //$nomTA = $ligne['nomTA'];
-                    //$prenomTA = $ligne['prenomTA'];
+                    $idTA = $ligne['idTA'];
                     $typeContrat = $ligne['type_contrat'];
                     $nomEntreprise = $ligne['nomEntreprise'];
                     $nomSite = $ligne['nomSite'];
@@ -185,6 +187,20 @@
                             $selectedContratpro = "selected";
                         }
                     }
+                    if($idTA != ""){
+                        if($idTA == "1"){
+                            $selectedetat1 = "selected";
+                        }
+                        if($idTA == "2"){
+                            $selectedetat2 = "selected";
+                        }
+                        if($idTA == "3"){
+                            $selectedetat3 = "selected";
+                        }
+                        if($idTA == "4"){
+                            $selectedetat4 = "selected";
+                        }
+                    }
                     if($distPres != ""){
                         if($distPres == "presentiel"){
                             $selectedPres = "selected";
@@ -196,7 +212,14 @@
                 }
 
             ?>
-
+            <center>
+                <div class="card mb-4"> <!--div de section 1 -->
+                <div id="confirmationMessage" style="display: none; font-size: 20px; color: mediumseagreen;">
+                    <b>Vos informations de stage ont étés envoyées avec succès !</b>
+                </div>
+                </div>
+                <br>
+            </center>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Veuillez remplir les informations concernant le stage.</li>
             </ol>
@@ -217,31 +240,70 @@
                             <label for="NumMDS"><b>Numéro de téléphone du maître de stage : </b></label>
                                 <br>
 						        <!--<input type="tel" id="NumMDS" name="NumMDS" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}|[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}|[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}">-->
-                                <input type="text" id="NumMDS" name="NumMDS" value= "<?php echo($numMDS)?>" required>
+                                <input type="text" id="NumMDS" name="NumMDS" value= "<?php echo($numMDS)?>" >
                                 <br>
                             <label for="emailMDS"><b>Adresse mail du maître de stage <b><span style="color: red;">*</span></b> : </b></label>
                                 <br>
 						        <input type="email" id="emailMDS" name="emailMDS" value= "<?php echo($emailMDS)?>" required>
 						        <br>
-                            <label for="TuteurA"><b>Tuteur académique<b><span style="color: red;">*</span></b> : </b></label>
-                            <select name="TuteurA">
-                                <?php
-                                // Exécuter la requête pour récupérer les tuteurs académiques
-                                $req_tuteurs = $bdd->prepare('SELECT nomTA, prenomTA FROM tuteur_academique');
-                                $req_tuteurs->execute();
-                                $result_tuteurs = $req_tuteurs->fetchAll();
-
-                                // Afficher les options de la liste déroulante
-                                if ($req_tuteurs->rowCount() > 0) {
-                                    foreach ($result_tuteurs as $row) {
-                                        // Utiliser les valeurs de nom et prénom pour chaque tuteur académique
-                                        echo "<option value='" . $row["nomTA"] . " " . $row["prenomTA"] . "'>" . $row["nomTA"] . " " . $row["prenomTA"] . "</option>";
-                                    }
-                                } else {
-                                    echo "<option value=''>Aucun tuteur académique trouvé</option>";
-                                }
-                                ?>
+                            <label for="nomTA"><b>Tuteur académique (si vous ne le connaissez pas encore vous pourrez revenir pour le modifier) <b><span style="color: red;">*</span></b> : </b></label>
+                            <select  name="nomTA" required>
+                                <option
+                                    <?php echo $selectedetat1?>
+                                        value = "thierry">URRUTY Thierry</option>
+                                <option
+                                    <?php echo $selectedetat2?>
+                                        value = "patrick">GIRARD Patrick</option>
+                                <option
+                                    <?php echo $selectedetat3?>
+                                        value = "dominique">GENIET Dominique</option>
+                                <option
+                                    <?php echo $selectedetat4?>
+                                        value = "allan">FOUSSE Allan</option>
                             </select>
+                            <br>
+                            <!--<?php /*
+                            <label for="nomEntreprise"><b>Nom de l'entreprise* : </b></label>
+						        <br>
+                                <select name="nomEntreprise"  id="nomEntreprise" required>
+                                <option value="">Sélectionnez une entreprise</option>
+                                    <?php
+                                        $SelectEnt = $bdd->query('SELECT * FROM entreprise ORDER BY nomEntreprise ASC');
+                                        while ($donnees = $SelectEnt->fetch()) {
+                                    ?>
+                                    <option 
+                                    <?php if($donnees['nomEntreprise'] == $nomEntreprise){ echo $selectedEntreprise ;}?>
+                                    value="<?php echo $donnees['idEntreprise']; ?>">
+                                        <?php echo $donnees['nomEntreprise']; ?>
+                                    </option>
+                                    <?php }; ?>
+                                </select>
+                                <br>
+                            <label for="nomSite"><b>Nom du site* : </b></label>
+						        <br>
+                                <select name="nomSite"  id="nomSite" required>
+                                <option value="">Sélectionnez un site</option>
+                                    <?php
+                                        $SelectSite = $bdd->query('SELECT nomSite FROM site ORDER BY nomSite ASC');
+                                        while ($donnees = $SelectSite->fetch()) {
+                                    ?>
+                                    <option
+                                    <?php if($donnees['nomSite'] == $nomSite){ echo $selectedSite ;}?>
+                                    value="<?php echo $donnees['nomSite']; ?>">
+                                        <?php echo $donnees['nomSite']; ?>
+                                    </option>
+                                    <?php }; ?>
+                                </select>
+                                <br>
+                            <label for="Ville"><b>Ville* : </b></label>
+						        <br>
+						        <input type="text" id="Ville" name="Ville" value = "<?php echo $ville ?>" required>
+						        <br>
+                            <label for="Pays"><b>Pays* : </b></label>
+						        <br>
+						        <input type="text" id="Pays" name="Pays" value = "<?php echo $pays ?>" required>
+						        <br>
+                            */ ?>-->
                             <label for="Postal"><b>Code Postal <b><span style="color: red;">*</span></b> : </b></label>
                                 <br>
                                 <input type="text" id="Postal" name="Postal" value = "<?php echo $code_postal ?>"required>
@@ -285,14 +347,13 @@
                             $numMS = $_POST['NumMDS'];
                             $mailMS = $_POST['emailMDS'];
 
-                            $NPTA = $_POST['TuteurA'];
-                            $NomVerif = "";
-                            // Explode le nom/prénom pour avoir le nom, requete pour trouver l'id, ajouter id à convention
+                            $nomTA = $_POST['nomTA'];
 
                             $code_postal = $_POST['Postal'];
 
                             $distPres = $_POST['dist_pres'];
                             $distPres=strtolower($distPres);
+
                     
                             $DateDeb = $_POST['DateDeb'];
                             $DateFin = $_POST['DateFin'];
@@ -333,6 +394,11 @@
                                         $idMDS = $resultat['idMDS'];
                                     }
 
+                                    if ($nomTA == "thierry") {$idTA = 1; }
+                                    if ($nomTA == "patrick") {$idTA = 2; }
+                                    if ($nomTA == "dominique") {$idTA = 3; }
+                                    if ($nomTA == "allan") {$idTA = 4; }
+
                                     // On met à jour les informations de la table 'offre'
                                     $upOffre = $bdd->prepare('UPDATE offre SET presentiel = ? WHERE idOffre = ?');
                                     $upOffre->execute(array($distPres, $idOffre));
@@ -342,8 +408,8 @@
                                     $upSite->execute(array($adressePostale, $code_postal, $idSite));
 
                                     // On met à jour les informations de la table 'convention_contrat'
-                                    $upCC = $bdd->prepare('UPDATE convention_contrat SET dateDeb = ?, dateFin = ?, idMDS = ? WHERE idUtilisateur = ?');
-                                    $upCC->execute(array($DateDeb,$DateFin, $idMDS, $id));
+                                    $upCC = $bdd->prepare('UPDATE convention_contrat SET dateDeb = ?, dateFin = ?, idMDS = ?, idTA = ? WHERE idUtilisateur = ?');
+                                    $upCC->execute(array($DateDeb,$DateFin, $idMDS, $idTA, $id));
                                 }
                                 else { echo "Les dates saisies sont incohérentes.";}
                             }
@@ -352,10 +418,24 @@
                             }
 
                             //on actualise automatiquement la page pour ré-afficher les nouvelles données
-                            echo "<script>window.location.replace(\"suivi_stage.php\")</script>";
+                            echo "<script>window.location.replace(\"suivi_stage.php?success=true\")</script>";
                         }
                       //include('fonctionality/insert_bdd_suivi_stage.php');
-                    ?> 
+                    ?>
+                    <script>
+                        // Récupérer le paramètre GET de l'URL
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const success = urlParams.get('success');
+
+                        // Vérifier si le paramètre success est présent et égal à true
+                        if (success === 'true') {
+                            // Afficher la div de confirmation
+                            const confirmationDiv = document.getElementById('confirmationMessage');
+                            if (confirmationDiv) {
+                                confirmationDiv.style.display = 'block';
+                            }
+                        }
+                    </script>
                 </div> <!--fin div de section 1 -->
 
 <!----------------------------Footer------------------------------------------->

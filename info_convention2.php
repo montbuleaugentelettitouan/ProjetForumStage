@@ -23,7 +23,7 @@ include('fonctionality/annee+promo.php');
 
             <?php
             $idS = $_GET['id'];
-            $req2 = $bdd->prepare("SELECT etat_convention, nomMDS, prenomMDS, nomTA, prenomTA, date, dateDeb, dateFin, gratification FROM convention_contrat LEFT JOIN tuteur_academique ON convention_contrat.idTA = tuteur_academique.idTA LEFT JOIN maitre_de_stage ON convention_contrat.idMDS = maitre_de_stage.idMDS WHERE idConvention = ? order by idConvention");
+            $req2 = $bdd->prepare("SELECT etat_convention, nomEntreprise, nomMDS, prenomMDS, nomTA, prenomTA, date, dateDeb, dateFin, gratification, format_gratification FROM convention_contrat LEFT JOIN tuteur_academique ON convention_contrat.idTA = tuteur_academique.idTA LEFT JOIN maitre_de_stage ON convention_contrat.idMDS = maitre_de_stage.idMDS LEFT JOIN site on site.idSite = maitre_de_stage.idSite LEFT JOIN entreprise on entreprise.idEntreprise = site.idEntreprise WHERE idConvention = ? order by idConvention");
             $req2->execute(array($idS));
             $resultat2 = $req2->fetchAll();
             ?>
@@ -36,6 +36,7 @@ include('fonctionality/annee+promo.php');
                         <thead class="thead-dark">
                         <tr>
                             <th>Etat de la convention</th>
+                            <th>Entreprise</th>
                             <th>Nom Prénom Maître de stage</th>
                             <th>Nom Prénom Tuteur académique</th>
                             <th>Date début</th>
@@ -62,11 +63,12 @@ include('fonctionality/annee+promo.php');
 							?>
                             <tr>
                                 <td><?php echo $val; ?></td>
+                                <td><?php echo $ligne['nomEntreprise']; ?></td>
                                 <td><?php echo $ligne['nomMDS']; echo " "; echo $ligne['prenomMDS']; ?></td>
-                                <td><?php echo $ligne['prenomTA']; ?></td>
+                                <td><?php echo $ligne['nomTA']; echo " "; echo $ligne['prenomTA']; ?></td>
                                 <td><?php echo $ligne['dateDeb']; ?></td>
                                 <td><?php echo $ligne['dateFin']; ?></td>
-                                <td><?php echo $ligne['gratification']; ?></td>
+                                <td><?php echo $ligne['gratification']; echo " "; echo $ligne['format_gratification']; ?></td>
                                 <td><?php echo $ligne['date']; ?></td>
                             </tr>
                         <?php }
