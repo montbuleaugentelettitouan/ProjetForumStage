@@ -116,6 +116,8 @@
                 $prenomMDS = "";
                 $numMDS = "";
                 $emailMDS = "";
+                //$nomTA = "";
+                //$prenomTA = "";
                 $typeContrat = "";
                 $ville = "";
                 $pays = "";
@@ -145,6 +147,8 @@
                     $prenomMDS = $ligne['prenomMDS'];
                     $numMDS = $ligne['numMDS'];
                     $emailMDS = $ligne['emailMDS'];
+                    //$nomTA = $ligne['nomTA'];
+                    //$prenomTA = $ligne['prenomTA'];
                     $typeContrat = $ligne['type_contrat'];
                     $nomEntreprise = $ligne['nomEntreprise'];
                     $nomSite = $ligne['nomSite'];
@@ -219,48 +223,25 @@
                                 <br>
 						        <input type="email" id="emailMDS" name="emailMDS" value= "<?php echo($emailMDS)?>" required>
 						        <br>
-                            <!--<?php /*
-                            <label for="nomEntreprise"><b>Nom de l'entreprise* : </b></label>
-						        <br>
-                                <select name="nomEntreprise"  id="nomEntreprise" required>
-                                <option value="">Sélectionnez une entreprise</option>
-                                    <?php
-                                        $SelectEnt = $bdd->query('SELECT * FROM entreprise ORDER BY nomEntreprise ASC');
-                                        while ($donnees = $SelectEnt->fetch()) {
-                                    ?>
-                                    <option 
-                                    <?php if($donnees['nomEntreprise'] == $nomEntreprise){ echo $selectedEntreprise ;}?>
-                                    value="<?php echo $donnees['idEntreprise']; ?>">
-                                        <?php echo $donnees['nomEntreprise']; ?>
-                                    </option>
-                                    <?php }; ?>
-                                </select>
-                                <br>
-                            <label for="nomSite"><b>Nom du site* : </b></label>
-						        <br>
-                                <select name="nomSite"  id="nomSite" required>
-                                <option value="">Sélectionnez un site</option>
-                                    <?php
-                                        $SelectSite = $bdd->query('SELECT nomSite FROM site ORDER BY nomSite ASC');
-                                        while ($donnees = $SelectSite->fetch()) {
-                                    ?>
-                                    <option
-                                    <?php if($donnees['nomSite'] == $nomSite){ echo $selectedSite ;}?>
-                                    value="<?php echo $donnees['nomSite']; ?>">
-                                        <?php echo $donnees['nomSite']; ?>
-                                    </option>
-                                    <?php }; ?>
-                                </select>
-                                <br>
-                            <label for="Ville"><b>Ville* : </b></label>
-						        <br>
-						        <input type="text" id="Ville" name="Ville" value = "<?php echo $ville ?>" required>
-						        <br>
-                            <label for="Pays"><b>Pays* : </b></label>
-						        <br>
-						        <input type="text" id="Pays" name="Pays" value = "<?php echo $pays ?>" required>
-						        <br>
-                            */ ?>-->
+                            <label for="TuteurA"><b>Tuteur académique<b><span style="color: red;">*</span></b> : </b></label>
+                            <select name="TuteurA">
+                                <?php
+                                // Exécuter la requête pour récupérer les tuteurs académiques
+                                $req_tuteurs = $bdd->prepare('SELECT nomTA, prenomTA FROM tuteur_academique');
+                                $req_tuteurs->execute();
+                                $result_tuteurs = $req_tuteurs->fetchAll();
+
+                                // Afficher les options de la liste déroulante
+                                if ($req_tuteurs->rowCount() > 0) {
+                                    foreach ($result_tuteurs as $row) {
+                                        // Utiliser les valeurs de nom et prénom pour chaque tuteur académique
+                                        echo "<option value='" . $row["nomTA"] . " " . $row["prenomTA"] . "'>" . $row["nomTA"] . " " . $row["prenomTA"] . "</option>";
+                                    }
+                                } else {
+                                    echo "<option value=''>Aucun tuteur académique trouvé</option>";
+                                }
+                                ?>
+                            </select>
                             <label for="Postal"><b>Code Postal <b><span style="color: red;">*</span></b> : </b></label>
                                 <br>
                                 <input type="text" id="Postal" name="Postal" value = "<?php echo $code_postal ?>"required>
@@ -304,11 +285,14 @@
                             $numMS = $_POST['NumMDS'];
                             $mailMS = $_POST['emailMDS'];
 
+                            $NPTA = $_POST['TuteurA'];
+                            $NomVerif = "";
+                            // Explode le nom/prénom pour avoir le nom, requete pour trouver l'id, ajouter id à convention
+
                             $code_postal = $_POST['Postal'];
 
                             $distPres = $_POST['dist_pres'];
                             $distPres=strtolower($distPres);
-
                     
                             $DateDeb = $_POST['DateDeb'];
                             $DateFin = $_POST['DateFin'];
