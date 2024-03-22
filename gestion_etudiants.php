@@ -66,7 +66,8 @@ include('fonctionality/bdd.php');
                         <tr>
                             <th style="border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom</th>
                             <th style="border-top : 2px solid black;">Contact Étudiant</th>
-                            <th style="border-top : 2px solid black;">Etat de la recherche</th>
+                            <th style="border-top : 2px solid black;">État de la recherche</th>
+                            <th style="border-top : 2px solid black;">Convention</th>
                             <th style="border-top : 2px solid black;">Nom Entreprise</th>
                             <th style="border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom Tuteur Stage</th>
                             <th style="border-top : 2px solid black;">Contact Tuteur Stage</th>
@@ -134,6 +135,8 @@ include('fonctionality/bdd.php');
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['etatC']; ?>
                                 </td>
+
+                                <td><a href="informations_convention.php?value=<?php echo $ligne['idUtilisateur']; ?>" class="btn btn-primary">Voir</a></td>
 
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['nomEntreprise']; ?>

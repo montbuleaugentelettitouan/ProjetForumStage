@@ -45,7 +45,7 @@ include('fonctionality/annee+promo.php');
                                 <!-- le nom -->
                                 <td><a href="dashboardSUIVIFORUM2.php?value=<?php echo $ligne['idUtilisateur'];?>"><?php echo $ligne['nom']; ?></a></td>
                                 <!-- le prénom -->
-                                <td><a href="dashboardSUIVIFORUM2.php?value=<?php echo $ligne['idUtilisateur'];?>"><?php echo $ligne['prenom']; ?></a></td>7
+                                <td><a href="dashboardSUIVIFORUM2.php?value=<?php echo $ligne['idUtilisateur'];?>"><?php echo $ligne['prenom']; ?></a></td>
                                 <!-- L'adresse mail de létudiant -->
                                 <td><?php echo $ligne['email']; ?></td>
                                 <!-- <td> <a href="Send_mail_etu.php"> <?php echo $ligne['email']; ?> </a> </td> -->

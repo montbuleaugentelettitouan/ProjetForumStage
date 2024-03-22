@@ -55,7 +55,7 @@ $selectedValue = $_GET['value'];
                                 </option>
                             <?php } ?>
                         </select>
-                        <input type="submit" class="btn btn-warning" name="retour" id="retour" value="Back">
+                        <input type="submit" class="btn btn-warning" name="retour" id="retour" value="Retour">
                     </div><!--fin div de tableau 1 -->
                 </form>
                 <br>
@@ -80,7 +80,9 @@ $selectedValue = $_GET['value'];
                 ?>
 
                 <h2> <?php echo $resultat76['nom'] ?> <?php echo ''?> <?php echo $resultat76['prenom'] ?> </h2>
-
+                <br>
+                <a href="gestion_etudiants.php" class="btn btn-primary">Tableau de gestion des étudiants</a>
+                <br>
                 <br>
 
                 <div class="card" style="width: 100rem;">
