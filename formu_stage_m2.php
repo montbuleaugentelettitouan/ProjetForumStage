@@ -6,7 +6,7 @@
  * @date : Promo GPhy 2025 - Année 2022/2023
  *
  */
-include('barre_nav_M1.php');
+include('barre_nav_M2.php');
 include('fonctionality/bdd.php');
 ?>
 
@@ -17,7 +17,36 @@ $espaces5 = str_repeat('&nbsp;', 5);
 $espaces8 = str_repeat('&nbsp;', 8);
 
 /* Requete pour récuperer les infos de l'étudiant dans la BDD, on se repère grâce à la variable de session "$_SESSION['user'] */
-$req = $bddd->prepare("SELECT * FROM utilisateur LEFT JOIN stage USING (idUtilisateur) WHERE statut='etudiant' AND idUtilisateur=:user");
+$req = $bdd->prepare("SELECT
+                            utilisateur.nom,
+                            utilisateur.prenom,
+                            utilisateur.email,
+                            utilisateur.numEtu,
+                            utilisateur.parcours,
+                            utilisateur.etat,
+                            convention_contrat.type_contrat,
+                            offre.secteur,
+                            tuteur_academique.nomTA,
+                            tuteur_academique.prenomTA,
+                            tuteur_academique.emailTA,
+                            tuteur_academique.numTA,
+                            maitre_de_stage.nomMDS,
+                            maitre_de_stage.prenomMDS,
+                            maitre_de_stage.emailMDS,
+                            maitre_de_stage.numMDS,
+                            site.nomSite,
+                            site.pays,
+                            site.ville,
+                            entreprise.nomEntreprise
+                        FROM
+                            utilisateur
+                        LEFT JOIN convention_contrat ON utilisateur.idUtilisateur = convention_contrat.idUtilisateur
+                        LEFT JOIN tuteur_academique ON convention_contrat.idTA = tuteur_academique.idTA
+                        LEFT JOIN maitre_de_stage ON convention_contrat.idMDS = maitre_de_stage.idMDS
+                        LEFT JOIN offre ON convention_contrat.idOffre = offre.idOffre
+                        LEFT JOIN site ON maitre_de_stage.idSite = site.idSite
+                        LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise 
+                        WHERE statut='etudiant' AND idUtilisateur=:user ORDER BY nom");
 $req->bindParam(':user', $_SESSION['user']);
 $req->execute();
 $resultat = $req->fetch();
@@ -32,8 +61,9 @@ $natureContratPrerempli = $resultat['type_contrat'];
 $rsEntreprisePrerempli = $resultat['nom_Entreprise'];
 $siteEntreprisePrerempli = $resultat['nom_Site'];
 $serviceEntreprisePrerempli = $resultat['secteur'];
-$paysEntreprisePrerempli = $resultat['pays_Stage'];
-$villeEntreprisePrerempli = $resultat['ville_stage'];
+
+$paysEntreprisePrerempli = $resultat['pays'];
+$villeEntreprisePrerempli = $resultat['ville'];
 $cpEntreprisePrerempli = $resultat['code_postal'];
 $contratPrerempli = $resultat['statut_contrat'];
 $debutStagePrerempli = $resultat['dateDeb'];
