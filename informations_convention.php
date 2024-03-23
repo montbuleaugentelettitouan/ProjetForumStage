@@ -43,11 +43,11 @@ $selectedValue = $_GET['value'];
                 <br>
                 <div>
                     <a href="info_convention.php">
-                <input type="submit" class="btn btn-warning" name="retour" id="retour" value="Choisir un autre étudiant">
+                <input type="submit" class="btn btn-primary" name="retour" id="retour" value="Choisir un autre étudiant">
                     </a>
 
                     <a href="gestion_etudiants.php">
-                        <input type="submit" class="btn btn-primary" name="retour" id="retour" value="Tableau de gestion des étudiants">
+                        <input type="submit" class="btn btn-warning" name="retour" id="retour" value="Tableau de gestion des étudiants">
                     </a>
                 </div>
                 <br>

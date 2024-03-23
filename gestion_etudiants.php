@@ -67,7 +67,7 @@ include('fonctionality/bdd.php');
                             <th style="border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom</th>
                             <th style="border-top : 2px solid black;">Contact Étudiant</th>
                             <th style="border-top : 2px solid black;">État de la recherche</th>
-                            <th style="border-top : 2px solid black;">Convention</th>
+                            <th style="border-top : 2px solid black;">Stage et Convention</th>
                             <th style="border-top : 2px solid black;">Nom Entreprise</th>
                             <th style="border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom Tuteur Stage</th>
                             <th style="border-top : 2px solid black;">Contact Tuteur Stage</th>
@@ -115,6 +115,7 @@ include('fonctionality/bdd.php');
                         foreach ($resultat as $ligne) {
                             $i++;
                             ?>
+
                             <tr>
                                 <td style="border-left : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;"'; } ?>">
                                     <a href="dashboardSUIVIFORUM2.php?value=<?php echo $ligne['idUtilisateur'];?>"><?php echo $ligne['nom']; echo " "; echo $ligne['prenom'];?></a>
@@ -136,8 +137,9 @@ include('fonctionality/bdd.php');
                                     <?php echo $ligne['etatC']; ?>
                                 </td>
 
-                                <td><a href="informations_convention.php?value=<?php echo $ligne['idUtilisateur']; ?>" class="btn btn-primary">Voir</a></td>
-
+                                <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
+                                <center><a href="informations_convention.php?value=<?php echo $ligne['idUtilisateur']; ?>" class="btn btn-secondary" style="width: 75%;">Voir</a></center>
+                                </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['nomEntreprise']; ?>
                                 </td>
@@ -174,6 +176,7 @@ include('fonctionality/bdd.php');
                                             <img src="assets/img/Tel.png" alt="Icône">
                                             <span class="popup-content"> Tel : <?php echo $ligne['numTA']; ?></span>
                                         </div>
+
                                         <?php }
                                     } ?>
                                 </td>
