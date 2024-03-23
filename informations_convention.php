@@ -26,48 +26,12 @@ $selectedValue = $_GET['value'];
                 <li class="breadcrumb-item active"> Vue générale des informations sur les stages</li>
             </ol>
 
-            <div class="card mb-4"> <!--div de section 1 -->
-                <div class="card-header"> <!--div de encadré 1 -->
-                    Informations du stage des étudiants de la promo <?php echo $promo ?>
-                </div> <!--fin div de encadré 1 -->
-
-                <!-- Sélection de l'étudiant pour l'affichage -->
-
-                <form method="POST" action="#">
-                    <div class="card-body"> <!--div de tableau 1 -->
-                        <select onchange="detailEtu()" name="Etudiant" id="Etudiant" >
-                            <option value="">Sélectionnez un étudiant</option>
-                            <?php
-                            $reponse = $bdd->prepare('SELECT idUtilisateur, nom, prenom FROM convention_contrat join utilisateur using (idUtilisateur) WHERE statut = "etudiant" and promo = ? ORDER BY nom ASC');
-                            $reponse->execute(array($promo));
-                            while ($donnees = $reponse->fetch()) {
-                                ?>
-                                <option value="<?php echo $donnees['idUtilisateur']; ?>">
-                                    <?php echo $donnees['nom']; ?>
-                                    <?php echo $donnees['prenom']; ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                        <input type="submit" class="btn btn-warning" name="retour" value="Retour">
-                    </div> <!--fin div de tableau 1 -->
-                </form>
-                <br>
-            </div> <!--fin div de section 1 -->
-
-            <?php
-            if (isset($_POST['retour'])) {
-                echo "<script>window.location.replace(\"infos_stage.php\")</script>";
-            }
-            ?>
-
             <!-- Affichage du nom de l'étudiant sélectionné et ses informations -->
-
             <div class="card mb-4"> <!--div de section 2 -->
                 <div class="card-header"> <!--div de encadré 2 -->
                     Affichage du détail du stage de l'étudiant
                 </div> <!--fin div de encadré 2 -->
             </div> <!--fin div de section 2 -->
-
             <div class="card-body"> <!--div de tableau 2 -->
                 <?php
                 $valid = $selectedValue;
@@ -76,9 +40,18 @@ $selectedValue = $_GET['value'];
                 $resultuser = $user->fetch();
                 ?>
                 <h2> <?php echo $resultuser['nom'] ?> <?php echo ''?> <?php echo $resultuser['prenom'] ?> </h2>
+                <br>
+                <div>
+                    <a href="info_convention.php">
+                <input type="submit" class="btn btn-warning" name="retour" id="retour" value="Choisir un autre étudiant">
+                    </a>
 
+                    <a href="gestion_etudiants.php">
+                        <input type="submit" class="btn btn-primary" name="retour" id="retour" value="Tableau de gestion des étudiants">
+                    </a>
+                </div>
+                <br>
                 <!-- Affichage du rappel de l'offre acceptée-->
-
                 <h5 class="card-title">Rappel du stage</h5>
                 <table class="table table-striped">
                     <thead class="thead-dark">
@@ -114,7 +87,7 @@ $selectedValue = $_GET['value'];
                 <h5 class="card-title">Informations du stage</h5>
                 <table class="table table-striped" >
                     <?php
-					// récupération de toutes les informations a affiché dans le dernier tableau
+                    // récupération de toutes les informations a affiché dans le dernier tableau
                     $req = $bdd->prepare("
                     SELECT s.adresse_postale, s.pays, s.ville, s.code_postal, cc.type_contrat, cc.dateDeb, cc.dateFin, o.anneeO, o.secteur, o.presentiel, cc.gratification, cc.format_gratification, mds.nomMDS, mds.prenomMDS, mds.numMDS, mds.emailMDS, ta.nomTA, ta.prenomTA, ta.numTA, ta.emailTA
                         FROM offre o
@@ -126,7 +99,7 @@ $selectedValue = $_GET['value'];
                     $req->execute(array($valid));
                     $resultat = $req->fetch();
 
-					// initialisation des résultats à nul s'il n'y a pas de résultat retourné, comme ça pas d'erreur d'affichage
+                    // initialisation des résultats à nul s'il n'y a pas de résultat retourné, comme ça pas d'erreur d'affichage
                     $nomMDS = !empty($resultat['nomMDS']) ? $resultat['nomMDS'] : NULL ;
                     $prenomMDS = !empty($resultat['prenomMDS']) ? $resultat['prenomMDS'] : NULL ;
                     $numMDS = !empty($resultat['numMDS']) ? $resultat['numMDS'] : NULL ;
@@ -138,18 +111,18 @@ $selectedValue = $_GET['value'];
                     $fin = !empty($resultat['dateFin']) ? $resultat['dateFin'] : NULL ;
                     $year = !empty($resultat['anneeO']) ? $resultat['anneeO'] : NULL ;
                     $code_postal = !empty($resultat['code_postal']) ? $resultat['code_postal'] : NULL ;
-					$adresse_postale = !empty($resultat['adresse_postale']) ? $resultat['adresse_postale'] : NULL ;
+                    $adresse_postale = !empty($resultat['adresse_postale']) ? $resultat['adresse_postale'] : NULL ;
                     $presentiel = !empty($resultat['presentiel']) ? $resultat['presentiel'] : NULL ;
                     $secteur = !empty($resultat['secteur']) ? $resultat['secteur'] : NULL ;
                     $nomTA = !empty($resultat['nomTA']) ? $resultat['nomTA'] : NULL ;
                     $prenomTA = !empty($resultat['prenomTA']) ? $resultat['prenomTA'] : NULL ;
                     $numTA = !empty($resultat['numTA']) ? $resultat['numTA'] : NULL ;
                     $mailTA = !empty($resultat['emailTA']) ? $resultat['emailTA'] : NULL ;
-					$gratif = !empty($resultat['gratification']) ? $resultat['gratification'] : NULL ;
+                    $gratif = !empty($resultat['gratification']) ? $resultat['gratification'] : NULL ;
                     $formatGratif = !empty($resultat['format_gratification']) ? $resultat['format_gratification'] : NULL ;
                     ?>
-					
-					<!-- affichage du tableau des informations de stage de l'étudiant -->
+
+                    <!-- affichage du tableau des informations de stage de l'étudiant -->
                     <tr>
                         <th>Maître de stage</th>
                         <td><?php echo $nomMDS; ?> <?php echo " "?><?php echo $prenomMDS; ?></td>
@@ -174,7 +147,7 @@ $selectedValue = $_GET['value'];
                         <th>Code Postal</th>
                         <td><?php echo $code_postal; ?></td>
                     </tr>
-					 <tr>
+                    <tr>
                         <th>Adresse Postale</th>
                         <td><?php echo $adresse_postale; ?></td>
                     </tr>
@@ -214,7 +187,7 @@ $selectedValue = $_GET['value'];
                         <th>Mail du tuteur académique</th>
                         <td><?php echo $mailTA; ?></td>
                     </tr>
-					<tr>
+                    <tr>
                         <th>Gratification </th>
                         <td> <?php echo $gratif; ?> <?php echo " "?> <?php echo $formatGratif; ?></td>
                     </tr>
@@ -232,3 +205,4 @@ $selectedValue = $_GET['value'];
 </div><!-- fin body de page-->
 </body>
 </html>
+

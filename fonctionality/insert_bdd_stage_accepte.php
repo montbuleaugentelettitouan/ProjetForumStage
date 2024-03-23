@@ -140,7 +140,7 @@ else {
     $newville = ucfirst($newville);
 
     $newpays = $_POST['Pays'];
-    $newpays=strtoupper($newsite);
+    $newpays=strtoupper($newpays);
 
     $newmail = $_POST['contact'];
 

@@ -29,7 +29,7 @@ include('fonctionality/annee+promo.php');
                         <tbody>
                         <?php
                         /* recupération de la requête et affichage de toutes les données dans un tableau */
-                        $req = $bdd->prepare("SELECT DISTINCT(idConvention), nom, prenom, nomEntreprise, titre FROM utilisateur JOIN convention_contrat USING (idUtilisateur) JOIN offre USING (idOffre) JOIN site USING (idSite) JOIN entreprise USING (idEntreprise) WHERE promo = ?;");
+                        $req = $bdd->prepare("SELECT DISTINCT(idConvention), idUtilisateur, nom, prenom, nomEntreprise, titre FROM utilisateur JOIN convention_contrat USING (idUtilisateur) JOIN offre USING (idOffre) JOIN site USING (idSite) JOIN entreprise USING (idEntreprise) WHERE promo = ?;");
                         $req->execute(array($promo));
                         $resultat = $req->fetchAll();
                         foreach ($resultat as $ligne) {
@@ -58,7 +58,7 @@ include('fonctionality/annee+promo.php');
                                 <td><?php echo $ligne['prenom']; ?></td>
                                 <td><?php echo $ligne['nomEntreprise']; ?></td>
                                 <td><?php echo $ligne['titre']; ?></td>
-                                <td><a href="info_convention2.php?id=<?php echo $ligne['idConvention']; ?>"> <?php echo $val; ?> </a></td>
+                                <td><a href="informations_convention.php?value=<?php echo $ligne['idUtilisateur']; ?>"> <?php echo $val; ?> </a></td>
                                 <td><?php echo $date; ?></td>
                                 <!-- <td> <a href="Send_mail_etu.php"> <?php echo $ligne['email']; ?> </a> </td> -->
                             </tr>
@@ -70,7 +70,6 @@ include('fonctionality/annee+promo.php');
                         </tbody>
                     </table>
                 </div> <!--fin div de tableau 1 -->
-                <a href="tableau_de_bord_ADMIN.php" class="btn btn-warning" >BACK</a>
         </div> <!-- fin div de page-->
     </main>
     <?php
