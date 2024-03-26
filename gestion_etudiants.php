@@ -77,6 +77,7 @@ include('fonctionality/bdd.php');
                         </thead>
 
                         <tbody>
+
                         <?php
 
                         /* Recupération de la requête et affichage de toutes les données dans un tableau */
@@ -95,7 +96,8 @@ include('fonctionality/bdd.php');
                             maitre_de_stage.prenomMDS,
                             maitre_de_stage.emailMDS,
                             maitre_de_stage.numMDS,
-                            entreprise.nomEntreprise
+                            entreprise.nomEntreprise,
+                            convention_contrat.idConvention
                         FROM
                             utilisateur
                         LEFT JOIN convention_contrat ON utilisateur.idUtilisateur = convention_contrat.idUtilisateur
@@ -114,6 +116,25 @@ include('fonctionality/bdd.php');
 
                         foreach ($resultat as $ligne) {
                             $i++;
+                            $req2 = $bdd->prepare("SELECT etat_convention, date FROM convention_contrat WHERE idConvention = ? order by idConvention DESC LIMIT 1");
+                            $req2->execute(array($ligne['idConvention']));
+                            $resultat2 = $req2->fetch();
+                            $rowcount = $req2->rowCount();
+                            $val = "";
+                            $date = "";
+                            if ($rowcount != 0){
+                                if ($resultat2['etat_convention']== "preconventionEnvoyee"){
+                                    $val = "Préconvention envoyée";}
+                                elseif ($resultat2['etat_convention']== "preconventionRecue"){
+                                    $val= "Préconvention reçue"; }
+                                elseif ($resultat2['etat_convention']== "conventionEditee"){
+                                    $val= "Convention éditée"; }
+                                elseif ($resultat2['etat_convention']== "conventionEnvoyee"){
+                                    $val= "Convention envoyée"; }
+                                else {
+                                    $val= "Pas de convention"; }
+                                $date =$resultat2['date'];
+                            }
                             ?>
 
                             <tr>
@@ -136,9 +157,8 @@ include('fonctionality/bdd.php');
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['etatC']; ?>
                                 </td>
-
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                <center><a href="informations_convention.php?value=<?php echo $ligne['idUtilisateur']; ?>" class="btn btn-secondary" style="width: 75%;">Voir</a></center>
+                                <center><a href="informations_convention.php?value=<?php echo $ligne['idUtilisateur']; ?>" class="btn btn-secondary" style="font-size: 15px; width: 95%;"><?php echo $val ?></a></center>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['nomEntreprise']; ?>
@@ -181,6 +201,7 @@ include('fonctionality/bdd.php');
                                     } ?>
                                 </td>
                             </tr>
+
                         <?php } ?>
                         </tbody>
                     </table>
