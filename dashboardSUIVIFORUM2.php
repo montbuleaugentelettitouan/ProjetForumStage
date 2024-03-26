@@ -82,9 +82,9 @@ $selectedValue = $_GET['value'];
                 <h2> <?php echo $resultat76['nom'] ?> <?php echo ''?> <?php echo $resultat76['prenom'] ?> </h2>
                 <br>
                 <a href="gestion_etudiants.php" class="btn btn-primary">Tableau de gestion des étudiants</a>
+                <a href="informations_convention.php?value=<?php echo $selectedValue; ?>" class="btn btn-secondary">Stage et convention</a>
                 <br>
                 <br>
-
                 <div class="card" style="width: 100rem;">
                     <div class="card-body">
                         <h5 class="card-title">Etat de la recherche</h5>
