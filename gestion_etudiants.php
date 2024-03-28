@@ -65,14 +65,18 @@ include('fonctionality/bdd.php');
                         <thead>
                         <tr>
                             <th style="border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom</th>
-                            <th style="border-top : 2px solid black;">Contact Étudiant</th>
+                            <th style="border-top : 2px solid black;">
+                                <div class="popup" id="icon">
+                                    <img src="assets/img/communication.png" alt="Icône">
+                                    <span class="popup-content"> Contacts étudiants</span>
+                                </div>
+                            </th>
                             <th style="border-top : 2px solid black;">État de la recherche</th>
                             <th style="border-top : 2px solid black;">Stage et Convention</th>
                             <th style="border-top : 2px solid black;">Nom Entreprise</th>
                             <th style="border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom Tuteur Stage</th>
                             <th style="border-top : 2px solid black;">Contact Tuteur Stage</th>
-                            <th style="border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom Tuteur Académique</th>
-                            <th style="border-right : 2px solid black; border-top : 2px solid black;">Contact Tuteur Académique</th>
+                            <th style="border-left : 2px solid black;border-right : 2px solid black; border-top : 2px solid black;">Nom Prénom Tuteur Académique</th>
                         </tr>
                         </thead>
 
@@ -182,23 +186,8 @@ include('fonctionality/bdd.php');
                                     } ?>
                                 </td>
 
-                                <td style="border-left : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;"'; } ?>">
+                                <td style="border-right : 2px solid black;border-left : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;"'; } ?>">
                                     <?php echo $ligne['nomTA']; echo " "; echo $ligne['prenomTA']; ?>
-                                </td>
-
-                                <td style="border-right : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;'; } ?>">
-                                    <?php if ($ligne['nomTA'] != '') {
-                                        if ($ligne['emailTA'] != Null) { ?>
-                                            <a href="Send_mail_etu.php?mail=<?php echo $ligne['emailTA']; ?>"><img src="assets/img/mail.png" alt="Email"></a>
-                                        <?php }
-                                        if ($ligne['numTA'] != Null) { ?>
-                                        <div class="popup" id="icon">
-                                            <img src="assets/img/Tel.png" alt="Icône">
-                                            <span class="popup-content"> Tel : <?php echo $ligne['numTA']; ?></span>
-                                        </div>
-
-                                        <?php }
-                                    } ?>
                                 </td>
                             </tr>
 
