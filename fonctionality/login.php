@@ -68,7 +68,7 @@ if(!empty($_POST['mail']) && !empty($_POST['mdp']))
                 $_SESSION['mail'] = $reponse['email'];
                 $_SESSION['statut'] = $reponse['statut'];
                 $_SESSION['parcours'] = 'GPhy';
-                header('Location: ../nombres_postulations_offres.php');
+                header('Location: ../gestion_etudiants.php');
 
             }
             else {

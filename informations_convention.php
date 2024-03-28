@@ -21,7 +21,7 @@ $selectedValue = $_GET['value'];
 <div id="layoutSidenav_content"> <!-- body de page-->
     <main>
         <div class="container-fluid px-4"> <!-- div de page-->
-            <h1 class="mt-4">Suivi du stage</h1>
+            <h1 class="mt-4">Informations du stage et de la convention</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active"> Vue générale des informations sur les stages</li>
             </ol>
