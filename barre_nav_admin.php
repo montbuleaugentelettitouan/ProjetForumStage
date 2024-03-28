@@ -123,7 +123,40 @@ if (isset($_POST['recherche'])) {
 
                         </a>
                     </li>
-                    <br>
+                    <li class="border-bottom">
+                        <a class="nav-link" href="gestion_entreprise.php">
+                            <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
+                            <b><span style="color: #ffc107;">Gestion des entreprises</span></b>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
+                            <div class="sb-nav-link-icon"><!--<i class="fas fa-tachometer-alt"></i>--></div>
+                            <b><span id="toggleIcon2" style="color: #dc3545;">▷</span><span style="color: #dc3545;">GESTION DES OFFRES</span></b>
+
+                        </a>
+                    </li>
+                    <div class="collapse" id="collapseExample2">
+                        <li>
+                            <a class="nav-link" href="nombres_postulations_offres.php">
+                                <div class="sb-nav-link-icon"></div>
+                                Récap postes et offres
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="dashboardVueOffres.php">
+                                <div class="sb-nav-link-icon"></div>
+                                Recueil des offres
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="validation_offres.php">
+                                <div class="sb-nav-link-icon"></div>
+                                Validation des offres
+                            </a>
+                        </li>
+                    </div>
                     <!-- Onglet principal -->
                     <li>
                         <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -132,20 +165,12 @@ if (isset($_POST['recherche'])) {
 
                         </a>
                     </li>
-
                     <!-- Section des autres onglets -->
                     <div class="collapse" id="collapseExample">
                         <li>
-                            <a class="nav-link" href="nombres_postulations_offres.php">
-                                <div class="sb-nav-link-icon"><!--<i class="fas fa-tachometer-alt"></i>--></div>
-                                Les offres de stage
-                            </a>
-                        </li>
-                        <br>
-                        <li>
                             <a class="nav-link" href="dashboardADMIN.php">
                                 <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
-                                Choix des étudiants
+                                Priorités des étudiants
                             </a>
                         </li>
                         <!-- <br>
@@ -155,27 +180,6 @@ if (isset($_POST['recherche'])) {
                             Etat de recherche des étudiants (obsolète - voir Suivi Post Forum Stage)
                         </a>
                         </li> -->
-                        <br>
-                        <li>
-                            <a class="nav-link" href="dashboardSUIVIFORUM.php">
-                                <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
-                                Suivi Post Forum Stage
-                            </a>
-                        </li>
-                        <br>
-                        <li>
-                            <a class="nav-link" href="infos_stage.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Suivi des stages
-                            </a>
-                        </li>
-                        <br>
-                        <li class="border-bottom">
-                            <a class="nav-link" href="info_convention.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Suivi des conventions
-                            </a>
-                        </li>
                         <!--<br>
                         <li class="border-bottom">
                             <a class="nav-link" href="suivi_convention_stage.php">
@@ -183,135 +187,18 @@ if (isset($_POST['recherche'])) {
                                 Suivi des conventions de stage
                             </a>
                         </li>-->
-                        <br>
                         <li>
                             <a class="nav-link" href="tableau_de_bord_ADMIN.php">
                                 <div class="sb-nav-link-icon"></div>
-                                Tableau de bord étudiants
+                                Stats des étudiants
                             </a>
                         </li>
-                        <br>
-                        <li class="border-bottom">
+                        <li>
                             <a class="nav-link" href="tableau_de_bord_ADMIN_entreprise.php">
                                 <div class="sb-nav-link-icon"></div>
-                                Tableau de bord entreprises
+                                Stats des entreprises
                             </a>
                         </li>
-                        <br>
-                        <li>
-                            <a class="nav-link" href="gestion_entreprise.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Gestion des entreprises
-                            </a>
-                        </li>
-                        <br>
-                        <li>
-                            <a class="nav-link" href="dashboardVueOffres.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Gestion des offres
-                            </a>
-                        </li>
-                        <br>
-                        <li>
-                            <a class="nav-link" href="validation_offres.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Validation des offres
-                            </a>
-                        </li>
-                        <br>
-                    </div>
-                        <li>
-                            <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
-                                <div class="sb-nav-link-icon"><!--<i class="fas fa-tachometer-alt"></i>--></div>
-                                <b><span id="toggleIcon2" style="color: #dc3545;">▷</span><span style="color: #dc3545;">STAGES M1</span></b>
-
-                            </a>
-                        </li>
-                    <div class="collapse" id="collapseExample2">
-                        <li>
-                            <a class="nav-link" href="nombres_postulations_offres.php">
-                                <div class="sb-nav-link-icon"><!--<i class="fas fa-tachometer-alt"></i>--></div>
-                                Les offres de stage
-                            </a>
-                        </li>
-                        <br>
-                        <li>
-                            <a class="nav-link" href="dashboardADMIN.php">
-                                <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
-                                Choix des étudiants
-                            </a>
-                        </li>
-                        <!-- <br>
-                        <li>
-                            <a class="nav-link" href="dashboardEtatEtudiant.php">
-                                <div class="sb-nav-link-icon"> ne pas oublier de commenter cette class comme plus haut <i class="fas fa-chart-area"></i></div>
-                            Etat de recherche des étudiants (obsolète - voir Suivi Post Forum Stage)
-                        </a>
-                        </li> -->
-                        <br>
-                        <li>
-                            <a class="nav-link" href="dashboardSUIVIFORUM.php">
-                                <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
-                                Suivi Post Forum Stage
-                            </a>
-                        </li>
-                        <br>
-                        <li>
-                            <a class="nav-link" href="infos_stage.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Suivi des stages
-                            </a>
-                        </li>
-                        <br>
-                        <li class="border-bottom">
-                            <a class="nav-link" href="info_convention.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Suivi des conventions
-                            </a>
-                        </li>
-                        <!--<br>
-                        <li class="border-bottom">
-                            <a class="nav-link" href="suivi_convention_stage.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Suivi des conventions de stage
-                            </a>
-                        </li>-->
-                        <br>
-                        <li>
-                            <a class="nav-link" href="tableau_de_bord_ADMIN.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Tableau de bord étudiants
-                            </a>
-                        </li>
-                        <br>
-                        <li class="border-bottom">
-                            <a class="nav-link" href="tableau_de_bord_ADMIN_entreprise.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Tableau de bord entreprises
-                            </a>
-                        </li>
-                        <br>
-                        <li>
-                            <a class="nav-link" href="gestion_entreprise.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Gestion des entreprises
-                            </a>
-                        </li>
-                        <br>
-                        <li>
-                            <a class="nav-link" href="dashboardVueOffres.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Gestion des offres
-                            </a>
-                        </li>
-                        <br>
-                        <li>
-                            <a class="nav-link" href="validation_offres.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Validation des offres
-                            </a>
-                        </li>
-                        <br>
                     </div>
                     <li>
                         <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">

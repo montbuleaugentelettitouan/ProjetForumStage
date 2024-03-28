@@ -16,17 +16,15 @@ include('fonctionality/annee+promo.php');
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Choix des étudiants</h1>
+            <h1 class="mt-4">Priorités des étudiants</h1>
 
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Vue générale des choix des étudiants de la promo <?php echo $promo?></li>
+                <li class="breadcrumb-item active">Vue générale des priorités des étudiants de la promo <?php echo $promo?></li>
             </ol>
 
 
             <div class="card mb-4">
                 <div class="card-header">
-
-                    Analyse M1
                 </div>
 
                 <!-- Tableau affichage tous les étudiants et leurs choix -->

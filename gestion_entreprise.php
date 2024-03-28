@@ -35,7 +35,6 @@ include('fonctionality/bdd.php');
                                 <th>Nom du site</th>
                                 <th>Ville</th>
                                 <th>Pays</th>
-                                <th>Contact RH du site</th>
                                 <th>Modification</th>
                             </tr>
                         </thead>
@@ -50,13 +49,11 @@ include('fonctionality/bdd.php');
                                 <td><?php echo $ligne['nomSite']; ?></td>
                                 <td><?php echo $ligne['ville']; ?></td>
                                 <td><?php echo $ligne['pays']; ?></td>
-                                <td><?php echo $ligne['contactRH']; ?></td>
                                 <td><a href="modif_entreprise.php?id=<?php echo $ligne['idSite']; ?>">Modifier</a></td>
                             </tr>
                         <?php } ?>
                         </tbody>
                     </table>
-                    <p> Pour ajouter un site, <a href = ajout_entreprise.php>cliquez ici</a>
                 </div>
 
             </div>

@@ -13,7 +13,7 @@ include('fonctionality/annee+promo.php');
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Gestion des offres</h1>
+            <h1 class="mt-4">Recueil des offres</h1>
 
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Vue générale de toutes les offres</li>
@@ -70,7 +70,6 @@ include('fonctionality/annee+promo.php');
                         </tbody>
                     </table>
                     <!--<input type="submit" class="btn btn-warning" name="ModifOffre" value="Ajouter">-->
-                    <p> Pour ajouter une offre, <a href = ajout_offres.php>cliquez ici</a>
                     <!--<input type="button" class="btn btn-warning" name="ModifOffre" value="Ajouter">-->
                 </div>
             </div>

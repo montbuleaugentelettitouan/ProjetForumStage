@@ -55,18 +55,13 @@ $selectedValue = $_GET['value'];
                                 </option>
                             <?php } ?>
                         </select>
-                        <input type="submit" class="btn btn-warning" name="retour" id="retour" value="Retour">
                     </div><!--fin div de tableau 1 -->
                 </form>
                 <br>
             </div> <!--fin div de section 1 -->
 
             <!-- Affichage du nom de l'étudiant sélectionné et ses informations -->
-            <?php
-            if (isset($_POST['retour'])) {
-                echo "<script>window.location.replace(\"dashboardSUIVIFORUM.php\")</script>";
-            }
-            ?>
+
 
             <div class="card-body"><!--div de tableau 2 -->
                 <?php
