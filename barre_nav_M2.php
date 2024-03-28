@@ -63,56 +63,7 @@ ini_set('display_errors', '1');
         <div class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-
-                    <!--<div class="sb-sidenav-menu-heading">Core</div>-->
-                    <a class="nav-link" href="dashboardPersonnel.php">
-                        <div class="sb-nav-link-icon"><!--<i class="fas fa-tachometer-alt"></i>--></div>
-                        Mes choix
-                    </a>
-
-                    <a class="nav-link" href="dashboardM1.php">
-                        <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
-                        Toutes les offres
-                    </a>
-
-                    <a class="nav-link" href="nombres_postulations_offresM1.php">
-                        <div class="sb-nav-link-icon"><!--<i class="fas fa-chart-area"></i>--></div>
-                        Récapitulatif
-                    </a>
-
-
-
-                    <a class="nav-link" href="suivi_forum.php">
-                        <div class="sb-nav-link-icon"></div>
-                        Suivi Post Forum Stage
-                    </a>
-
-                    <a class="nav-link" href="stage_accepte.php">
-                        <div class="sb-nav-link-icon"></div>
-                        Choix du stage
-                    </a>
-
-                    <a class="nav-link" href="suivi_stage.php">
-                        <div class="sb-nav-link-icon"></div>
-                        Informations du stage
-                    </a>
-
-                    <a class="nav-link" href="suivi_convention.php">
-                        <div class="sb-nav-link-icon"></div>
-                        État de la convention
-                    </a>
-                    <!--
-                    <a class="nav-link" href="suivi_stage.php">
-                        <div class="sb-nav-link-icon"></div>
-                        Informations du stage
-                    </a>
-
-                     <a class="nav-link" href="suivi_convention.php">
-                        <div class="sb-nav-link-icon"></div>
-                        Informations de la convention
-                    </a>
-                    -->
-
+                    
 <!--                    <a class="nav-link" href="test.php">
                         <div class="sb-nav-link-icon"></div>
                         Zone de test
