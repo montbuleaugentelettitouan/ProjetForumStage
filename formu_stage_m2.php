@@ -23,20 +23,23 @@ $req = $bdd->prepare("SELECT
                             utilisateur.email,
                             utilisateur.numEtu,
                             utilisateur.parcours,
-                            utilisateur.etat,
+                            utilisateur.etatC,
                             convention_contrat.type_contrat,
+                            convention_contrat.statut_contrat,
+                            convention_contrat.dateDeb,
+                            convention_contrat.dateFin,
+                            convention_contrat.gratification,
                             offre.secteur,
                             tuteur_academique.nomTA,
                             tuteur_academique.prenomTA,
                             tuteur_academique.emailTA,
-                            tuteur_academique.numTA,
                             maitre_de_stage.nomMDS,
                             maitre_de_stage.prenomMDS,
                             maitre_de_stage.emailMDS,
-                            maitre_de_stage.numMDS,
                             site.nomSite,
                             site.pays,
                             site.ville,
+                            site.code_postal,
                             entreprise.nomEntreprise
                         FROM
                             utilisateur
@@ -46,7 +49,7 @@ $req = $bdd->prepare("SELECT
                         LEFT JOIN offre ON convention_contrat.idOffre = offre.idOffre
                         LEFT JOIN site ON maitre_de_stage.idSite = site.idSite
                         LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise 
-                        WHERE statut='etudiant' AND idUtilisateur=:user ORDER BY nom");
+                        WHERE utilisateur.statut='etudiant' AND utilisateur.idUtilisateur=:user ORDER BY nom");
 $req->bindParam(':user', $_SESSION['user']);
 $req->execute();
 $resultat = $req->fetch();
@@ -56,25 +59,24 @@ $numEtuPrerempli = $resultat['numEtu'];
 $nomEtuPrerempli = $resultat['nom'];
 $prenomEtuPrerempli = $resultat['prenom'];
 $parcoursPrerempli = $resultat['parcours'];
-$recherchePrerempli = $resultat['etat'];
+$recherchePrerempli = $resultat['etatC'];
 $natureContratPrerempli = $resultat['type_contrat'];
 $rsEntreprisePrerempli = $resultat['nom_Entreprise'];
 $siteEntreprisePrerempli = $resultat['nom_Site'];
 $serviceEntreprisePrerempli = $resultat['secteur'];
-
 $paysEntreprisePrerempli = $resultat['pays'];
 $villeEntreprisePrerempli = $resultat['ville'];
 $cpEntreprisePrerempli = $resultat['code_postal'];
 $contratPrerempli = $resultat['statut_contrat'];
 $debutStagePrerempli = $resultat['dateDeb'];
 $finStagePrerempli = $resultat['dateFin'];
-$nomMDSPrerempli = $resultat['nomTuteur'];
-$prenomMDSPrerempli = $resultat['prenomTuteur'];
-$emailMDSPrerempli = $resultat['emailTuteur'];
+$nomMDSPrerempli = $resultat['nomMDS'];
+$prenomMDSPrerempli = $resultat['prenomMDS'];
+$emailMDSPrerempli = $resultat['emailMDS'];
 $remunerationPrerempli = $resultat['gratification'];
-$nomTAPrerempli = $resultat['nom_tuteur_academique'];
-$prenomTAPrerempli = $resultat['prenom_tuteur_academique'];
-$emailTAPrerempli = $resultat['email_tuteur_academique'];
+$nomTAPrerempli = $resultat['nomTA'];
+$prenomTAPrerempli = $resultat['prenomTA'];
+$emailTAPrerempli = $resultat['emailTA'];
 
 /* Ces variables vont permettre de préremplir les choix dans les types 'radios'. On les mets à jour selon ce que la base de données renvoie. */
 $selectedParcours1 = '';
