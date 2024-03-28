@@ -1,30 +1,31 @@
 <?php
 include('barre_nav_M1.php');
+include('fonctionality/bdd.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // On récupère les données du formulaire
-    $emailEtu = $_POST["emailEtu"];
+    $emailEtu = $_POST["email"];
     $numEtu = $_POST["numEtu"];
-    $nomEtu = $_POST["nomEtu"];
-    $prenomEtu = $_POST["prenomEtu"];
-    $parcoursEtu = $_POST["parcoursEtu"];
-    $rechercheEtu = $_POST["statutEtu"];
-    $natureCont = $_POST["natureEtu"];
-    $rsEnt = $_POST["RSEntreprise"];
-    $siteEnt = $_POST["SiteEntreprise"];
-    $serviceEnt = $_POST["ServiceEntreprise"];
-    $paysEnt = $_POST["PaysEntreprise"];
-    $villeEnt = $_POST["VilleEntreprise"];
-    $cpEnt = $_POST["CPEntreprise"];
-    $statutCont = $_POST["StatutContrat"];
-    $debCont = $_POST["DebContrat"];
-    $finCont = $_POST["FinContrat"];
-    $nomMDS = $_POST["NomMDS"];
-    $prenomMDS = $_POST["PrenomMDS"];
-    $emailMDS = $_POST["EmailMDS"];
-    $remuneration = $_POST["Rémunération"];
-    $nomTA = $_POST["NomTA"];
-    $prenomTA = $_POST["PrénomTA"];
-    $emailTA = $_POST["EmailTA"];
+    $nomEtu = $_POST["nom"];
+    $prenomEtu = $_POST["prenom"];
+    $parcoursEtu = $_POST["parcours"];
+    $rechercheEtu = $_POST["etatC"];
+    $natureCont = $_POST["type_contrat"];
+    $rsEnt = $_POST["nomEntreprise"];
+    $siteEnt = $_POST["nomSite"];
+    $serviceEnt = $_POST["secteur"];
+    $paysEnt = $_POST["pays"];
+    $villeEnt = $_POST["ville"];
+    $cpEnt = $_POST["code_postal"];
+    $statutCont = $_POST["statut_contrat"];
+    $debCont = $_POST["dateDeb"];
+    $finCont = $_POST["dateFin"];
+    $nomMDS = $_POST["nomMDS"];
+    $prenomMDS = $_POST["prenomMDS"];
+    $emailMDS = $_POST["emailMDS"];
+    $remuneration = $_POST["gratification"];
+    $nomTA = $_POST["nomTA"];
+    $prenomTA = $_POST["prénomTA"];
+    $emailTA = $_POST["emailTA"];
 
     $Test1 = True; //$_POST['AddFields1'];
     $Test2 = True; //$_POST['AddFields2'];

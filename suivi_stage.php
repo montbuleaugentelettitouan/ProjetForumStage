@@ -105,7 +105,7 @@
 
             <?php
                 // requête pour afficher les informations de l'offre que l'Utilisateur à acceptée
-                $req = $bdd->prepare('SELECT nomEntreprise, site.idSite, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, convention_contrat.idTA, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale, offre.idOffre FROM convention_contrat LEFT JOIN tuteur_academique on tuteur_academique.idTA = convention_contrat.idTA LEFT JOIN maitre_de_stage ON maitre_de_stage.idMDS = convention_contrat.idMDS LEFT JOIN offre on convention_contrat.idOffre = offre.idOffre LEFT JOIN site on offre.idSite = site.idSite LEFT JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
+                $req = $bdd->prepare('SELECT nomEntreprise, site.idSite, nomSite, titre, nomMDS, prenomMDS, numMDS, emailMDS, numTel, convention_contrat.idTA, type_contrat, description, ville, pays, presentiel, code_postal, secteur, dateDeb, dateFin, adresse_postale, offre.idOffre FROM utilisateur LEFT JOIN convention_contrat USING(idUtilisateur) LEFT JOIN tuteur_academique on tuteur_academique.idTA = convention_contrat.idTA LEFT JOIN maitre_de_stage ON maitre_de_stage.idMDS = convention_contrat.idMDS LEFT JOIN offre on convention_contrat.idOffre = offre.idOffre LEFT JOIN site on offre.idSite = site.idSite LEFT JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE convention_contrat.idUtilisateur = ? LIMIT 1');
                 $req->execute(array($_SESSION['user']));
                 $resultat = $req->fetchAll();
 
@@ -116,6 +116,7 @@
                 $prenomMDS = "";
                 $numMDS = "";
                 $emailMDS = "";
+                $numTel = "";
                 $typeContrat = "";
                 $ville = "";
                 $pays = "";
@@ -150,6 +151,7 @@
                     $prenomMDS = $ligne['prenomMDS'];
                     $numMDS = $ligne['numMDS'];
                     $emailMDS = $ligne['emailMDS'];
+                    $numTel = $ligne['numTel'];
                     $idTA = $ligne['idTA'];
                     $typeContrat = $ligne['type_contrat'];
                     $nomEntreprise = $ligne['nomEntreprise'];
@@ -229,6 +231,11 @@
                 <p><b><span style="color: red;">*</span></b> : Saisie obligatoire</p>
                     <form id="formulaireinscription" method="post">
                         <div class="card-body"> <!--div de tableau 1 -->
+                            <label for="NumMDS"><b>Numéro de téléphone de l'étudiant <b><span style="color: red;">*</span></b> : </b></label>
+                                <br>
+                                <!--<input type="tel" id="NumMDS" name="NumMDS" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}|[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}|[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}">-->
+                                <input type="text" id="NumTEL" name="NumTEL" value= "<?php echo($numTel)?>" required>
+                                <br>
                             <label for="NomMDS"><b>Nom du maître de stage <b><span style="color: red;">*</span></b> : </b></label>
                                 <br>
 						        <input type="text" id="NomMDS" name="NomMDS" value= "<?php echo($nomMDS)?>" required>
@@ -359,6 +366,10 @@
                             $DateFin = $_POST['DateFin'];
 
                             $adressePostale = $_POST['Adresse_postale'];
+
+                            $numTel = $_POST['NumTEL'];
+                            $numAjout = $bdd->prepare('UPDATE utilisateur SET numTel = ? WHERE idUtilisateur = ?');
+                            $numAjout->execute(array($numTel,$id));
 
                             $verifStage = $bdd->prepare('SELECT * FROM convention_contrat WHERE idUtilisateur = ?');
                             $verifStage->execute(array($id));

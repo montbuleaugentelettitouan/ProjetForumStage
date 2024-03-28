@@ -63,7 +63,7 @@ ini_set('display_errors', '1');
         <div class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-                    
+
 <!--                    <a class="nav-link" href="test.php">
                         <div class="sb-nav-link-icon"></div>
                         Zone de test
