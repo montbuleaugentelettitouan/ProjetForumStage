@@ -72,7 +72,6 @@ include('fonctionality/annee+promo.php');
                                                     <textarea rows="10%" cols="100%" id="message" name="Message" placeholder="Message" ><?php echo $message ?>  </textarea>
                                                 </div><br>
                                       <!-- bouton back pour retrouner en arriere  -->
-                                <a href="tableau_adminEtu3.php" class="btn btn-warning" >BACK</a>
                                 <!-- bouton envoyer pour envoyer le mail (logique ... ) -->
                                 <input type= "submit" class="btn btn-warning" name="Envoyer" value="Envoyer">
                                 </form>

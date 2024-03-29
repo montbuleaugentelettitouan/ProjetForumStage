@@ -20,14 +20,19 @@ include('fonctionality/annee+promo.php');
             $resultatNom = $reqNom->fetch();
 
             /* recupération de la requête et affichage de toutes les données dans un tableau */
-            $req = $bdd->prepare("select DISTINCT(email), nom, prenom, nomEntreprise, titre from utilisateur join convention_contrat using (idUtilisateur) join offre using (idOffre) join site on offre.idSite = site.idSite join entreprise using (idEntreprise) where statut = 'etudiant' and  promo = ? and idEntreprise = ?;");
+            $req = $bdd->prepare("select DISTINCT(email), nom, idUtilisateur, prenom, nomEntreprise, titre from utilisateur join convention_contrat using (idUtilisateur) join offre using (idOffre) join site on offre.idSite = site.idSite join entreprise using (idEntreprise) where statut = 'etudiant' and  promo = ? and idEntreprise = ?;");
             $req->execute(array($promo, $idE));
             $resultat = $req->fetchAll();
             ?>
-
+            <h1 class="mt-4"> Stage(s) pourvu(s) par <?php echo $resultatNom['nomEntreprise'];?></h1>
+            <br>
+            <div>
+                <a href="gestion_entreprise.php">
+                    <input type="submit" class="btn btn-warning" name="retour2" id="retour2" value="Tableau de gestion des entreprises">
+                </a>
+            </div>
             <form id="choixaccepte" method="post">
                 <div class="card-body"> <!--div de tableau 1 -->
-                    <h1 class="mt-4"> Stage(s) pourvu(s) par <?php echo $resultatNom['nomEntreprise'];?></h1>
                     <br>
                     <table class="table table-bordered table-striped " id="datatablesSimple">
                         <thead class="thead-dark">
@@ -42,8 +47,8 @@ include('fonctionality/annee+promo.php');
 
                         foreach ($resultat as $ligne) { ?>
                             <tr>
-                                <td><?php echo $ligne['nom']; ?></td>
-                                <td><?php echo $ligne['prenom']; ?></td>
+                                <td><a href="informations_convention.php?value=<?php echo $ligne['idUtilisateur'];?>"><?php echo $ligne['nom']; ?></a></td>
+                                <td><a href="informations_convention.php?value=<?php echo $ligne['idUtilisateur'];?>"><?php echo $ligne['prenom']; ?></a></td>
                                 <td><?php echo $ligne['titre']; ?></td>
                             </tr>
                         <?php }
@@ -101,9 +106,6 @@ include('fonctionality/annee+promo.php');
                     <h3 class="mt-4"> <?php echo $resultatNom['nomEntreprise'];?> a pourvu tous ses stages.  </h3>
                     <br><br>
                 <?php } ?>
-
-
-                <a href="tableau_adminE1.php" class="btn btn-warning" >BACK</a>
         </div> <!-- fin div de page-->
     </main>
     <?php

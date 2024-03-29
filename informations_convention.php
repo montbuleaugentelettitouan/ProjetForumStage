@@ -46,6 +46,9 @@ $selectedValue = $_GET['value'];
                     <a href="gestion_etudiants.php">
                         <input type="submit" class="btn btn-warning" name="retour" id="retour" value="Tableau de gestion des étudiants">
                     </a>
+                    <a href="dashboardSUIVIFORUM2.php?value=<?php echo $valid;?>">
+                        <input type="submit" class="btn btn-secondary" name="retour" id="retour2" value="Suivi post forum stage">
+                    </a>
                 </div>
                 <br>
                 <!-- Affichage du rappel de l'offre acceptée-->

@@ -208,13 +208,6 @@ if (isset($_POST['recherche'])) {
                         </a>
                     </li>
                     <div class="collapse" id="collapseExample3">
-                        <li>
-                            <a class="nav-link" href="Vierge_alternance.php">
-                                <div class="sb-nav-link-icon"></div>
-                                Test alternance
-                            </a>
-                        </li>
-                        <br>
                         <!-- Ajoutez d'autres onglets ici si nécessaire -->
                     </div>
                 </div>

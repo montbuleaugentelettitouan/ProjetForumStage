@@ -12,11 +12,9 @@ include('fonctionality/annee+promo.php');
 <div id="layoutSidenav_content"> <!-- body de page-->
     <main>
         <div class="container-fluid px-4"> <!-- div de page-->
-        <!-- titre de la page -->
-            <h1 class="mt-4"> Etudiants étant encore en recherche</h1>
+            <h1 class="mt-4">Étudiants étant encore en recherche</h1>
             <form id="choixaccepte" method="post">
                 <div class="card-body"> <!--div de tableau 1 -->
-                <!-- tableau des Etudiants étante encore en recherche de stage  -->
                     <table class="table table-striped" id="datatablesSimple">
                         <thead>
                         <tr>
@@ -24,7 +22,6 @@ include('fonctionality/annee+promo.php');
                             <th>Prénom</th>
                             <th>Adresse Mail</th>
                             <th>Selection pour l'Envoi de Mail</th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -33,9 +30,7 @@ include('fonctionality/annee+promo.php');
                         $req = $bdd->prepare("select DISTINCT(email), nom, prenom, idUtilisateur from utilisateur where etatC = 'en recherche' and promo = ? ; ");
                         $req->execute(array($promo));
                         $resultat = $req->fetchAll();
-                        // déclaration d'un compteur pour afficher le nombre d'entrée dans le tableau des etudiants étant encore en recherche
                         $cpt1 = 0;
-
                         foreach ($resultat as $ligne) { ?>
                         <!-- Pour chaque tour de boucle le compteur prendre +1 -->
                         <?php $cpt1 = $cpt1 + 1;?>

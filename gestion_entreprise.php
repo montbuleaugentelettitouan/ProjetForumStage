@@ -45,7 +45,7 @@ include('fonctionality/bdd.php');
                         $resultat = $req->fetchAll();
                         foreach ($resultat as $ligne) { ?>
                             <tr>
-                                <td><?php echo $ligne['nomEntreprise']; ?></td>
+                                <td><a href="tableau_adminE2.php?id=<?php echo $ligne['idEntreprise'];?>"><?php echo $ligne['nomEntreprise']; ?></a></td>
                                 <td><?php echo $ligne['nomSite']; ?></td>
                                 <td><?php echo $ligne['ville']; ?></td>
                                 <td><?php echo $ligne['pays']; ?></td>
