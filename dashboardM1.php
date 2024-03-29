@@ -34,6 +34,7 @@ ini_set('display_errors', '1');
                         <table class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
+                                    <th>N°</th>
                                     <th>Entreprise</th>
                                     <th>Site</th>
                                     <th>Intitulé de l'offre</th>
@@ -59,6 +60,7 @@ ini_set('display_errors', '1');
                                     foreach ($resultat as $ligne) {
                                 ?>
                                 <tr>
+                                    <td><?php echo $ligne['idOffre']; ?></td>
                                     <td><?php echo $ligne['nomEntreprise']; ?></td>
                                     <td><?php echo $ligne['nomSite']; ?></td>
                                     <td><?php echo $ligne['titre']; ?></td>

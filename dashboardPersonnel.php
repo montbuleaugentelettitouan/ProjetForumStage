@@ -34,6 +34,7 @@ include('fonctionality/bdd.php');
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Priorité enregistrée</th>
+                                    <th>N°</th>
                                     <th>Entreprise</th>
                                     <th>Site</th>
                                     <th>Intitulé de l'offre</th>
@@ -60,6 +61,7 @@ include('fonctionality/bdd.php');
 
                                 <tr>
                                     <td><?php echo $ligne['priorite']; ?></td>
+                                    <td><?php echo $ligne['idOffre']; ?></td>
                                     <td><?php echo $ligne['nomEntreprise']; ?></td>
                                     <td><?php echo $ligne['nomSite']; ?></td>
                                     <td><?php echo $ligne['titre']; ?></td>

@@ -51,7 +51,7 @@ include('fonctionality/bdd.php');
 <div id="layoutSidenav_content"> <!-- body de page-->
     <main>
         <div class="container-fluid px-4"> <!-- div de page-->
-            <h1 class="mt-4">Acceptation d'une proposition</h1>
+            <h1 class="mt-4">Choix du stage</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Sélectionner l'offre que vous acceptez</li>
             </ol>
