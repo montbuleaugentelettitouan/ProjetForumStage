@@ -51,7 +51,7 @@ include('fonctionality/annee+promo.php');
                         </tbody>
                     </table>
                 </div> <!--fin div de tableau 1 -->
-                <a href="tableau_de_bord_ADMIN.php" class="btn btn-warning" >BACK</a>
+                <a href="tableau_de_bord_ADMIN.php" class="btn btn-secondary" >Retour</a>
                 <!-- bouton pour envoyer un mail a tout les étudiants présents dans le tableau -->
                 <input type="submit" class="btn btn-warning" name="validerenvoitous" value="Envoyer un mail à tous les étudiants">
                 <!-- bouton pour envoyer un mail aux etudiants étant selectionné uniquement -->

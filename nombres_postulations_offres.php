@@ -116,6 +116,17 @@ include('fonctionality/annee+promo.php');
                         <?php } ?>
                         </tbody>
                     </table>
+                    <div>
+                        <button onclick="topFunction()" id="scrollTopBtn" class="btn btn-secondary" title="Revenir en haut de la page">Haut de la page</button>
+
+                        <script>
+                            // Fonction pour revenir au haut de la page
+                            function topFunction() {
+                                document.body.scrollTop = 0; // Pour les navigateurs Chrome, Safari et Opera
+                                document.documentElement.scrollTop = 0; // Pour les navigateurs Firefox, IE et Edge
+                            }
+                        </script>
+                    </div>
                 </div>
             </div>
             <br>

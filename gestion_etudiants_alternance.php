@@ -1,11 +1,4 @@
 <?php
-/**
- * Fonctionnalité de login à l'application
- *
- * @autor : Anne SIECA, Victor ALLIOT, Alice Broussely et Audrey CHALAUX
- * @date : Promo GPhy 2022 - Année 2021 : 2022
- *
- */
 include('barre_nav_admin.php');
 include('fonctionality/bdd.php');
 ?>
@@ -44,7 +37,7 @@ include('fonctionality/bdd.php');
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Gestion des étudiants M1</h1>
+            <h1 class="mt-4">Gestion des étudiants M2 (promo <?php echo $parcours; echo " "; echo $promo ?>)</h1>
 
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active"></li>
@@ -52,7 +45,7 @@ include('fonctionality/bdd.php');
 
             <div class="card mb-4">
                 <div class="card-header">
-                        <button onclick="bottomFunction()" id="scrollBottomBtn" class="btn btn-secondary" title="Aller en bas de la page">Bas de la page</button>
+                    <button onclick="bottomFunction()" id="scrollBottomBtn" class="btn btn-secondary" title="Aller en bas de la page">Bas de la page</button>
                     <script>
                         // Fonction pour aller en bas de la page
                         function bottomFunction() {
@@ -67,38 +60,33 @@ include('fonctionality/bdd.php');
                     <table id="datatablesSimple" class="table table-striped table-bordered table-sm">
                         <thead>
                         <tr>
-                            <th style="border-bottom : 2px solid black;border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom</th>
-                            <th style="border-bottom : 2px solid black;border-top : 2px solid black;">
+                            <th style="border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom</th>
+                            <th style="border-top : 2px solid black;">
                                 <div class="popup" id="icon">
                                     <img src="assets/img/communication.png" alt="Icône">
                                     <span class="popup-content" style="position: absolute; top: -55px; left: 60px;"> Contacts étudiants</span>
                                 </div>
                             </th>
-                            <th style="border-bottom : 2px solid black;border-top : 2px solid black;">
-                                <div class="popup" id="icon">
-                                    <img src="assets/img/recherche.png" alt="Icône">
-                                    <span class="popup-content"> État de la recherche</span>
-                                </div>
-                            </th>
-                            <th style="border-bottom : 2px solid black;border-top : 2px solid black;">
-                                <div class="popup" id="icon">
-                                    <img src="assets/img/convention.png" alt="Icône">
-                                    <span class="popup-content" style="position: absolute; top: -50px; left: 55px;"> Stage et convention</span>
-                                </div>
-                            </th>
-                            <th style="border-bottom : 2px solid black;border-top : 2px solid black; max-width: 200px;">Nom Entreprise</th>
-                            <th style="border-bottom : 2px solid black;border-top : 2px solid black; max-width: 200px;">Ville</th>
-                            <th style="border-bottom : 2px solid black;border-left : 2px solid black; border-top : 2px solid black;">Nom Prénom Maître de stage</th>
-                            <th style="border-bottom : 2px solid black;border-top : 2px solid black;">
+                            <th style="border-top : 2px solid black; max-width: 200px;">Parcours</th>
+                            <th style="border-top : 2px solid black; max-width: 200px;">Statut</th>
+                            <th style="border-top : 2px solid black; max-width: 200px;">Nature</th>
+                            <th style="border-top : 2px solid black; max-width: 200px;">Entreprise</th>
+                            <th style="border-top : 2px solid black; max-width: 200px;">Site</th>
+                            <th style="border-top : 2px solid black; max-width: 200px;">Service</th>
+                            <th style="border-top : 2px solid black; max-width: 200px;">Ville</th>
+                            <th style="border-left : 2px solid black; border-top : 2px solid black;">MDS</th>
+                            <th style="border-top : 2px solid black;">
                                 <div class="popup" id="icon">
                                     <img src="assets/img/communication.png" alt="Icône">
-                                    <span class="popup-content"> Contact Maître de stage</span>
+                                    <span class="popup-content"> Contact MDS</span>
                                 </div>
                             </th>
-                            <th style="border-bottom : 2px solid black;border-left : 2px solid black;border-right : 2px solid black; border-top : 2px solid black;">Nom Prénom Tuteur Académique</th>
+                            <th style="border-left : 2px solid black;border-right : 2px solid black; border-top : 2px solid black;">Tuteur académique</th>
                         </tr>
                         </thead>
+
                         <tbody>
+
                         <?php
 
                         /* Recupération de la requête et affichage de toutes les données dans un tableau */
@@ -119,6 +107,7 @@ include('fonctionality/bdd.php');
                             maitre_de_stage.numMDS,
                             entreprise.nomEntreprise,
                             ville,
+                            site.nomSite,
                             convention_contrat.idConvention
                         FROM
                             utilisateur
@@ -161,7 +150,7 @@ include('fonctionality/bdd.php');
 
                             <tr>
                                 <td style="border-left : 2px solid black; <?php if ($i == $totalLigne) { echo 'border-bottom : 2px solid black;"'; } ?>">
-                                    <a href="dashboardSUIVIFORUM2.php?value=<?php echo $ligne['idUtilisateur'];?>"><?php echo $ligne['nom']; echo " "; echo $ligne['prenom'];?></a>
+                                    <a href="informations_contrat.php?value=<?php echo $ligne['idUtilisateur']; ?>"><?php echo $ligne['nom']; echo " "; echo $ligne['prenom'];?></a>
                                 </td>
 
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
@@ -175,59 +164,23 @@ include('fonctionality/bdd.php');
                                         <span class="popup-content"> Tel : <?php echo $ligne['numTel']; ?></span>
                                     </div>
                                 </td>
-
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <?php if ($ligne['etatC']=="accepte"): ?>
-                                            <div class="popup" id="icon">
-                                                <img src="assets/img/vert.png" alt="Icône">
-                                                <b><span class="popup-content" style="position: absolute; top: -40px; left: 70px; line-height: 1"> Accepté</span></b>
-                                            </div>
-                                    <?php elseif ($ligne['etatC']=="en attente"): ?>
-                                            <div class="popup" id="icon">
-                                                <img src="assets/img/jaune.png" alt="Icône">
-                                                <b><span class="popup-content" style="position: absolute; top: -40px; left: 70px; line-height: 1;"> En attente</span></b>
-                                            </div>
-                                    <?php elseif ($ligne['etatC']=="en recherche"): ?>
-                                            <div class="popup" id="icon">
-                                                <img src="assets/img/rouge.png" alt="Icône">
-                                                <b><span class="popup-content" style="position: absolute; top: -40px; left: 60px; line-height: 1"> En recherche</span></b>
-                                            </div>
-                                    <?php endif; ?>
+                                    <span>PlaceholderParcours</span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                <center>
-                                    <a href="informations_convention.php?value=<?php echo $ligne['idUtilisateur']; ?>">
-                                        <?php if ($val== "Pas de convention"): ?>
-                                            <div class="popup" id="icon">
-                                                <img src="assets/img/croix.png" alt="Icône">
-                                                <b><span class="popup-content" style="position: absolute; top: -40px; left: 50px; line-height: 0.5"> Pas de convention</span></b>
-                                            </div>
-                                        <?php elseif ($val== "Convention envoyée"): ?>
-                                            <div class="popup" id="icon">
-                                                <img src="assets/img/ok.png" alt="Icône">
-                                                <b><span class="popup-content" style="position: absolute; top: -40px; left: 45px; line-height: 0.5"> Convention envoyée</span></b>
-                                            </div>
-                                        <?php elseif ($val== "Convention éditée"): ?>
-                                            <div class="popup" id="icon">
-                                                <img src="assets/img/attente.png" alt="Icône">
-                                                <b><span class="popup-content" style="position: absolute; top: -40px; left: 50px; line-height: 0.5"> Convention éditée</span></b>
-                                            </div>
-                                        <?php elseif ($val== "Préconvention envoyée"): ?>
-                                            <div class="popup" id="icon">
-                                                <img src="assets/img/envoi.png" alt="Icône">
-                                                <b><span class="popup-content" style="position: absolute; top: -40px; left: 50px; line-height: 0.5"> Préconvention envoyée</span></b>
-                                            </div>
-                                        <?php elseif ($val== "Préconvention reçue"): ?>
-                                            <div class="popup" id="icon">
-                                                <img src="assets/img/recu.png" alt="Icône">
-                                                <b><span class="popup-content" style="position: absolute; top: -40px; left: 50px; line-height: 0.5"> Préconvention reçue</span></b>
-                                            </div>
-                                        <?php endif;?>
-                                    </a>
-                                </center>
+                                    <span>PlaceholderStatut</span>
+                                </td>
+                                <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
+                                    <span>PlaceholderNature</span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['nomEntreprise']; ?>
+                                </td>
+                                <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
+                                    <?php echo $ligne['nomSite']; ?>
+                                </td>
+                                <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
+                                    <span>PlaceholderService</span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['ville']; ?>
@@ -254,6 +207,7 @@ include('fonctionality/bdd.php');
                                     <?php echo $ligne['nomTA']; echo " "; echo $ligne['prenomTA']; ?>
                                 </td>
                             </tr>
+
                         <?php } ?>
                         </tbody>
                     </table>
@@ -269,10 +223,10 @@ include('fonctionality/bdd.php');
                     </script>
                 </div>
             </div>
+        </div>
     </main>
     <?php
     include('fonctionality/footer.php');
     ?>
 </div>
-</body>
-</html>
+<script src="script.js"></script>

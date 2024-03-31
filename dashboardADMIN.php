@@ -22,9 +22,15 @@ include('fonctionality/annee+promo.php');
                 <li class="breadcrumb-item active">Vue générale des priorités des étudiants de la promo <?php echo $promo?></li>
             </ol>
 
-
             <div class="card mb-4">
                 <div class="card-header">
+                    <button onclick="bottomFunction()" id="scrollBottomBtn" class="btn btn-secondary" title="Aller en bas de la page">Bas de la page</button>
+                    <script>
+                        // Fonction pour aller en bas de la page
+                        function bottomFunction() {
+                            window.scrollTo(0, document.body.scrollHeight); // Fait défiler vers le bas de la page
+                        }
+                    </script>
                 </div>
 
                 <!-- Tableau affichage tous les étudiants et leurs choix -->
@@ -123,6 +129,15 @@ include('fonctionality/annee+promo.php');
                     </table>
                 </div>
             </div>
+            <button onclick="topFunction()" id="scrollTopBtn" class="btn btn-secondary" title="Revenir en haut de la page">Haut de la page</button>
+
+            <script>
+                // Fonction pour revenir au haut de la page
+                function topFunction() {
+                    document.body.scrollTop = 0; // Pour les navigateurs Chrome, Safari et Opera
+                    document.documentElement.scrollTop = 0; // Pour les navigateurs Firefox, IE et Edge
+                }
+            </script>
         </div>
     </main>
     <?php

@@ -21,15 +21,12 @@ $selectedValue = $_GET['value'];
 <div id="layoutSidenav_content"> <!-- body de page-->
     <main>
         <div class="container-fluid px-4"> <!-- div de page-->
-            <h1 class="mt-4">Informations du stage et de la convention</h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active"> Vue générale des informations sur les stages</li>
-            </ol>
+            <h1 class="mt-4">Informations du contrat</h1>
 
             <!-- Affichage du nom de l'étudiant sélectionné et ses informations -->
             <div class="card mb-4"> <!--div de section 2 -->
                 <div class="card-header"> <!--div de encadré 2 -->
-                    Affichage du détail du stage de l'étudiant
+                    Affichage du détail du contrat de l'étudiant
                 </div> <!--fin div de encadré 2 -->
             </div> <!--fin div de section 2 -->
             <div class="card-body"> <!--div de tableau 2 -->
@@ -43,11 +40,8 @@ $selectedValue = $_GET['value'];
                 <br>
                 <div>
 
-                    <a href="gestion_etudiants.php">
-                        <input type="submit" class="btn btn-warning" name="retour" id="retour" value="Tableau de gestion des étudiants">
-                    </a>
-                    <a href="dashboardSUIVIFORUM2.php?value=<?php echo $valid;?>">
-                        <input type="submit" class="btn btn-secondary" name="retour" id="retour2" value="Suivi post forum stage">
+                    <a href="gestion_etudiants_alternance.php">
+                        <input type="submit" class="btn btn-warning" name="retour" id="retour" value="Tableau des étudiants M2">
                     </a>
                 </div>
                 <br>

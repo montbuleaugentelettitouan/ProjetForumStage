@@ -14,17 +14,19 @@ include('fonctionality/bdd.php');
 <div id="layoutSidenav_content"> <!-- body de la page -->
     <main>
         <div class="container-fluid px-4"> <!-- div de page -->
-            <h1 class="mt-4">Page Administrateur </h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Modifications des sites</li>
-                </ol>
-
+            <h1 class="mt-4">Modification entreprise </h1>
+            <br>
+            <center>
+            <div class="card mb-4"> <!--div de section 1 -->
+                <div id="confirmationMessage" style="display: none; font-size: 20px; color: mediumseagreen;">
+                    <b>Modifications prises en compte</b>
+                </div>
+            </div>
+            </center>
     <!----------------------------Section site/entreprise------------------------------------------->
 
     <div class="card mb-4"> <!--div de section 1 -->
         <div class="card-header"> <!--div de encadré 1 -->
-            <i class="far fa-file-pdf"></i>
-            Modification du site et de l'entreprise
         </div><!--fin div de encadré 1 -->
         <!-- Tableau modification de l'offre -->
 
@@ -34,10 +36,10 @@ include('fonctionality/bdd.php');
                     <thead class="thead-dark">
                         <tr>
                             <th>Nom de l'entreprise </th>
+                            <th>Contact RH </th>
                             <th>Nom du site </th>
                             <th>Ville </th>
                             <th>Pays </th>
-                            <th>Contact RH </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,6 +62,11 @@ include('fonctionality/bdd.php');
                                 class="form-control" rows="3" ></textarea> </td>
                             </td>
                             <td>
+                            <textarea name = "texteAreaContact" id = "texteAreaContact" placeholder =
+                            "<?php echo $resultAfficheS['contactRH']; ?>"
+                                      value =  "<?php echo $resultAfficheS['contactRH']; ?>"
+                                      class="form-control" rows="3" ></textarea> </td>
+                            <td>
                                 <textarea name = "texteAreaSite" id = "texteAreaSite" placeholder =
                                 "<?php echo $resultAfficheS['nomSite']; ?>"
                                           value =  "<?php echo $resultAfficheS['nomSite']; ?>"
@@ -68,23 +75,17 @@ include('fonctionality/bdd.php');
                                 <textarea name = "texteAreaVille" id = "texteAreaVille" placeholder =
                                 "<?php echo $resultAfficheS['ville']; ?>"
                                           value =  "<?php echo $resultAfficheS['ville']; ?>"
-                                class="form-control" rows="3" required></textarea> </td>
+                                class="form-control" rows="3" ></textarea> </td>
                             <td>
                                 <textarea name = "texteAreaPays" id = "texteAreaPays" placeholder =
                                 "<?php echo $resultAfficheS['pays']; ?>"
                                           value =  "<?php echo $resultAfficheS['pays']; ?>"
-                                class="form-control" rows="3" ></textarea> </td>
-                            <td>
-                            <textarea name = "texteAreaContact" id = "texteAreaContact" placeholder =
-                                "<?php echo $resultAfficheS['contactRH']; ?>"
-                                      value =  "<?php echo $resultAfficheS['contactRH']; ?>"
                                 class="form-control" rows="3" ></textarea> </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <input type="submit" class="btn btn-warning" name="ValidModifEnt" value="Valider">
-            <br>
         </form>
         <?php
           if (isset($_POST['ValidModifEnt'])) {
@@ -129,14 +130,35 @@ include('fonctionality/bdd.php');
 
           $ModifE = $bdd ->prepare("UPDATE entreprise SET nomEntreprise = ? WHERE idEntreprise =?");
           $ModifE->execute(array($nomEntreprise,$resultAfficheE['idEntreprise']));
-          $resultModifE = $ModifE->fetch(); 
-  
-          echo "Le site a été modifié";
+          $resultModifE = $ModifE->fetch();
+
+              $url = "modif_entreprise.php?id=$idS&success=true";
+              echo "<script>window.location.replace(\"$url\")</script>";
+             exit();
         }else{
           echo " ";
         }
-
         ?>
+        <br>
+        <div>
+            <a href="gestion_entreprise.php">
+                <input type="submit" class="btn btn-secondary" name="retour" id="retour2" value="Retour">
+            </a>
+        </div>
+        <script>
+            // Récupérer le paramètre GET de l'URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('success');
+
+            // Vérifier si le paramètre success est présent et égal à true
+            if (success === 'true') {
+                // Afficher la div de confirmation
+                const confirmationDiv = document.getElementById('confirmationMessage');
+                if (confirmationDiv) {
+                    confirmationDiv.style.display = 'block';
+                }
+            }
+        </script>
     </div> <!--fin div de section 1 -->
 
       <!----------------------------Footer------------------------------------------->

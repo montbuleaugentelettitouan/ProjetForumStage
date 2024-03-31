@@ -41,7 +41,7 @@ include('fonctionality/annee+promo.php');
                         </tbody>
                     </table>
                 </div> <!--fin div de tableau 1 -->
-                <a href="tableau_de_bord_ADMIN_entreprise.php" class="btn btn-warning" >BACK</a>
+                <a href="tableau_de_bord_ADMIN_entreprise.php" class="btn btn-secondary" >Retour</a>
         </div> <!-- fin div de page-->
     </main>
     <?php

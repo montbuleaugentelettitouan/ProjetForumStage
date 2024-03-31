@@ -13,7 +13,7 @@ include('fonctionality/annee+promo.php');
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Recueil des offres</h1>
+            <h1 class="mt-4">Recueil des offres de l'année <?php echo $annee ?></h1>
 
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Vue générale de toutes les offres</li>
@@ -22,8 +22,13 @@ include('fonctionality/annee+promo.php');
 
             <div class="card mb-4">
                 <div class="card-header">
-
-                    Toutes les offres de l'année <?php echo $annee ?>
+                    <button onclick="bottomFunction()" id="scrollBottomBtn" class="btn btn-secondary" title="Aller en bas de la page">Bas de la page</button>
+                    <script>
+                        // Fonction pour aller en bas de la page
+                        function bottomFunction() {
+                            window.scrollTo(0, document.body.scrollHeight); // Fait défiler vers le bas de la page
+                        }
+                    </script>
                 </div>
 
 
@@ -73,7 +78,15 @@ include('fonctionality/annee+promo.php');
                     <!--<input type="button" class="btn btn-warning" name="ModifOffre" value="Ajouter">-->
                 </div>
             </div>
-            <br>
+            <button onclick="topFunction()" id="scrollTopBtn" class="btn btn-secondary" title="Revenir en haut de la page">Haut de la page</button>
+
+            <script>
+                // Fonction pour revenir au haut de la page
+                function topFunction() {
+                    document.body.scrollTop = 0; // Pour les navigateurs Chrome, Safari et Opera
+                    document.documentElement.scrollTop = 0; // Pour les navigateurs Firefox, IE et Edge
+                }
+            </script>
         </div>
     </main>
     <?php
