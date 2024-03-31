@@ -208,12 +208,14 @@ if (isset($_POST['recherche'])) {
                         </a>
                     </li>
                     <div class="collapse" id="collapseExample3">
+
                         <li>
                             <a class="nav-link" href="gestion_etudiants_alternance.php">
                                 <div class="sb-nav-link-icon"></div>
                                 Tableau des étudiants
                             </a>
                         </li>
+                        
                         <!-- Ajoutez d'autres onglets ici si nécessaire -->
                     </div>
                 </div>
