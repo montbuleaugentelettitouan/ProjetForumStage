@@ -1,55 +1,52 @@
 <?php
 include('barre_nav_M1.php');
 include('fonctionality/bdd.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // On récupère les données du formulaire
-    $emailEtu = $_POST["email"];
+    $emailEtu = $_POST["emailEtu"];
     $numEtu = $_POST["numEtu"];
-    $nomEtu = $_POST["nom"];
-    $prenomEtu = $_POST["prenom"];
-    $parcoursEtu = $_POST["parcours"];
-    $rechercheEtu = $_POST["etatC"];
-    $natureCont = $_POST["type_contrat"];
-    $rsEnt = $_POST["nomEntreprise"];
-    $siteEnt = $_POST["nomSite"];
-    $serviceEnt = $_POST["secteur"];
-    $paysEnt = $_POST["pays"];
-    $villeEnt = $_POST["ville"];
-    $cpEnt = $_POST["code_postal"];
-    $statutCont = $_POST["statut_contrat"];
-    $debCont = $_POST["dateDeb"];
-    $finCont = $_POST["dateFin"];
-    $nomMDS = $_POST["nomMDS"];
-    $prenomMDS = $_POST["prenomMDS"];
-    $emailMDS = $_POST["emailMDS"];
-    $remuneration = $_POST["gratification"];
-    $nomTA = $_POST["nomTA"];
-    $prenomTA = $_POST["prénomTA"];
-    $emailTA = $_POST["emailTA"];
+    $nomEtu = $_POST["nomEtu"];
+    $prenomEtu = $_POST["prenomEtu"];
+    $parcoursEtu = $_POST["parcoursEtu"];
+    $statutEtu = $_POST["statutEtu"];
 
-    $Test1 = True; //$_POST['AddFields1'];
-    $Test2 = True; //$_POST['AddFields2'];
+    if (isset($_POST['AddFields1'])) {
+        $Suite1 = True;
+
+        $natureCont = $_POST['natureEtu'];
+        $rsEnt = $_POST['RSEntreprise'];
+        $siteEnt = $_POST['SiteEntreprise'];
+        $serviceEnt = $_POST['ServiceEntreprise'];
+        $paysEnt = $_POST['PaysEntreprise'];
+        $villeEnt = $_POST['VilleEntreprise'];
+        $cpEnt = $_POST['CPEntreprise'];
+        $statutCont = $_POST['StatutContrat'];
+        if (isset($_POST['AddFields2'])) {
+            $Suite2 = True;
+
+            $debCont = $_POST['DebContrat'];
+            $finCont = $_POST['FinContrat'];
+            $nomMDS = $_POST['NomMDS'];
+            $prenomMDS = $_POST['PrenomMDS'];
+            $emailMDS = $_POST['EmailMDS'];
+            $remuneration = $_POST['Rémunération'];
+            $nomTA = $_POST['NomTA'];
+            $prenomTA = $_POST['PrénomTA'];
+            $emailTA = $_POST['EmailTA'];
+        } else {
+            $Suite2 = False;
+        }
+    } else {
+        $Suite1 = False;
+    }
+
     // Mise à jour de la table "utilisateur"
-    $sqlUtilisateur = "UPDATE utilisateur SET
-        email = :email, 
-        nom = :nom, 
-        prenom = :prenom, 
-        numEtu = :numEtu, 
-        parcours = :parcours, 
-        etatC = :etat 
-        WHERE idUtilisateur = :idU";
-    $majUtilisateur = $bdd->prepare($sqlUtilisateur);
-    $majUtilisateur->bindParam(':email', $emailEtu);
-    $majUtilisateur->bindParam(':nom', $nomEtu);
-    $majUtilisateur->bindParam(':prenom', $prenomEtu);
-    $majUtilisateur->bindParam(':numEtu', $numEtu);
-    $majUtilisateur->bindParam(':parcours', $parcoursEtu);
-    $majUtilisateur->bindParam(':etat', $rechercheEtu);
-    $majUtilisateur->bindParam(':idU', $_SESSION['user']);
-    $majUtilisateur->execute();
-
+    $sqlUtilisateur = $bdd->prepare("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, numEtu = :?, parcours = ?, etatC = ? WHERE idUtilisateur = ?");
+    $sqlUtilisateur->execute(array($emailEtu, $nomEtu, $prenomEtu, $numEtu, $parcoursEtu, $statutEtu, $_SESSION['user']));
+/*
     // On teste si les champs additionnels du formulaire ont été affichés ou pas
-    if ($Test1 != False) {
+    if ($Suite1 != False) {
         $sqlStage = "UPDATE convention_contrat SET
         type_contrat = :typeContrat,
         //secteur = :secteur,
@@ -60,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ville_stage = :ville,
         nom_Entreprise = :rsEnt";
 
-        if ($Test2 == True) {
+        if ($Suite2 == True) {
             $sqlStage .= ",
             dateDeb = :debutContrat,
             dateFin = :finContrat,
@@ -86,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $majStage->bindParam(':rsEnt', $rsEnt);
         $majStage->bindParam(':idU', $_SESSION['user']);
 
-        if ($Test2 == True) {
+        if ($Suite2 == True) {
             $majStage->bindParam(':debutContrat', $debCont);
             $majStage->bindParam(':finContrat', $finCont);
             $majStage->bindParam(':nomMDS', $nomMDS);
@@ -100,6 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $majStage->execute();
     }
+*/
 
     header("Location: formu_stage_m2.php");
 } else {

@@ -16,6 +16,32 @@ $espaces3 = str_repeat('&nbsp;', 3);
 $espaces5 = str_repeat('&nbsp;', 5);
 $espaces8 = str_repeat('&nbsp;', 8);
 
+// On intiialise les variables au cas où il n'y ai pas de résultat associé après la requête SQL
+$emailEtuPrerempli = '';
+$numEtuPrerempli = '';
+$nomEtuPrerempli = '';
+$prenomEtuPrerempli = '';
+$parcoursPrerempli = '';
+$recherchePrerempli = '';
+$natureContratPrerempli = '';
+$rsEntreprisePrerempli = '';
+$siteEntreprisePrerempli = '';
+$serviceEntreprisePrerempli = '';
+$paysEntreprisePrerempli = '';
+$villeEntreprisePrerempli = '';
+$cpEntreprisePrerempli = '';
+$contratPrerempli = '';
+$debutStagePrerempli = '';
+$finStagePrerempli = '';
+$nomMDSPrerempli = '';
+$prenomMDSPrerempli = '';
+$emailMDSPrerempli = '';
+$remunerationPrerempli = '';
+$nomTAPrerempli = '';
+$prenomTAPrerempli = '';
+$emailTAPrerempli = '';
+
+// Si l'étudiant à déjà une ligne dans la table convention_contrat avec une offre de M2, on récupère les infos autour de cette offre et de la convention associée
 /* Requete pour récuperer les infos de l'étudiant dans la BDD, on se repère grâce à la variable de session "$_SESSION['user'] */
 $req = $bdd->prepare("SELECT
                             utilisateur.nom,
@@ -49,130 +75,189 @@ $req = $bdd->prepare("SELECT
                         LEFT JOIN offre ON convention_contrat.idOffre = offre.idOffre
                         LEFT JOIN site ON maitre_de_stage.idSite = site.idSite
                         LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise 
-                        WHERE utilisateur.statut='etudiant' AND utilisateur.idUtilisateur=:user ORDER BY nom");
+                        WHERE utilisateur.statut='etudiant' AND utilisateur.idUtilisateur=:user AND offre.niveau='M2' ORDER BY nom");
 $req->bindParam(':user', $_SESSION['user']);
 $req->execute();
 $resultat = $req->fetch();
 
-$emailEtuPrerempli = $resultat['email'];
-$numEtuPrerempli = $resultat['numEtu'];
-$nomEtuPrerempli = $resultat['nom'];
-$prenomEtuPrerempli = $resultat['prenom'];
-$parcoursPrerempli = $resultat['parcours'];
-$recherchePrerempli = $resultat['etatC'];
-$natureContratPrerempli = $resultat['type_contrat'];
-$rsEntreprisePrerempli = $resultat['nomEntreprise'];
-$siteEntreprisePrerempli = $resultat['nomSite'];
-$serviceEntreprisePrerempli = $resultat['secteur'];
-$paysEntreprisePrerempli = $resultat['pays'];
-$villeEntreprisePrerempli = $resultat['ville'];
-$cpEntreprisePrerempli = $resultat['code_postal'];
-$contratPrerempli = $resultat['statut_contrat'];
-$debutStagePrerempli = $resultat['dateDeb'];
-$finStagePrerempli = $resultat['dateFin'];
-$nomMDSPrerempli = $resultat['nomMDS'];
-$prenomMDSPrerempli = $resultat['prenomMDS'];
-$emailMDSPrerempli = $resultat['emailMDS'];
-$remunerationPrerempli = $resultat['gratification'];
-$nomTAPrerempli = $resultat['nomTA'];
-$prenomTAPrerempli = $resultat['prenomTA'];
-$emailTAPrerempli = $resultat['emailTA'];
+if ($resultat) {
+    $emailEtuPrerempli = $resultat['email'];
+    $numEtuPrerempli = $resultat['numEtu'];
+    $nomEtuPrerempli = $resultat['nom'];
+    $prenomEtuPrerempli = $resultat['prenom'];
+    $parcoursPrerempli = $resultat['parcours'];
+    $recherchePrerempli = $resultat['etatC'];
+    $natureContratPrerempli = $resultat['type_contrat'];
+    $rsEntreprisePrerempli = $resultat['nomEntreprise'];
+    $siteEntreprisePrerempli = $resultat['nomSite'];
+    $serviceEntreprisePrerempli = $resultat['secteur'];
+    $paysEntreprisePrerempli = $resultat['pays'];
+    $villeEntreprisePrerempli = $resultat['ville'];
+    $cpEntreprisePrerempli = $resultat['code_postal'];
+    $contratPrerempli = $resultat['statut_contrat'];
+    $debutStagePrerempli = $resultat['dateDeb'];
+    $finStagePrerempli = $resultat['dateFin'];
+    $nomMDSPrerempli = $resultat['nomMDS'];
+    $prenomMDSPrerempli = $resultat['prenomMDS'];
+    $emailMDSPrerempli = $resultat['emailMDS'];
+    $remunerationPrerempli = $resultat['gratification'];
+    $nomTAPrerempli = $resultat['nomTA'];
+    $prenomTAPrerempli = $resultat['prenomTA'];
+    $emailTAPrerempli = $resultat['emailTA'];
 
-/* Ces variables vont permettre de préremplir les choix dans les types 'radios'. On les mets à jour selon ce que la base de données renvoie. */
-$selectedParcours1 = '';
-$selectedParcours2 = '';
-$selectedParcours3 = '';
-if($parcoursPrerempli != ""){
-    if($parcoursPrerempli == "ECMPS"){
-        $selectedParcours1 = "checked";
+    /* Ces variables vont permettre de préremplir les choix dans les types 'radios'. On les mets à jour selon ce que la base de données renvoie. */
+    $selectedParcours1 = '';
+    $selectedParcours2 = '';
+    $selectedParcours3 = '';
+    if ($parcoursPrerempli != "") {
+        if ($parcoursPrerempli == "ECMPS") {
+            $selectedParcours1 = "checked";
+        }
+        if ($parcoursPrerempli == "GCell") {
+            $selectedParcours2 = "checked";
+        }
+        if ($parcoursPrerempli == "GPhy") {
+            $selectedParcours3 = "checked";
+        }
     }
-    if($parcoursPrerempli == "GCell"){
-        $selectedParcours2 = "checked";
-    }
-    if($parcoursPrerempli == "GPhy") {
-        $selectedParcours3 = "checked";
-    }
-}
 
-$selectedRecherche1 = '';
-$selectedRecherche2 = '';
-$selectedRecherche3 = '';
-$selectedRecherche4 = '';
-if($recherchePrerempli != ""){
-    if($recherchePrerempli == "pas commence"){
-        $selectedRecherche1 = "checked";
-        $choix = "Recherche1";
+    $selectedRecherche1 = '';
+    $selectedRecherche2 = '';
+    $selectedRecherche3 = '';
+    $selectedRecherche4 = '';
+    if ($recherchePrerempli != "") {
+        if ($recherchePrerempli == "pas commence") {
+            $selectedRecherche1 = "checked";
+            $choix = "Recherche1";
+        }
+        if ($recherchePrerempli == "en recherche") {
+            $selectedRecherche2 = "checked";
+            $choix = "Recherche2";
+        }
+        if ($recherchePrerempli == "en attente") {
+            $selectedRecherche3 = "checked";
+            $choix = "Recherche3";
+        }
+        if ($recherchePrerempli == "accepte") {
+            $selectedRecherche4 = "checked";
+            $choix = "Recherche4";
+        }
+    } else {
+        $choix = "";
     }
-    if($recherchePrerempli == "en recherche"){
-        $selectedRecherche2 = "checked";
-        $choix = "Recherche2";
+
+    $selectedNatContrat1 = '';
+    $selectedNatContrat2 = '';
+    $selectedNatContrat3 = '';
+    if ($natureContratPrerempli != "") {
+        if ($natureContratPrerempli == "apprentissage") {
+            $selectedNatContrat1 = "checked";
+        }
+        if ($natureContratPrerempli == "pro") {
+            $selectedNatContrat2 = "checked";
+        }
+        if ($natureContratPrerempli == "stage") {
+            $selectedNatContrat3 = "checked";
+        }
     }
-    if($recherchePrerempli == "en attente"){
-        $selectedRecherche3 = "checked";
-        $choix = "Recherche3";
+
+    $selectedStatutContrat1 = '';
+    $selectedStatutContrat2 = '';
+    if ($contratPrerempli != "") {
+        if ($contratPrerempli == "Traitement") {
+            $selectedStatutContrat1 = "checked";
+            $choix2 = "Statut1";
+        }
+        if ($contratPrerempli == "Signe") {
+            $selectedStatutContrat2 = "checked";
+            $choix2 = "Statut2";
+        }
+    } else {
+        $choix2 = "";
     }
-    if($recherchePrerempli == "accepte"){
-        $selectedRecherche4 = "checked";
-        $choix = "Recherche4";
+
+    $selectedRemu1 = '';
+    $selectedRemu2 = '';
+    $selectedRemu3 = '';
+    $selectedRemu4 = '';
+    $selectedRemu5 = '';
+    $selectedRemu6 = '';
+    if ($remunerationPrerempli != "") {
+        if ($remunerationPrerempli == "<800") {
+            $selectedRemu1 = "checked";
+        }
+        if ($remunerationPrerempli == "800-1000") {
+            $selectedRemu2 = "checked";
+        }
+        if ($remunerationPrerempli == "1000-1200") {
+            $selectedRemu3 = "checked";
+        }
+        if ($remunerationPrerempli == "1200-1400") {
+            $selectedRemu4 = "checked";
+        }
+        if ($remunerationPrerempli == "1400-1600") {
+            $selectedRemu5 = "checked";
+        }
+        if ($remunerationPrerempli == ">1600") {
+            $selectedRemu6 = "checked";
+        }
     }
 } else {
-    $choix = "";
-}
+    $reqUtilisateur = $bdd->prepare("
+                            SELECT
+                                nom, prenom, email, numEtu, parcours, etatC
+                            FROM
+                                utilisateur
+                            WHERE statut='etudiant' AND idUtilisateur=:user");
+    $reqUtilisateur->bindParam(':user', $_SESSION['user']);
+    $reqUtilisateur->execute();
+    $resultatUtilisateur = $reqUtilisateur->fetch();
 
-$selectedNatContrat1 = '';
-$selectedNatContrat2 = '';
-$selectedNatContrat3 = '';
-if($natureContratPrerempli != ""){
-    if($natureContratPrerempli == "apprentissage"){
-        $selectedNatContrat1 = "checked";
-    }
-    if($natureContratPrerempli == "pro"){
-        $selectedNatContrat2 = "checked";
-    }
-    if($natureContratPrerempli == "stage") {
-        $selectedNatContrat3 = "checked";
-    }
-}
+    $emailEtuPrerempli = $resultatUtilisateur['email'];
+    $numEtuPrerempli = $resultatUtilisateur['numEtu'];
+    $nomEtuPrerempli = $resultatUtilisateur['nom'];
+    $prenomEtuPrerempli = $resultatUtilisateur['prenom'];
+    $parcoursPrerempli = $resultatUtilisateur['parcours'];
+    $recherchePrerempli = $resultatUtilisateur['etatC'];
 
-$selectedStatutContrat1 = '';
-$selectedStatutContrat2 = '';
-if($contratPrerempli != ""){
-    if($contratPrerempli == "Traitement"){
-        $selectedStatutContrat1 = "checked";
-        $choix2 = "Statut1";
+    $selectedParcours1 = '';
+    $selectedParcours2 = '';
+    $selectedParcours3 = '';
+    if ($parcoursPrerempli != "") {
+        if ($parcoursPrerempli == "ECMPS") {
+            $selectedParcours1 = "checked";
+        }
+        if ($parcoursPrerempli == "GCell") {
+            $selectedParcours2 = "checked";
+        }
+        if ($parcoursPrerempli == "GPhy") {
+            $selectedParcours3 = "checked";
+        }
     }
-    if($contratPrerempli == "Signe"){
-        $selectedStatutContrat2 = "checked";
-        $choix2 = "Statut2";
-    }
-} else {
-    $choix2 = "";
-}
 
-$selectedRemu1 = '';
-$selectedRemu2 = '';
-$selectedRemu3 = '';
-$selectedRemu4 = '';
-$selectedRemu5 = '';
-$selectedRemu6 = '';
-if($remunerationPrerempli != ""){
-    if($remunerationPrerempli == "<800"){
-        $selectedRemu1 = "checked";
-    }
-    if($remunerationPrerempli == "800-1000"){
-        $selectedRemu2 = "checked";
-    }
-    if($remunerationPrerempli == "1000-1200"){
-        $selectedRemu3 = "checked";
-    }
-    if($remunerationPrerempli == "1200-1400"){
-        $selectedRemu4 = "checked";
-    }
-    if($remunerationPrerempli == "1400-1600"){
-        $selectedRemu5 = "checked";
-    }
-    if($remunerationPrerempli == ">1600"){
-        $selectedRemu6 = "checked";
+    $selectedRecherche1 = '';
+    $selectedRecherche2 = '';
+    $selectedRecherche3 = '';
+    $selectedRecherche4 = '';
+    if ($recherchePrerempli != "") {
+        if ($recherchePrerempli == "pas commence") {
+            $selectedRecherche1 = "checked";
+            $choix = "Recherche1";
+        }
+        if ($recherchePrerempli == "en recherche") {
+            $selectedRecherche2 = "checked";
+            $choix = "Recherche2";
+        }
+        if ($recherchePrerempli == "en attente") {
+            $selectedRecherche3 = "checked";
+            $choix = "Recherche3";
+        }
+        if ($recherchePrerempli == "accepte") {
+            $selectedRecherche4 = "checked";
+            $choix = "Recherche4";
+        }
+    } else {
+        $choix = "";
     }
 }
 $More1 = "";
@@ -219,6 +304,15 @@ $More2 = "";
 
     .smaller-text {
         font-size: 90%;
+    }
+
+    /* Grise les éléments que l'on ne peut pas modifier */
+    .readonly-input {
+        background-color: #f0f0f0; /* Gris clair */
+    }
+
+    input[type=radio]:disabled {
+        filter: grayscale(100%) opacity(0.5); /* Rend le bouton complètement gris et réduit l'opacité */
     }
 </style>
 
@@ -268,7 +362,7 @@ $More2 = "";
                     <!-- Question 1 -->
 
                     <label for="emailEtu">1.<?php echo $espaces5 ?>Adresse e-mail <span style="color: red;">*</span></label><br><br>
-                    <?php echo $espaces8 ?><input type="email" id="emailEtu" name="emailEtu" value="<?php echo $emailEtuPrerempli ?>" required><br><br>
+                    <?php echo $espaces8 ?><input type="email" id="emailEtu" name="emailEtu" value="<?php echo $emailEtuPrerempli ?>" required readonly class="readonly-input"><br><br>
 
                     <!-- Question 2 -->
                     <label for="numEtu">2.<?php echo $espaces5 ?>Numéro étudiant <span style="color: red;">*</span></label><br><br>
@@ -277,26 +371,26 @@ $More2 = "";
                     <!-- Question 3 -->
                     <label for="nomEtu">3.<?php echo $espaces5 ?>Nom <span style="color: red;">*</span></label><br>
                     <?php echo $espaces8 ?><span class="smaller-text">Votre nom</span><br><br>
-                    <?php echo $espaces8 ?><input type="text" id="nomEtu" name="nomEtu" value="<?php echo $nomEtuPrerempli ?>" required><br><br>
+                    <?php echo $espaces8 ?><input type="text" id="nomEtu" name="nomEtu" value="<?php echo $nomEtuPrerempli ?>" required readonly class="readonly-input"><br><br>
 
                     <!-- Question 4 -->
                     <label for="prenomEtu">4.<?php echo $espaces5 ?>Prénom <span style="color: red;">*</span></label><br>
                     <?php echo $espaces8 ?><span class="smaller-text">Votre prénom</span><br><br>
-                    <?php echo $espaces8 ?><input type="text" id="prenomEtu" name="prenomEtu" value="<?php echo $prenomEtuPrerempli ?>" required><br><br>
+                    <?php echo $espaces8 ?><input type="text" id="prenomEtu" name="prenomEtu" value="<?php echo $prenomEtuPrerempli ?>" required readonly class="readonly-input"><br><br>
 
                     <!-- Question 5 -->
                     <label for="parcoursEtu">5.<?php echo $espaces5 ?>Parcours <span style="color: red;">*</span></label><br>
                     <?php echo $espaces8 ?><span class="smaller-text"><i>Une seule réponse possible</i></span><br><br>
                     <div>
-                        <?php echo $espaces8 ?><input type="radio" id="ECMPS" name="parcoursEtu" value="ECMPS" <?php echo $selectedParcours1 ?>>
+                        <?php echo $espaces8 ?><input type="radio" id="ECMPS" name="parcoursEtu" value="ECMPS" <?php echo $selectedParcours1 ?> disabled >
                         <label for="ECMPS">ECMPS</label>
                     </div>
                     <div>
-                        <?php echo $espaces8 ?><input type="radio" id="GCell" name="parcoursEtu" value="GCell" <?php echo $selectedParcours2 ?>>
+                        <?php echo $espaces8 ?><input type="radio" id="GCell" name="parcoursEtu" value="GCell" <?php echo $selectedParcours2 ?> disabled>
                         <label for="GCell">GCell</label>
                     </div>
                     <div>
-                        <?php echo $espaces8 ?><input type="radio" id="GPhy" name="parcoursEtu" value="GPhy" <?php echo $selectedParcours3 ?>>
+                        <?php echo $espaces8 ?><input type="radio" id="GPhy" name="parcoursEtu" value="GPhy" <?php echo $selectedParcours3 ?> disabled>
                         <label for="GPhy">GPhy</label>
                     </div>
                     <br>
