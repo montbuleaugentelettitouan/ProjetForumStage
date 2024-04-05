@@ -28,7 +28,10 @@ ini_set('display_errors', '1');
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-red">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="index.php">Stage M1 GPhy</a>
+    <a class="navbar-brand ps-3" href="profil.php">
+        <img src="assets/img/gphy.png" alt="Logo" width="50" height="50">
+    </a>
+
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -65,6 +68,10 @@ ini_set('display_errors', '1');
                 <div class="nav">
                     <br>
                     <!--<div class="sb-sidenav-menu-heading">Core</div>-->
+                    <a class="nav-link" href="profil.php">
+                        <div class="sb-nav-link-icon"><!--<i class="fas fa-tachometer-alt"></i>--></div>
+                        Mon profil
+                    </a>
                     <a class="nav-link" href="dashboardPersonnel.php">
                         <div class="sb-nav-link-icon"><!--<i class="fas fa-tachometer-alt"></i>--></div>
                         Mes choix

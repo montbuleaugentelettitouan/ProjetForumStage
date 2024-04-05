@@ -81,7 +81,7 @@ if(!empty($_POST['mail']) && !empty($_POST['mdp']))
                 $_SESSION['statut'] = $reponse['statut'];
                 $_SESSION['parcours'] = $reponse['parcours'];
 
-                header('Location: ../dashboardM1.php');
+                header('Location: ../profil.php');
 
             }
         }
