@@ -1,11 +1,4 @@
 <?php
-/**
- * Fonctionnalité de login à l'application
- *
- * @autor : Anne SIECA, Victor ALLIOT, Alice Broussely et Audrey CHALAUX
- * @date : Promo GPhy 2022 - Année 2021 : 2022
- *
- */
 // ajout des fonctionnalités php
 include('barre_nav_M1.php');
 include('fonctionality/annee+promo.php');
@@ -36,9 +29,9 @@ ini_set('display_errors', '1');
                                 <tr>
                                     <th>N°</th>
                                     <th>Entreprise</th>
+                                    <th>Ville</th>
                                     <th>Site</th>
-                                    <th>Intitulé de l'offre</th>
-                                    <th>Description</th>
+                                    <th>Intitulé du poste</th>
                                     <th>PDF</th>
                                     <th>Priorité</th>
                                 </tr>
@@ -52,7 +45,7 @@ ini_set('display_errors', '1');
                             <!--Execution d'une requête permettant d'afficher les différentes offres inscrites dans la base de données en fonction d'un utilisateur-->
 
                                 <?php
-                                    $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, description, priorite FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise LEFT JOIN postule_m1 on offre.idOffre = postule_m1.idOffre AND postule_m1.idUtilisateur = ? where offre.anneeO = ? AND offre.valider = 1 ORDER BY entreprise.nomEntreprise ASC');
+                                    $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, ville, description, priorite FROM offre JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise LEFT JOIN postule_m1 on offre.idOffre = postule_m1.idOffre AND postule_m1.idUtilisateur = ? where offre.anneeO = ? AND offre.valider = 1 ORDER BY entreprise.nomEntreprise ASC');
                                     $req->execute(array($_SESSION['user'], $annee));
                                     //$resultat = $bdd->query($req);
                                     $resultat = $req->fetchAll();
@@ -62,9 +55,9 @@ ini_set('display_errors', '1');
                                 <tr>
                                     <td><?php echo $ligne['idOffre']; ?></td>
                                     <td><?php echo $ligne['nomEntreprise']; ?></td>
+                                    <td><?php echo $ligne['ville']; ?></td>
                                     <td><?php echo $ligne['nomSite']; ?></td>
                                     <td><?php echo $ligne['titre']; ?></td>
-                                    <td><?php echo $ligne['description']; ?></td>
                                     <td><a href="telechargement_pdf.php?id=<?php echo $ligne['idOffre']; ?>" class="btn btn-primary">Télécharger le PDF</a></td>
                                     <td>
                                         <select class="form-select modif" aria-label="Default select example"
