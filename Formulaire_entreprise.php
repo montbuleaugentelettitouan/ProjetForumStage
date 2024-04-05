@@ -53,7 +53,7 @@ include('fonctionality/annee+promo.php');
                         </div>
                         <br>
                         <div class="form-group">
-                            <label><h5> Nom du site industriel:</h5></label>
+                            <label><h5> Nom du site géographique:</h5></label>
                             <input type="text" class="form-control" placeholder="Entrez le site de l'entreprise où se déroulera le stage" id="ChoiceSite" name="ChoiceSite" value="<?php echo isset($_POST['ChocieSite']) ? htmlspecialchars($_POST['ChoiceSite']) : ''; ?>">
                         </div>
                         <br>
