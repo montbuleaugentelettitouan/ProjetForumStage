@@ -1,5 +1,5 @@
 <?php
-include('barre_nav_M1.php');
+session_start();
 include('fonctionality/bdd.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -11,9 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $parcoursEtu = $_POST["parcoursEtu"];
     $statutEtu = $_POST["statutEtu"];
 
-    if (isset($_POST['AddFields1'])) {
-        $Suite1 = True;
 
+    if (isset($_POST['natureEtu'])) {
         $natureCont = $_POST['natureEtu'];
         $rsEnt = $_POST['RSEntreprise'];
         $siteEnt = $_POST['SiteEntreprise'];
@@ -22,9 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $villeEnt = $_POST['VilleEntreprise'];
         $cpEnt = $_POST['CPEntreprise'];
         $statutCont = $_POST['StatutContrat'];
-        if (isset($_POST['AddFields2'])) {
-            $Suite2 = True;
 
+        if (isset($_POST['DebContrat'])) {
             $debCont = $_POST['DebContrat'];
             $finCont = $_POST['FinContrat'];
             $nomMDS = $_POST['NomMDS'];
@@ -34,15 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nomTA = $_POST['NomTA'];
             $prenomTA = $_POST['PrénomTA'];
             $emailTA = $_POST['EmailTA'];
-        } else {
-            $Suite2 = False;
         }
-    } else {
-        $Suite1 = False;
     }
 
     // Mise à jour de la table "utilisateur"
-    $sqlUtilisateur = $bdd->prepare("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, numEtu = :?, parcours = ?, etatC = ? WHERE idUtilisateur = ?");
+    $sqlUtilisateur = $bdd->prepare("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, numEtu = ?, parcours = ?, etatC = ? WHERE idUtilisateur = ?");
     $sqlUtilisateur->execute(array($emailEtu, $nomEtu, $prenomEtu, $numEtu, $parcoursEtu, $statutEtu, $_SESSION['user']));
 /*
     // On teste si les champs additionnels du formulaire ont été affichés ou pas
@@ -98,7 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $majStage->execute();
     }
 */
-
     header("Location: formu_stage_m2.php");
 } else {
     header("Location: dashboardPersonnel.php");

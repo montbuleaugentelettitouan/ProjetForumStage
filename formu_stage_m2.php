@@ -152,11 +152,9 @@ if ($resultat) {
     if ($natureContratPrerempli != "") {
         if ($natureContratPrerempli == "apprentissage") {
             $selectedNatContrat1 = "checked";
-        }
-        if ($natureContratPrerempli == "pro") {
+        } elseif ($natureContratPrerempli == "pro") {
             $selectedNatContrat2 = "checked";
-        }
-        if ($natureContratPrerempli == "stage") {
+        } elseif ($natureContratPrerempli == "stage") {
             $selectedNatContrat3 = "checked";
         }
     }
@@ -382,15 +380,15 @@ $More2 = "";
                     <label for="parcoursEtu">5.<?php echo $espaces5 ?>Parcours <span style="color: red;">*</span></label><br>
                     <?php echo $espaces8 ?><span class="smaller-text"><i>Une seule réponse possible</i></span><br><br>
                     <div>
-                        <?php echo $espaces8 ?><input type="radio" id="ECMPS" name="parcoursEtu" value="ECMPS" <?php echo $selectedParcours1 ?> disabled >
+                        <?php echo $espaces8 ?><input type="radio" id="ECMPS" name="parcoursEtu" value="ECMPS" <?php echo $selectedParcours1 ?> >
                         <label for="ECMPS">ECMPS</label>
                     </div>
                     <div>
-                        <?php echo $espaces8 ?><input type="radio" id="GCell" name="parcoursEtu" value="GCell" <?php echo $selectedParcours2 ?> disabled>
+                        <?php echo $espaces8 ?><input type="radio" id="GCell" name="parcoursEtu" value="GCell" <?php echo $selectedParcours2 ?> >
                         <label for="GCell">GCell</label>
                     </div>
                     <div>
-                        <?php echo $espaces8 ?><input type="radio" id="GPhy" name="parcoursEtu" value="GPhy" <?php echo $selectedParcours3 ?> disabled>
+                        <?php echo $espaces8 ?><input type="radio" id="GPhy" name="parcoursEtu" value="GPhy" <?php echo $selectedParcours3 ?> >
                         <label for="GPhy">GPhy</label>
                     </div>
                     <br>
@@ -562,8 +560,6 @@ $More2 = "";
                             <?php echo $espaces8 ?><input type="text" id="EmailTA" name="EmailTA" value="<?php echo $emailTAPrerempli ?>"><br><br><br>
                         </div>
                     </div>
-                    <input type="hidden" name="AddFields1" value="<?php echo $More1 ?>">
-                    <input type="hidden" name="AddFields2" value="<?php echo $More2 ?>">
                     <input type="submit" name="Validation" value="Envoyer">
                 </form>
             </div>
@@ -578,71 +574,59 @@ $More2 = "";
 <script>
 
     // Script JS pour que la suite du formulaire devienne accessible si l'étudiant répond "j'ai accepté une offre" à la question 6
-    <?php
-    echo 'var choix = "' . $choix . '";';
-    ?>
+    let choix = <?php echo $choix ?>;
+    console.log(choix);
 
     document.addEventListener("DOMContentLoaded", function() {
-        var additionalFields = document.getElementById("additionalFields"); // additionalFields est le nom de la div qui gère la suite du formulaire
-
+        let additionalFields = document.getElementById("additionalFields"); // additionalFields est le nom de la div qui gère la suite du formulaire
+        console.log(choix);
         // Vérifie la valeur de la variable `choix` et affiche/masque la section du formulaire
         if (choix === "Recherche4") {
             additionalFields.style.display = "block"; // Afficher la suite
-            <?php $More1 = True ?>;
         } else {
             additionalFields.style.display = "none"; // Enlever la suite
-            <?php $More1 = False ?>;
         }
 
         // Écoute les changements de sélection du choix radio
-        var choixRadio = document.getElementsByName("statutEtu");
-        for (var i = 0; i < choixRadio.length; i++) {
+        let choixRadio = document.getElementsByName("statutEtu");
+        for (let i = 0; i < choixRadio.length; i++) {
             choixRadio[i].addEventListener("click", function() {
                 // Vérifie à nouveau la valeur du choix et affiche/masque la section
                 // On enverra la valeur du boolean '$More1' et '$More2' au fichier traitement.php pour vérifier quels infos à update dans la base de données
                 if (this.value === "accepte") {
                     additionalFields.style.display = "block";
-                    <?php $More1 = True ?>;
                 } else {
                     additionalFields.style.display = "none";
-                    <?php $More1 = False ?>;
                 }
             });
         }
     });
 
     // Même chose mais pour la question 14 "Statut".
-    <?php
-    echo 'var choix2 = "' . $choix2 . '";';
-    ?>
+    let choix2 = <?php echo $choix ?>;
+    console.log(choix2);
 
     document.addEventListener("DOMContentLoaded", function() {
-        var additionalFields2 = document.getElementById("additionalFields2"); // additionalFields est le nom de la div qui gère la suite du formulaire
+        let additionalFields2 = document.getElementById("additionalFields2"); // additionalFields est le nom de la div qui gère la suite du formulaire
 
         // Vérifie la valeur de la variable `choix` et affiche/masque la section du formulaire
         if (choix2 === "Statut2") {
             additionalFields2.style.display = "block"; // Afficher la suite
-            <?php $More2 = True ?>;
         } else {
             additionalFields2.style.display = "none"; // Enlever la suite
-            <?php $More2 = False ?>;
         }
 
         // Écoute les changements de sélection du choix radio
-        var choixRadio = document.getElementsByName("StatutContrat");
-        for (var i = 0; i < choixRadio.length; i++) {
+        let choixRadio = document.getElementsByName("StatutContrat");
+        for (let i = 0; i < choixRadio.length; i++) {
             choixRadio[i].addEventListener("click", function() {
                 // Vérifie à nouveau la valeur du choix et affiche/masque la section
                 if (this.value === "Signe") {
                     additionalFields2.style.display = "block";
-                    <?php $More2 = True ?>;
                 } else {
                     additionalFields2.style.display = "none";
-                    <?php $More2 = False ?>;
                 }
             });
         }
     });
-
-
 </script>
