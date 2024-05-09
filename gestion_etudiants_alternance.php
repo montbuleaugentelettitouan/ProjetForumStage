@@ -97,6 +97,7 @@ include('fonctionality/bdd.php');
                             utilisateur.email,
                             utilisateur.numTel,
                             utilisateur.etatC,
+                            utilisateur.parcours,
                             tuteur_academique.nomTA,
                             tuteur_academique.prenomTA,
                             tuteur_academique.emailTA,
@@ -108,7 +109,9 @@ include('fonctionality/bdd.php');
                             entreprise.nomEntreprise,
                             ville,
                             site.nomSite,
-                            convention_contrat.idConvention
+                            convention_contrat.idConvention,
+                            convention_contrat.type_contrat,
+                            convention_contrat.statut_contrat
                         FROM
                             utilisateur
                         LEFT JOIN convention_contrat ON utilisateur.idUtilisateur = convention_contrat.idUtilisateur
@@ -116,7 +119,7 @@ include('fonctionality/bdd.php');
                         LEFT JOIN maitre_de_stage ON convention_contrat.idMDS = maitre_de_stage.idMDS
                         LEFT JOIN site ON maitre_de_stage.idSite = site.idSite
                         LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise 
-                        WHERE statut='etudiant' AND promo = ? AND parcours = ? ORDER BY nom");
+                        WHERE statut='etudiant' AND promo = ? AND parcours = ? AND (convention_contrat.type_contrat = 'apprentissage' OR convention_contrat.type_contrat = 'pro') ORDER BY nom");
 
                         $req->execute(array($promo, $parcours));
                         $resultat = $req->fetchAll();
@@ -165,13 +168,13 @@ include('fonctionality/bdd.php');
                                     </div>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <span>PlaceholderParcours</span>
+                                    <span><?php echo $ligne['parcours'];?></span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <span>PlaceholderStatut</span>
+                                    <span><?php echo $ligne['statut_contrat'];?></span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <span>PlaceholderNature</span>
+                                    <span><?php echo $ligne['type_contrat'];?></span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['nomEntreprise']; ?>
