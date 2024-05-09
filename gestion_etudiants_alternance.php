@@ -183,7 +183,7 @@ include('fonctionality/bdd.php');
                                     <?php echo $ligne['nomSite']; ?>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <span>PlaceholderService</span>
+                                    <span>?</span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['ville']; ?>
