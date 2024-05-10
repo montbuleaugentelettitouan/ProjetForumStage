@@ -98,6 +98,7 @@ include('fonctionality/bdd.php');
                             utilisateur.numTel,
                             utilisateur.etatC,
                             utilisateur.parcours,
+                            utilisateur.typeAnnee,
                             tuteur_academique.nomTA,
                             tuteur_academique.prenomTA,
                             tuteur_academique.emailTA,
@@ -168,7 +169,7 @@ include('fonctionality/bdd.php');
                                     </div>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <span><?php echo $ligne['parcours'];?></span>
+                                    <span><?php echo $ligne['typeAnnee'];?><?php echo " "?><?php echo $ligne['parcours'];?></span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <span><?php echo $ligne['statut_contrat'];?></span>
