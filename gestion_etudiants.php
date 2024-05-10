@@ -99,6 +99,7 @@ include('fonctionality/bdd.php');
                         </tr>
                         </thead>
                         <tbody>
+                        <!-- Bouton de téléchargement Excel -->
                         <?php
 
                         /* Recupération de la requête et affichage de toutes les données dans un tableau */

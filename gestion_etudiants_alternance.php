@@ -224,7 +224,10 @@ include('fonctionality/bdd.php');
                         <?php } ?>
                         </tbody>
                     </table>
+                        <a href="export_excel.php">
+                            <button type="button" class="btn btn-info">Exportation Excel</button></a>
                     </div>
+                    <br>
                     <button onclick="topFunction()" id="scrollTopBtn" class="btn btn-secondary" title="Revenir en haut de la page">Haut de la page</button>
 
                     <script>
