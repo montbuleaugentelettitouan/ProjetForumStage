@@ -78,10 +78,10 @@ foreach($resultat as $ligne) {
 $writer = new Xlsx($spreadsheet);
 
 // Enregistrer le fichier sur le serveur
-$writer->save('etu_test.xlsx');
+$writer->save('liste_etu_postM1.xlsx');
 
 // Télécharger le fichier
-$file = 'etu_test.xlsx';
+$file = 'liste_etu_postM1.xlsx';
 header('Content-Description: File Transfer');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment; filename="'.basename($file).'"');

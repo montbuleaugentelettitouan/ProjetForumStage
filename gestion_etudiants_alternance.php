@@ -57,7 +57,7 @@ include('fonctionality/bdd.php');
                 <!-- Certaines parties du tableau sont en noir pour mieux différencier les groupes d'informations -->
                 <div class="card-body">
                     <a href="export_excel.php">
-                        <button type="button" class="btn btn-info">Exportation Excel</button></a>
+                        <button type="button" class="btn btn-outline-success"><img src="assets/img/excel.png" alt="Icône"> Exportation Excel</button></a>
 
                     <div class="table-responsive">
                         <br>
