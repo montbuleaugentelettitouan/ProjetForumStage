@@ -82,11 +82,8 @@
                 $countr1 = $reqTut->rowcount();
 
                 //initialisation des variables pour la récupération des valeurs
-                //$nomTuteur = "";
-                //$prenomTuteur = "";
                 $gratification = "";
                 $format = "";
-
                 $stageid = "";
 
                 $selectedformat1 ="";
@@ -98,9 +95,6 @@
 
                 //s'il y a des données déjà renseignées
                 if($countr1 != 0){
-
-                    //$nomTuteur = $resultat['nomTA'];
-                    //$prenomTuteur = $resultat['prenomTA'];
                     $stageid = $resultat['idConvention'];
                     $gratification = $resultat['gratification'];
                     $format = $resultat['format_gratification'];
@@ -130,7 +124,7 @@
                 //récupération du dernier état 
                 $reqEtat = $bdd->prepare('SELECT etat_convention FROM convention_contrat WHERE idConvention = ? order by idConvention DESC LIMIT 1');
                 $reqEtat->execute(array($stageid));
-                $resultat = $reqEtat->fetchAll();
+                $resultat2 = $reqEtat->fetchAll();
 
                 $countr2 = $reqEtat->rowcount();
 
@@ -145,7 +139,7 @@
 
                 if($countr2 != 0){
 
-                    foreach ($resultat as $ligne ){
+                    foreach ($resultat2 as $ligne ){
                         $etat_convention = $ligne['etat_convention'];
                         
                     }
@@ -168,6 +162,43 @@
 
                 }
 
+                // selection du dernier type de contrat
+            $reqType = $bdd->prepare('SELECT type_contrat FROM convention_contrat WHERE idConvention = ? order by idConvention DESC LIMIT 1');
+            $reqType->execute(array($stageid));
+            $resultat3 = $reqType->fetchAll();
+
+            $countr3 = $reqType->rowcount();
+
+            $type_contrat = "";
+
+            $selectedtype1 ="";
+            $selectedtype2 ="";
+            $selectedtype3 ="";
+            $selectedtype4 ="";
+
+            //si il y a déjà des informations de saisies on récupère la valeur et on initialise la variable pour pré-selectionner la valeur
+
+            if($countr3 != 0){
+
+                foreach ($resultat3 as $ligne ){
+                    $type_contrat = $ligne['type_contrat'];
+
+                }
+
+                if($type_contrat != ""){
+                    if($type_contrat == "stage"){
+                        $selectedtype1 = "selected";
+                    }
+                    if($type_contrat == "apprentissage"){
+                        $selectedtype2 = "selected";
+                    }
+                    if($type_contrat == "pro"){
+                        $selectedtype3 = "selected";
+                    }
+                }
+
+
+            }
 
             ?>
 
@@ -191,9 +222,6 @@
                                     <?php echo $selectedetat4?>
                                     value = "conventionEnvoyee">Convention envoyée</option>                                           
                                 </select>
-                                <!--<br>
-						        <input type="text" id="Type_contrat" name="Type_contrat" required>
-						        <br>-->
                             <label for="gratification"><b>Gratification (si aucune gratification mettre 0) : </b></label>
                                 <br>
                                 <input type="text" id="gratification" name="gratification" value = "<?php echo $gratification ?>" >
@@ -207,24 +235,28 @@
                                     <option 
                                     <?php echo $selectedformat3?>
                                     value = "mensuelbrut">Taux mensuel EUR Brut</option>
-                                    <option 
+                                    <option
                                     <?php echo $selectedformat4?>
                                     value = "mensuelnet">Taux mensuel EUR Net</option>
-                                    <option 
+                                    <option
                                     <?php echo $selectedformat5?>
-                                    value = "smc">% du SMC</option>                                             
+                                    value = "smc">% du SMC</option>
                                 </select>
-                            <!--
-						        <br>
-                                <label for="nomtuteur"><b>Nom du Tuteur Académique : </b></label>
+                            <label for="type_contrat"><b>Type de contrat</b></label>
+                            <br>
+                            <select  name="type_contrat" >
+                                <option
+                                    <?php echo $selectedtype1?>
+                                        value = "stage">Stage</option>
+                                <option
+                                    <?php echo $selectedtype2?>
+                                        value = "apprentissage">Apprentissage</option>
+                                <option
+                                    <?php echo $selectedtype3?>
+                                        value = "pro">Contrat Pro</option>
+                            </select>
                                 <br>
-                                <input type="text" id="nomtuteur" name="nomtuteur" value = "<?php echo $nomTuteur ?>">
-                                <label for="prenomtuteur"><b>Prénom du Tuteur Académique : </b></label>
-                                <br>
-                                <input type="text" id="prenomtuteur" name="prenomtuteur" value = "<?php echo $prenomTuteur ?>">
-                            -->
-
-                                <br>                        </div> <!--fin div de tableau 1 -->
+                        </div> <!--fin div de tableau 1 -->
                         <br>
                         <input type="submit" class="btn btn-warning" name="Validersuivi" value="Valider">
                     </form>
@@ -236,6 +268,7 @@
                             $gratif = $_POST['gratification'];
                             $format_gratif = $_POST['format_gratification'];
                             $dateactuelle = date("Y-m-d");
+                            $type_contrat = $_POST['type_contrat'];
 
                             /*
                             $nomTut = $_POST['nomtuteur'];
@@ -244,8 +277,8 @@
                             $prenomTut=strtoupper($prenomTut);
                             */
 
-                            $upStage = $bdd->prepare('UPDATE convention_contrat SET gratification = ?, format_gratification = ?, etat_convention = ?, date = ? WHERE idUtilisateur = ?');
-                            $upStage->execute(array($gratif, $format_gratif, $etat, $dateactuelle, $id));
+                            $upStage = $bdd->prepare('UPDATE convention_contrat SET type_contrat = ?, gratification = ?, format_gratification = ?, etat_convention = ?, date = ? WHERE idUtilisateur = ?');
+                            $upStage->execute(array($type_contrat, $gratif, $format_gratif, $etat, $dateactuelle, $id));
 
                             /*
                             //récupération de l'id stage 
