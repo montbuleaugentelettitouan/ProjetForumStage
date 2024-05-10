@@ -111,15 +111,15 @@ include('fonctionality/bdd.php');
                             site.nomSite,
                             convention_contrat.idConvention,
                             convention_contrat.type_contrat,
-                            convention_contrat.statut_contrat
+                            convention_contrat.statut_contrat               
                         FROM
                             utilisateur
                         LEFT JOIN convention_contrat ON utilisateur.idUtilisateur = convention_contrat.idUtilisateur
                         LEFT JOIN tuteur_academique ON convention_contrat.idTA = tuteur_academique.idTA
                         LEFT JOIN maitre_de_stage ON convention_contrat.idMDS = maitre_de_stage.idMDS
                         LEFT JOIN site ON maitre_de_stage.idSite = site.idSite
-                        LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise 
-                        WHERE statut='etudiant' AND promo = ? AND parcours = ? AND (convention_contrat.type_contrat = 'apprentissage' OR convention_contrat.type_contrat = 'pro') ORDER BY nom");
+                        LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise
+                        WHERE statut='etudiant' AND promo = ? AND parcours = ? AND ((convention_contrat.type_contrat = 'stage' AND utilisateur.typeAnnee = 'M2') OR convention_contrat.type_contrat = 'apprentissage' OR convention_contrat.type_contrat = 'pro')ORDER BY nom");
 
                         $req->execute(array($promo, $parcours));
                         $resultat = $req->fetchAll();
