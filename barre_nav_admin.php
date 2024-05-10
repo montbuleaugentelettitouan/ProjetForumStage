@@ -203,7 +203,7 @@ if (isset($_POST['recherche'])) {
                     <li>
                         <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
                             <div class="sb-nav-link-icon"><!--<i class="fas fa-tachometer-alt"></i>--></div>
-                            <b><span id="toggleIcon3" style="color: #dc3545;">▷</span><span style="color: #dc3545;">ALTERNANCES M2</span></b>
+                            <b><span id="toggleIcon3" style="color: #dc3545;">▷</span><span style="color: #dc3545;">SUIVI POST-M1</span></b>
 
                         </a>
                     </li>
