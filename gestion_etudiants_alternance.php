@@ -150,6 +150,15 @@ include('fonctionality/bdd.php');
                                     $val= "Pas de convention"; }
                                 $date =$resultat2['date'];
                             }
+                            if ($ligne['type_contrat'] == 'stage') {
+                                $typecontrat = 'Stage';
+                            }
+                            elseif ($ligne['type_contrat'] == 'apprentissage') {
+                                $typecontrat = 'Apprentissage';
+                            }
+                            elseif ($ligne['type_contrat'] == 'pro') {
+                                $typecontrat = 'Contrat Pro';
+                            }
                             ?>
 
                             <tr>
@@ -175,7 +184,7 @@ include('fonctionality/bdd.php');
                                     <span><?php echo $ligne['statut_contrat'];?></span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <span><?php echo $ligne['type_contrat'];?></span>
+                                    <span><?php echo $typecontrat?></span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <?php echo $ligne['nomEntreprise']; ?>
