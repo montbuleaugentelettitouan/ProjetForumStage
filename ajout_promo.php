@@ -64,9 +64,20 @@ require 'vendor/autoload.php';
                                             <div class="col-md-6">
                                                 <br>
                                                 <label for="fichier_excel">Fichier Excel</label>
-                                                <input class="form-control" id="fichier_excel" name="fichier_excel" type="file" accept=".xls,.xlsx" required />
+                                                <div class="input-group">
+                                                    <input class="form-control" id="fichier_excel" name="fichier_excel" type="file" accept=".xls,.xlsx" required />
+                                                    <div class="input-group">
+                                                        <br>
+                                                    <span class="input-group-text">
+                                                        <p><b>Pour un bon fonctionnement, merci de fournir un fichier Excel sous ce format:</b>
+                                                        <br>
+                                                        <img src="assets/img/exempleexcel.png" alt="Image"> </p>
+                                                    </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
                             </div>
                             <div class="mt-4 mb-0">
