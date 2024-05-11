@@ -246,7 +246,6 @@
 						        <br>
                             <label for="NumMDS"><b>Numéro de téléphone du maître de stage : </b></label>
                                 <br>
-						        <!--<input type="tel" id="NumMDS" name="NumMDS" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}|[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}|[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}">-->
                                 <input type="text" id="NumMDS" name="NumMDS" value= "<?php echo($numMDS)?>" >
                                 <br>
                             <label for="emailMDS"><b>Adresse mail du maître de stage <b><span style="color: red;">*</span></b> : </b></label>

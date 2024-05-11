@@ -106,7 +106,7 @@ foreach ($resultat as $ligne) {
                         </div>
                     </form>
                     <br>
-                    <b style="text-decoration: underline">Promo:</b> <?php echo $_SESSION['promo']; ?>
+                    <b style="text-decoration: underline">Promo:</b> <?php echo $ligne['promo']; ?>
                     <br><br>
                     <b style="text-decoration: underline">N° étudiant:</b> <?php echo $ligne['numEtu']; ?>
                     <br><br>

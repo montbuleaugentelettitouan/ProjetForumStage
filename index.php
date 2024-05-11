@@ -28,7 +28,7 @@ include('fonctionality/bdd.php');
 if (!empty($_SESSION["user"])) {
     if ($_SESSION['statut'] == "administrateur") {
         // si l'utilisateur est un admin alors on redirige vers la page admin
-        header('Location: ../nombres_postulations_offres.php');
+        header('Location: ../gestion_etudiants.php');
         exit();
     } else {
         // si l'utilisateur est un M1 on redirige vers la page de gestion de ses offres.

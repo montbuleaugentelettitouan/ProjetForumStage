@@ -99,6 +99,10 @@ if (isset($_POST['recherche'])) {
                     <hr class="dropdown-divider"/>
                 </li>
                 <li><a class="dropdown-item" href="register.php">Création de compte</a></li>
+                <li>
+                    <hr class="dropdown-divider"/>
+                </li>
+                <li><a class="dropdown-item" href="ajout_promo.php">Ajouter une nouvelle promo</a></li>
         </li>
         <li>
             <hr class="dropdown-divider"/>
