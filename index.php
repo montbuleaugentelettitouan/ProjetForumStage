@@ -19,10 +19,16 @@
 // On initialise la session si elle existe (on redirige l'utilisateur s'il est déjà connecté)
 session_start();
 
-$_SESSION['annee'] = 2024;
-$_SESSION['promo'] = 2025;
-
 include('fonctionality/bdd.php');
+// Requête SQL pour récupérer l'année de promotion la plus grande
+$requete_max_annee = $bdd->query("SELECT MAX(promo) AS max_annee FROM utilisateur");
+$resultat_max_annee = $requete_max_annee->fetch(PDO::FETCH_ASSOC);
+
+// Récupération de l'année de promotion la plus grande
+$annee_max = $resultat_max_annee['max_annee'];
+
+$_SESSION['promo'] = $annee_max;
+$_SESSION['annee'] = $_SESSION['promo'] - 1;
 
 // permet de rediriger si l'utilisateur c'est déjà connecté, on regarde si la SESSION est vide (présence d'un ID ou non)
 if (!empty($_SESSION["user"])) {

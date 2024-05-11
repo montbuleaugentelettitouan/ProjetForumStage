@@ -15,6 +15,7 @@ $req = $bdd->prepare("SELECT
                             utilisateur.numTel,
                             utilisateur.etatC,
                             utilisateur.parcours,
+                            utilisateur.promo,
                             utilisateur.typeAnnee,
                             tuteur_academique.nomTA,
                             tuteur_academique.prenomTA,
@@ -49,28 +50,32 @@ $sheet = $spreadsheet->getActiveSheet();
 // Ajouter les en-têtes
 $sheet->setCellValue('A1', 'Nom');
 $sheet->setCellValue('B1', 'Prénom');
-$sheet->setCellValue('C1', 'Parcours');
-$sheet->setCellValue('D1', 'Statut');
-$sheet->setCellValue('E1', 'Nature');
-$sheet->setCellValue('F1', 'Entreprise');
-$sheet->setCellValue('G1', 'Site');
-$sheet->setCellValue('H1', 'NomMDS');
-$sheet->setCellValue('I1', 'NumMDS');
-$sheet->setCellValue('J1', 'NomTA');
+$sheet->setCellValue('C1', 'Promo');
+$sheet->setCellValue('D1', 'TypeAnnée');
+$sheet->setCellValue('E1', 'Parcours');
+$sheet->setCellValue('F1', 'Statut');
+$sheet->setCellValue('G1', 'Nature');
+$sheet->setCellValue('H1', 'Entreprise');
+$sheet->setCellValue('I1', 'Site');
+$sheet->setCellValue('J1', 'NomMDS');
+$sheet->setCellValue('K1', 'NumMDS');
+$sheet->setCellValue('L1', 'NomTA');
 
 // Remplir les données
 $row = 2;
 foreach($resultat as $ligne) {
     $sheet->setCellValue('A' . $row, $ligne['nom']);
     $sheet->setCellValue('B' . $row, $ligne['prenom']);
-    $sheet->setCellValue('C' . $row, $ligne['parcours']);
-    $sheet->setCellValue('D' . $row, $ligne['statut_contrat']);
-    $sheet->setCellValue('E' . $row, $ligne['type_contrat']);
-    $sheet->setCellValue('F' . $row, $ligne['nomEntreprise']);
-    $sheet->setCellValue('G' . $row, $ligne['ville']);
-    $sheet->setCellValue('H' . $row, $ligne['nomMDS']);
-    $sheet->setCellValue('I' . $row, $ligne['numMDS']);
-    $sheet->setCellValue('J' . $row, $ligne['nomTA']);
+    $sheet->setCellValue('C' . $row, $ligne['promo']);
+    $sheet->setCellValue('D' . $row, $ligne['typeAnnee']);
+    $sheet->setCellValue('E' . $row, $ligne['parcours']);
+    $sheet->setCellValue('F' . $row, $ligne['statut_contrat']);
+    $sheet->setCellValue('G' . $row, $ligne['type_contrat']);
+    $sheet->setCellValue('H' . $row, $ligne['nomEntreprise']);
+    $sheet->setCellValue('I' . $row, $ligne['ville']);
+    $sheet->setCellValue('J' . $row, $ligne['nomMDS']);
+    $sheet->setCellValue('K' . $row, $ligne['numMDS']);
+    $sheet->setCellValue('L' . $row, $ligne['nomTA']);
     $row++;
 }
 

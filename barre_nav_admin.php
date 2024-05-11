@@ -103,6 +103,10 @@ if (isset($_POST['recherche'])) {
                     <hr class="dropdown-divider"/>
                 </li>
                 <li><a class="dropdown-item" href="ajout_promo.php">Ajouter une nouvelle promo</a></li>
+                <li>
+                    <hr class="dropdown-divider"/>
+                </li>
+                <li><a class="dropdown-item" href="evolution_etudiants.php">Passage M1 -> M2</a></li>
         </li>
         <li>
             <hr class="dropdown-divider"/>

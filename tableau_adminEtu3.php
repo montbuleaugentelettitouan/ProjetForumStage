@@ -1,10 +1,4 @@
 <?php
-/**
- *
- * @autor:  Tom ROBIN, Axel ITEY, Nathan GODART, Damien CALOIN
- * @date : Promo Gphy 2023 - Année 2022 - 2023
- *
- */
 include('barre_nav_admin.php');
 include('fonctionality/bdd.php');
 include('fonctionality/annee+promo.php');
