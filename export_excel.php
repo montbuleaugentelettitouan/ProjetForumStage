@@ -14,6 +14,8 @@ $req = $bdd->prepare("SELECT
                             utilisateur.email,
                             utilisateur.numTel,
                             utilisateur.etatC,
+                            utilisateur.parcours,
+                            utilisateur.typeAnnee,
                             tuteur_academique.nomTA,
                             tuteur_academique.prenomTA,
                             tuteur_academique.emailTA,
@@ -24,20 +26,20 @@ $req = $bdd->prepare("SELECT
                             maitre_de_stage.numMDS,
                             entreprise.nomEntreprise,
                             ville,
+                            site.nomSite,
                             convention_contrat.idConvention,
-                            convention_contrat.statut_contrat,
                             convention_contrat.type_contrat,
-                            utilisateur.parcours
+                            convention_contrat.statut_contrat               
                         FROM
                             utilisateur
                         LEFT JOIN convention_contrat ON utilisateur.idUtilisateur = convention_contrat.idUtilisateur
                         LEFT JOIN tuteur_academique ON convention_contrat.idTA = tuteur_academique.idTA
                         LEFT JOIN maitre_de_stage ON convention_contrat.idMDS = maitre_de_stage.idMDS
                         LEFT JOIN site ON maitre_de_stage.idSite = site.idSite
-                        LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise 
-                        WHERE statut='etudiant' AND promo = ? ORDER BY nom");
+                        LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise
+                        WHERE statut='etudiant' AND promo = ? AND parcours = ? AND ((convention_contrat.type_contrat = 'stage' AND utilisateur.typeAnnee = 'M2') OR convention_contrat.type_contrat = 'apprentissage' OR convention_contrat.type_contrat = 'pro')ORDER BY nom");
 
-$req->execute(array($promo));
+$req->execute(array($promo, $parcours));
 $resultat = $req->fetchAll();
 
 // Créer un nouvel objet Spreadsheet
@@ -76,10 +78,10 @@ foreach($resultat as $ligne) {
 $writer = new Xlsx($spreadsheet);
 
 // Enregistrer le fichier sur le serveur
-$writer->save('etu_test.xlsx');
+$writer->save('liste_etu_postM1.xlsx');
 
 // Télécharger le fichier
-$file = 'etu_test.xlsx';
+$file = 'liste_etu_postM1.xlsx';
 header('Content-Description: File Transfer');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment; filename="'.basename($file).'"');

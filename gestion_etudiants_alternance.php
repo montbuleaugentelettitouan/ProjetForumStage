@@ -37,7 +37,7 @@ include('fonctionality/bdd.php');
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Gestion des alternances (promo <?php echo $parcours; echo " "; echo $promo ?>)</h1>
+            <h1 class="mt-4">Suivi des étudiants post-M1 (promo <?php echo $parcours; echo " "; echo $promo ?>)</h1>
 
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active"></li>
@@ -56,7 +56,11 @@ include('fonctionality/bdd.php');
                 <!-- Tableau affichage tous les étudiants et leurs choix -->
                 <!-- Certaines parties du tableau sont en noir pour mieux différencier les groupes d'informations -->
                 <div class="card-body">
+                    <a href="export_excel.php">
+                        <button type="button" class="btn btn-outline-success"><img src="assets/img/excel.png" alt="Icône"> Exportation Excel</button></a>
+
                     <div class="table-responsive">
+                        <br>
                     <table id="datatablesSimple" class="table table-striped table-bordered table-sm">
                         <thead>
                         <tr>
@@ -224,8 +228,7 @@ include('fonctionality/bdd.php');
                         <?php } ?>
                         </tbody>
                     </table>
-                        <a href="export_excel.php">
-                            <button type="button" class="btn btn-info">Exportation Excel</button></a>
+
                     </div>
                     <br>
                     <button onclick="topFunction()" id="scrollTopBtn" class="btn btn-secondary" title="Revenir en haut de la page">Haut de la page</button>
