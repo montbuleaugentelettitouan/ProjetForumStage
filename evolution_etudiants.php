@@ -38,9 +38,7 @@ if (isset($_POST['submit']) && isset($_POST['etudiants'])) {
     <main>
         <div class="container-fluid px-4">
             <h1 class="mt-4">Évolution des étudiants M1 en M2</h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active"></li>
-            </ol>
+            <br>
             <div class="card mb-4">
                 <div class="card-header">
                     <!-- Bouton de bas de page -->

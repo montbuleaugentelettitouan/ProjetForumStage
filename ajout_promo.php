@@ -1,11 +1,4 @@
 <?php
-/**
- * Fonctionnalité de login à l'application
- *
- * @autor : Anne SIECA, Victor ALLIOT, Alice Broussely et Audrey CHALAUX
- * @date : Promo GPhy 2022 - Année 2021 : 2022
- *
- */
 
 include('fonctionality/bdd.php');
 require 'vendor/autoload.php';
@@ -30,8 +23,17 @@ require 'vendor/autoload.php';
                 <div class="row justify-content-center">
                     <div class="col-lg-7">
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Ajout d'une promotion</h3></div>
+                            <div class="card-header" align="center"><h3 class="text-center font-weight-light my-4">Ajout d'une promotion</h3>
+                            <a href="gestion_etudiants.php">Retour à l'accueil</a></div>
                             <div class="card-body">
+                                <center>
+                                    <div class="card mb-4"> <!--div de section 1 -->
+                                        <div id="confirmationMessage" style="display: none; font-size: 20px; color: mediumseagreen;">
+                                            <b>Les nouveaux étudiants ont été ajoutés avec succès !</b>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </center>
                                 <form method="post" action ="#" enctype="multipart/form-data">
                                     <div class="row mb-3">
                                         <div>
@@ -122,27 +124,38 @@ require 'vendor/autoload.php';
                                     $requete = $bdd->prepare("INSERT INTO utilisateur (idUtilisateur, statut, prenom, nom, email, password, numEtu, parcours, typeAnnee, promo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                                     $requete->execute([$idEtu, $statut, $prenom, $nom, $mail_etudiant, $mdp, $numero_etudiant, $parcours, $type_annee, $annee]);
                                 }
-
-                                // Message de succès
-                                echo "Les étudiants ont été ajoutés avec succès.";
+                                echo "<script>window.location.replace(\"ajout_promo.php?success=true\")</script>";
                             }
                             ?>
                         </div>
-                        <br>
                         <div class="card-footer text-center py-3">
-                            <!-- <div class="small"><a href="dashboardADMIN.php">Retour à l'accueil</a></div> -->
+
                         </div>
                     </div>
                 </div>
             </div>
     </div>
+    <script>
+        // Récupérer le paramètre GET de l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+
+        // Vérifier si le paramètre success est présent et égal à true
+        if (success === 'true') {
+            // Afficher la div de confirmation
+            const confirmationDiv = document.getElementById('confirmationMessage');
+            if (confirmationDiv) {
+                confirmationDiv.style.display = 'block';
+            }
+        }
+    </script>
     </main>
 </div>
 <div id="layoutAuthentication_footer">
     <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted">Copyright &copy; GPhy 2024</div>
+                <div class="text-muted">Copyright &copy; GPhy Forum 2024</div>
                 <div>
                     <a href="#">Privacy Policy</a>
                     &middot;
