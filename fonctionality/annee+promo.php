@@ -1,11 +1,15 @@
 <?php
-//A la connexion, l'année est définit dans une variable de session pour les admins. 
-//Elle n'est en revanche pas initialisé lors d'une connexion étudiant. 
-//Ces valeurs doivent être modifié directement ici suivant les années pour que les étudiants voient les stages de leur année seulement et pas des autres. 
-//Il est également important de faire en sorte que l'année de la promo soit d'une année supérieur à l'année en cours.
+include('fonctionality/bdd.php');
+// Requête SQL pour récupérer l'année de promotion la plus grande
+$requete_max_annee = $bdd->query("SELECT MAX(promo) AS max_annee FROM utilisateur");
+$resultat_max_annee = $requete_max_annee->fetch(PDO::FETCH_ASSOC);
+
+// Récupération de l'année de promotion la plus grande
+$annee_max = $resultat_max_annee['max_annee'];
+
 if (!isset($_SESSION['compt'])){
-    $annee = 2024;
-    $promo = 2025;
+    $promo = $annee_max;
+    $annee = $promo-1;
     $parcours = 'GPhy';
 }
 ?>
