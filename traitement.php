@@ -38,6 +38,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Mise à jour de la table "utilisateur"
     $sqlUtilisateur = $bdd->prepare("UPDATE utilisateur SET email = ?, nom = ?, prenom = ?, numEtu = ?, parcours = ?, etatC = ? WHERE idUtilisateur = ?");
     $sqlUtilisateur->execute(array($emailEtu, $nomEtu, $prenomEtu, $numEtu, $parcoursEtu, $statutEtu, $_SESSION['user']));
+
+    
+
+
+
+
+
 /*
     // On teste si les champs additionnels du formulaire ont été affichés ou pas
     if ($Suite1 != False) {
@@ -94,6 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 */
     header("Location: formu_stage_m2.php");
 } else {
-    header("Location: dashboardPersonnel.php");
+    header("Location: profil.php");
 }
 ?>

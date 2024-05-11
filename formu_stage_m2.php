@@ -80,6 +80,30 @@ $req->bindParam(':user', $_SESSION['user']);
 $req->execute();
 $resultat = $req->fetch();
 
+// On initialise les variables
+$selectedParcours1 = '';
+$selectedParcours2 = '';
+$selectedParcours3 = '';
+
+$selectedRecherche1 = '';
+$selectedRecherche2 = '';
+$selectedRecherche3 = '';
+$selectedRecherche4 = '';
+
+$selectedNatContrat1 = '';
+$selectedNatContrat2 = '';
+$selectedNatContrat3 = '';
+
+$selectedStatutContrat1 = '';
+$selectedStatutContrat2 = '';
+
+$selectedRemu1 = '';
+$selectedRemu2 = '';
+$selectedRemu3 = '';
+$selectedRemu4 = '';
+$selectedRemu5 = '';
+$selectedRemu6 = '';
+
 if ($resultat) {
     $emailEtuPrerempli = $resultat['email'];
     $numEtuPrerempli = $resultat['numEtu'];
@@ -105,10 +129,8 @@ if ($resultat) {
     $prenomTAPrerempli = $resultat['prenomTA'];
     $emailTAPrerempli = $resultat['emailTA'];
 
-    /* Ces variables vont permettre de préremplir les choix dans les types 'radios'. On les mets à jour selon ce que la base de données renvoie. */
-    $selectedParcours1 = '';
-    $selectedParcours2 = '';
-    $selectedParcours3 = '';
+    /* Ces variables vont permettre de préremplir les choix dans les types 'radios'. On les met à jour selon ce que la base de données renvoie. */
+
     if ($parcoursPrerempli != "") {
         if ($parcoursPrerempli == "ECMPS") {
             $selectedParcours1 = "checked";
@@ -121,10 +143,6 @@ if ($resultat) {
         }
     }
 
-    $selectedRecherche1 = '';
-    $selectedRecherche2 = '';
-    $selectedRecherche3 = '';
-    $selectedRecherche4 = '';
     if ($recherchePrerempli != "") {
         if ($recherchePrerempli == "pas commence") {
             $selectedRecherche1 = "checked";
@@ -146,9 +164,6 @@ if ($resultat) {
         $choix = "";
     }
 
-    $selectedNatContrat1 = '';
-    $selectedNatContrat2 = '';
-    $selectedNatContrat3 = '';
     if ($natureContratPrerempli != "") {
         if ($natureContratPrerempli == "apprentissage") {
             $selectedNatContrat1 = "checked";
@@ -159,8 +174,6 @@ if ($resultat) {
         }
     }
 
-    $selectedStatutContrat1 = '';
-    $selectedStatutContrat2 = '';
     if ($contratPrerempli != "") {
         if ($contratPrerempli == "Traitement") {
             $selectedStatutContrat1 = "checked";
@@ -174,12 +187,6 @@ if ($resultat) {
         $choix2 = "";
     }
 
-    $selectedRemu1 = '';
-    $selectedRemu2 = '';
-    $selectedRemu3 = '';
-    $selectedRemu4 = '';
-    $selectedRemu5 = '';
-    $selectedRemu6 = '';
     if ($remunerationPrerempli != "") {
         if ($remunerationPrerempli == "<800") {
             $selectedRemu1 = "checked";
@@ -218,9 +225,6 @@ if ($resultat) {
     $parcoursPrerempli = $resultatUtilisateur['parcours'];
     $recherchePrerempli = $resultatUtilisateur['etatC'];
 
-    $selectedParcours1 = '';
-    $selectedParcours2 = '';
-    $selectedParcours3 = '';
     if ($parcoursPrerempli != "") {
         if ($parcoursPrerempli == "ECMPS") {
             $selectedParcours1 = "checked";
@@ -232,11 +236,6 @@ if ($resultat) {
             $selectedParcours3 = "checked";
         }
     }
-
-    $selectedRecherche1 = '';
-    $selectedRecherche2 = '';
-    $selectedRecherche3 = '';
-    $selectedRecherche4 = '';
     if ($recherchePrerempli != "") {
         if ($recherchePrerempli == "pas commence") {
             $selectedRecherche1 = "checked";

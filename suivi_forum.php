@@ -102,7 +102,13 @@ else{
                             
                             <br>
                                 <?php
-                                    $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, entretien_passe, proposition_recue, cr_entretien FROM entreprise JOIN site on entreprise.idEntreprise = site.idEntreprise JOIN offre ON site.idSite = offre.idSite JOIN postule_m1 on offre.idOffre = postule_m1.idOffre WHERE postule_m1.idUtilisateur=? ORDER BY priorite ASC');
+                                    $req = $bdd->prepare('SELECT offre.idOffre, nomEntreprise, nomSite, titre, entretien_passe, proposition_recue, cr_entretien 
+                                                                FROM entreprise 
+                                                                JOIN site on entreprise.idEntreprise = site.idEntreprise 
+                                                                JOIN offre ON site.idSite = offre.idSite 
+                                                                JOIN postule_m1 on offre.idOffre = postule_m1.idOffre 
+                                                                WHERE postule_m1.idUtilisateur=? 
+                                                                ORDER BY priorite ASC');
                                     $req->execute(array($_SESSION['user']));
                                     $resultat = $req->fetchAll();
                                     
