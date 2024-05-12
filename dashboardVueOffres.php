@@ -41,7 +41,6 @@ include('fonctionality/annee+promo.php');
                             <th>Nom du site</th>
                             <th>Ville</th>
                             <th>Intitulé de l'offre</th>
-                            <th>Description</th>
                             <th>Postes</th>
                             <th>Représentant</th>
                             <th>Mail à contacter</th>
@@ -62,7 +61,6 @@ include('fonctionality/annee+promo.php');
                                 <td><?php echo $ligne['nomSite']; ?></td>
                                 <td><?php echo $ligne['ville']; ?></td>
                                 <td><?php echo $ligne['titre']; ?></td>
-                                <td><?php echo $ligne['description']; ?></td>
                                 <td><?php echo $ligne['nbPoste']; ?></td>
                                 <td><?php echo $ligne['representant']; ?></td>
                                 <td><?php echo $ligne['mailContact']; ?></td>

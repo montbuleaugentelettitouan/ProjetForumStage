@@ -37,7 +37,7 @@ include('fonctionality/bdd.php');
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Suivi des étudiants post-M1 (promo <?php echo $parcours; echo " "; echo $promo ?>)</h1>
+            <h1 class="mt-4">Suivi des étudiants post-M1</h1>
 
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active"></li>

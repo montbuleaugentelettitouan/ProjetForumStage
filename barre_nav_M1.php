@@ -53,6 +53,11 @@ ini_set('display_errors', '1');
                 <li>
                     <hr class="dropdown-divider"/>
                 </li> -->
+
+                <li><a class="dropdown-item" href="GuideEtu.pdf" download="GuideEtu.pdf"><i class="fas fa-file-pdf"></i> Guide d'utilisation</a></li>
+                <li>
+                    <hr class="dropdown-divider"/>
+                </li>
                 <li><a class="dropdown-item" href="fonctionality/deconnexion.php">Déconnexion</a></li>
             </ul>
         </li>
