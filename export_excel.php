@@ -36,7 +36,9 @@ $req = $bdd->prepare("SELECT
                             site.nomSite,
                             convention_contrat.idConvention,
                             convention_contrat.type_contrat,
-                            convention_contrat.statut_contrat               
+                            convention_contrat.statut_contrat,
+                            convention_contrat.dateDeb,
+                            convention_contrat.dateFin
                         FROM
                             utilisateur
                         LEFT JOIN convention_contrat ON utilisateur.idUtilisateur = convention_contrat.idUtilisateur
@@ -66,6 +68,8 @@ $sheet->setCellValue('I1', 'Site');
 $sheet->setCellValue('J1', 'NomMDS');
 $sheet->setCellValue('K1', 'NumMDS');
 $sheet->setCellValue('L1', 'NomTA');
+$sheet->setCellValue('M1', 'DateDébut');
+$sheet->setCellValue('N1', 'DateFin');
 
 // Remplir les données
 $row = 2;
@@ -82,6 +86,8 @@ foreach($resultat as $ligne) {
     $sheet->setCellValue('J' . $row, $ligne['nomMDS']);
     $sheet->setCellValue('K' . $row, $ligne['numMDS']);
     $sheet->setCellValue('L' . $row, $ligne['nomTA']);
+    $sheet->setCellValue('M' . $row, $ligne['dateDeb']);
+    $sheet->setCellValue('N' . $row, $ligne['dateFin']);
     $row++;
 }
 

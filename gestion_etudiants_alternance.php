@@ -116,7 +116,7 @@ include('fonctionality/bdd.php');
                             site.nomSite,
                             convention_contrat.idConvention,
                             convention_contrat.type_contrat,
-                            convention_contrat.statut_contrat               
+                            convention_contrat.statut_contrat
                         FROM
                             utilisateur
                         LEFT JOIN convention_contrat ON utilisateur.idUtilisateur = convention_contrat.idUtilisateur
