@@ -57,7 +57,7 @@ $selectedValue = $_GET['value'];
                     </thead>
                     <tbody>
                     <?php
-                    $verif = $bdd->prepare('SELECT titre, nomSite, nomEntreprise FROM convention_contrat JOIN offre USING (idOffre) JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE convention_contrat.idUtilisateur =?');
+                    $verif = $bdd->prepare("SELECT titre, nomSite, nomEntreprise FROM convention_contrat JOIN offre USING (idOffre) JOIN site on offre.idSite = site.idSite JOIN entreprise on site.idEntreprise = entreprise.idEntreprise WHERE convention_contrat.idUtilisateur =? AND offre.niveau = 'M2'");
                     $verif->execute(array($valid));
                     $result = $verif->fetch();
 
@@ -89,7 +89,7 @@ $selectedValue = $_GET['value'];
                         LEFT JOIN tuteur_academique ta ON cc.idTA = ta.idTA
                         LEFT JOIN maitre_de_stage mds ON cc.idMDS = mds.idMDS
                         LEFT JOIN site s ON mds.idSite = s.idSite
-                        WHERE cc.idUtilisateur = ?");
+                        WHERE cc.idUtilisateur = ? AND o.niveau = 'M2'");
                     $req->execute(array($valid));
                     $resultat = $req->fetch();
 
