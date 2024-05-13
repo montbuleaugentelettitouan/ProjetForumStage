@@ -7,6 +7,12 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 include('fonctionality/bdd.php');
 include('fonctionality/annee+promo.php');
 
+// Démarrer la session pour accéder aux variables de session
+session_start();
+
+// Accéder à la variable de session de la page barre_nav_admin.php
+$promo = $_SESSION['promo'];
+
 $req = $bdd->prepare("SELECT
                             utilisateur.idUtilisateur,
                             utilisateur.nom,
@@ -95,6 +101,4 @@ header('Cache-Control: must-revalidate');
 header('Pragma: public');
 readfile($file);
 exit;
-
-
 ?>
