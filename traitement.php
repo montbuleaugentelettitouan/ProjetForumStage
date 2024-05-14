@@ -45,12 +45,21 @@ $statutCont = $_POST['StatutContrat']; convention_contrat.statut_contrat
         // Si etudiant dans la table convention_contrat M2 alors on actualise les informations
         if ($countCCM2 != 0) {
             // UPDATE TOUTES LES INFOS DANS TOUTES LES TABLES CONCERNEES
-            $updateCC1 = $bdd->prepare("UPDATE convention_contrat SET type_contrat = ? AND statut_contrat = ? WHERE ");
-            $updateCC1->execute(array($natureCont, $statutCont));
+            $updateCC1 = $bdd->prepare('UPDATE convention_contrat SET type_contrat = ? AND statut_contrat = ? WHERE idUtilisateur = ? AND niveau = "M2"');
+            $updateCC1->execute(array($natureCont, $statutCont, $_SESSION['user']));
+
+            $updateE1 = $bdd->prepare('UPDATE entreprise JOIN site USING (idEntreprise) JOIN offre USING (idSite) JOIN convention_contrat USING (idOffre) SET nomEntreprise = ? WHERE idUtilisateur = ? AND niveau = "M2"');
+            $updateE1->execute(array($rsEnt, $_SESSION['user']));
+
+            $updateS1 = $bdd->prepare('UPDATE site JOIN offre USING (idSite) JOIN convention_contrat USING (idOffre) SET nomSite = ? AND pays = ? AND ville = ? AND code_postal = ? WHERE idUtilisateur = ? AND niveau = "M2"');
+            $updateS1->execute(array($siteEnt, $paysEnt, $villeEnt, $cpEnt, $_SESSION['user']));
+
+            $updateO1 = $bdd->prepare('UPDATE offre SET titre = ? WHERE idUtilisateur = ? AND niveau = "M2"');
+            $updateO1->execute(array($serviceEnt, $_SESSION['user']));
 
         } else {
             // Si la nouvelle offre découle du stage de M1
-            if ($offreM1 == "ouim1") {
+            if ($offreM1 == 'ouim1") {
                 // SELECT les infos de l'offre de M1
                 // SELECT dans les offres M2 join site join entreprise si une offre M2 correspond à ces infos
                 // Si offre existe déja avec ces infos, alors on récupère son idOffre pour le mettre dans une nouvelle ligne de convention_contrat plus bas

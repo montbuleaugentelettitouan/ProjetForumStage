@@ -339,7 +339,7 @@ if ($resultatM1 != null) {
         <!-- Cette partie concerne le texte avant le début du formulaire. -->
         <div class="info">
             <div class="container-fluid px-4">
-                <h1 class="mt-4">GPhy-GCell-ECMPS-M2 - Stages & Alternance <?php echo $_SESSION['promo']-1;?>/<?php echo $_SESSION['promo'];?></h1>
+                <h1 class="mt-4">GPhy-GCell-ECMPS-M2 - Stages & Alternances <?php echo $_SESSION['promo']-1;?>/<?php echo $_SESSION['promo'];?></h1>
             </div>
             <div class="container-fluid px-4">
                 Ce formulaire concerne les stages ou alternance de Master-2, pour l'année <?php echo $_SESSION['promo']-1;?>/<?php echo $_SESSION['promo'];?>
