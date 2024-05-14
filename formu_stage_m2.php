@@ -470,13 +470,17 @@ if ($resultatM1 != null) {
                         </div>
                         <br>
 
+                        <span style="color: red;">Si vous avez coché "oui" à la question 7, vous n'avez pas besoin de remplir les questions de 9 à 14 inclus.</span>
+                        <br>
+                        <br>
+
                         <!-- Question 9 -->
                         <label for="RSEntreprise">9.<?php echo $espaces5 ?>Entreprise <span style="color: red;">*</span></label><br>
                         <?php echo $espaces8 ?><span class="smaller-text">Raison sociale de la société</span><br><br>
                         <?php echo $espaces8 ?><input type="text" id="RSEntreprise" name="RSEntreprise" value="<?php echo $rsEntreprisePrerempli ?>"><br><br>
 
                         <!-- Question 10 -->
-                        <label for="SiteEntreprise">10.<?php echo $espaces5 ?>Site d'entreprise</label><br>
+                        <label for="SiteEntreprise">10.<?php echo $espaces3 ?>Site d'entreprise</label><br>
                         <?php echo $espaces8 ?><span class="smaller-text">Si l'entreprise comporte plusieurs sites industriels, désignez celui dans lequel vous travaillerez. ATTENTION : ON NE DEMANDE PAS ICI LE SITE WEB DE L'ENTREPRISE.</span><br><br>
                         <?php echo $espaces8 ?><input type="text" id="SiteEntreprise" name="SiteEntreprise" value="<?php echo $siteEntreprisePrerempli ?>"><br><br>
 

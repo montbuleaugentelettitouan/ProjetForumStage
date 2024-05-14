@@ -44,14 +44,39 @@ $statutCont = $_POST['StatutContrat']; convention_contrat.statut_contrat
 
         // Si etudiant dans la table convention_contrat M2 alors on actualise les informations
         if ($countCCM2 != 0) {
+            // UPDATE TOUTES LES INFOS DANS TOUTES LES TABLES CONCERNEES
             $updateCC1 = $bdd->prepare("UPDATE convention_contrat SET type_contrat = ? AND statut_contrat = ?");
             $updateCC1->execute(array($natureCont, $statutCont));
 
         } else {
+            // Si la nouvelle offre découle du stage de M1
+            if ($offreM1 == "ouim1") {
+                // SELECT les infos de l'offre de M1
+                // SELECT dans les offres M2 join site join entreprise si une offre M2 correspond à ces infos
+                // Si offre existe déja avec ces infos, alors on récupère son idOffre pour le mettre dans une nouvelle ligne de convention_contrat plus bas
+                // Sinon on crée une nouvelle ligne dans offre avec ces infos et on récup ensuite son idOffre par une autre requete
+            } else {
+                // SELECT dans les offres M2 join site join entreprise si une offre M2 correspond aux infos du $_POST
+                // Si offre existe déja avec ces infos, alors on récupère son idOffre pour le mettre dans une nouvelle ligne de convention_contrat plus bas
+                // Sinon on crée une nouvelle ligne dans entreprise si elle existe pas déja, dans site si il existe pas deja puis dans offre avec ces infos et on récup ensuite son idOffre par une autre requete
+            }
+
+
+
+
+
+
+
             // On regarde si les infos ajoutées correspondent à une offre déjà enregistrée en M2
-            $recupE = $bdd -> prepare ('SELECT * FROM entreprise WHERE nomEntreprise LIKE ? ORDER BY idEntreprise DESC LIMIT 1');
-            $recupE -> execute (array($rsEnt));
+            $recupE = $bdd -> prepare ('SELECT * FROM offre JOIN site USING (idSite) JOIN entreprise USING (idEntreprise) WHERE titre = ? AND niveau = ? AND nomEntrepise = ? AND nomSite = ?');
+            $recupE -> execute (array($serviceEnt, 'M2', $rsEnt, $siteEnt));
             $resultatE = $recupE -> fetch();
+
+            if ($resultatE != null) {
+
+            } else {
+
+            }
 
 
 
@@ -141,60 +166,7 @@ $emailTA = $_POST['EmailTA']; tuteur_academique.emailTA
 
 
 
-/*
-    // On teste si les champs additionnels du formulaire ont été affichés ou pas
-    if ($Suite1 != False) {
-        $sqlStage = "UPDATE convention_contrat SET
-        type_contrat = :typeContrat,
-        //secteur = :secteur,
-        //code_postal = :cpEntreprise,
-        statut_contrat = :statutContrat,
-        //nom_Site = :nomSite,
-        //pays_Stage = :pays,
-        ville_stage = :ville,
-        nom_Entreprise = :rsEnt";
 
-        if ($Suite2 == True) {
-            $sqlStage .= ",
-            dateDeb = :debutContrat,
-            dateFin = :finContrat,
-            nomTuteur = :nomMDS,
-            prenomTuteur = :prenomMDS,
-            emailTuteur = :emailMDS,
-            gratification = :remuneration,
-            nom_tuteur_academique = :nomTA,
-            prenom_tuteur_academique = :prenomTA,
-            email_tuteur_academique = :emailTA";
-        }
-
-        $sqlStage .= " WHERE idUtilisateur = :idU";
-
-        $majStage = $bdd->prepare($sqlStage);
-        $majStage->bindParam(':typeContrat', $natureCont);
-        $majStage->bindParam(':secteur', $serviceEnt);
-        $majStage->bindParam(':cpEntreprise', $cpEnt);
-        $majStage->bindParam(':statutContrat', $statutCont);
-        $majStage->bindParam(':nomSite', $siteEnt);
-        $majStage->bindParam(':pays', $paysEnt);
-        $majStage->bindParam(':ville', $villeEnt);
-        $majStage->bindParam(':rsEnt', $rsEnt);
-        $majStage->bindParam(':idU', $_SESSION['user']);
-
-        if ($Suite2 == True) {
-            $majStage->bindParam(':debutContrat', $debCont);
-            $majStage->bindParam(':finContrat', $finCont);
-            $majStage->bindParam(':nomMDS', $nomMDS);
-            $majStage->bindParam(':prenomMDS', $prenomMDS);
-            $majStage->bindParam(':emailMDS', $emailMDS);
-            $majStage->bindParam(':remuneration', $remuneration);
-            $majStage->bindParam(':nomTA', $nomTA);
-            $majStage->bindParam(':prenomTA', $prenomTA);
-            $majStage->bindParam(':emailTA', $emailTA);
-        }
-
-        $majStage->execute();
-    }
-*/
     header("Location: formu_stage_m2.php");
 } else {
     header("Location: profil.php");
