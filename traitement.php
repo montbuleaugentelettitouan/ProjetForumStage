@@ -45,7 +45,7 @@ $statutCont = $_POST['StatutContrat']; convention_contrat.statut_contrat
         // Si etudiant dans la table convention_contrat M2 alors on actualise les informations
         if ($countCCM2 != 0) {
             // UPDATE TOUTES LES INFOS DANS TOUTES LES TABLES CONCERNEES
-            $updateCC1 = $bdd->prepare("UPDATE convention_contrat SET type_contrat = ? AND statut_contrat = ?");
+            $updateCC1 = $bdd->prepare("UPDATE convention_contrat SET type_contrat = ? AND statut_contrat = ? WHERE ");
             $updateCC1->execute(array($natureCont, $statutCont));
 
         } else {

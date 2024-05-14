@@ -6,7 +6,7 @@
  * @date : Promo GPhy 2025 - Année 2022/2023
  *
  */
-include('barre_nav_M2.php');
+include('barre_nav_M1.php');
 include('fonctionality/bdd.php');
 ?>
 
@@ -267,7 +267,7 @@ $searchM1 = $bdd -> prepare ('SELECT * FROM convention_contrat JOIN offre USING 
 $searchM1 -> execute (array($_SESSION['user']));
 $resultatM1 = $searchM1 -> fetch();
 if ($resultatM1 != null) {
-    $idOffreM2 = $resultatM1['idEntreprise'];
+    $idOffreM2 = $resultatM1['idOffre'];
 
     // On regarde si idOffreM2 de l'offre de M2 est égal a l'idOffre de M1 ($idOffreM2)
     $searchM1M2 = $bdd->prepare('SELECT * FROM convention_contrat JOIN offre USING (idOffre) WHERE idUtilisateur = ? AND niveau = "M2" AND idOffreM2 = ?');
