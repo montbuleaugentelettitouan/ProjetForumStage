@@ -1,5 +1,5 @@
 <?php
-include('fonctionality/bdd.php');
+include('bdd.php');
 // Requête SQL pour récupérer l'année de promotion la plus grande
 $requete_max_annee = $bdd->query("SELECT MAX(promo) AS max_annee FROM utilisateur");
 $resultat_max_annee = $requete_max_annee->fetch(PDO::FETCH_ASSOC);

@@ -49,7 +49,7 @@ $req = $bdd->prepare("SELECT
                             utilisateur.email,
                             utilisateur.numEtu,
                             utilisateur.parcours,
-                            utilisateur.etatC,
+                            utilisateur.etatCM2,
                             convention_contrat.type_contrat,
                             convention_contrat.statut_contrat,
                             convention_contrat.dateDeb,
@@ -110,7 +110,7 @@ if ($resultat) {
     $nomEtuPrerempli = $resultat['nom'];
     $prenomEtuPrerempli = $resultat['prenom'];
     $parcoursPrerempli = $resultat['parcours'];
-    $recherchePrerempli = $resultat['etatC'];
+    $recherchePrerempli = $resultat['etatCM2'];
     $natureContratPrerempli = $resultat['type_contrat'];
     $rsEntreprisePrerempli = $resultat['nomEntreprise'];
     $siteEntreprisePrerempli = $resultat['nomSite'];
@@ -209,11 +209,11 @@ if ($resultat) {
     }
 } else {
     $reqUtilisateur = $bdd->prepare("
-                            SELECT
-                                nom, prenom, email, numEtu, parcours, etatC
-                            FROM
-                                utilisateur
-                            WHERE statut='etudiant' AND idUtilisateur=:user");
+                SELECT
+                    nom, prenom, email, numEtu, parcours, etatCM2
+                FROM
+                    utilisateur
+                WHERE statut='etudiant' AND idUtilisateur=:user");
     $reqUtilisateur->bindParam(':user', $_SESSION['user']);
     $reqUtilisateur->execute();
     $resultatUtilisateur = $reqUtilisateur->fetch();
@@ -223,7 +223,7 @@ if ($resultat) {
     $nomEtuPrerempli = $resultatUtilisateur['nom'];
     $prenomEtuPrerempli = $resultatUtilisateur['prenom'];
     $parcoursPrerempli = $resultatUtilisateur['parcours'];
-    $recherchePrerempli = $resultatUtilisateur['etatC'];
+    $recherchePrerempli = $resultatUtilisateur['etatCM2'];
 
     if ($parcoursPrerempli != "") {
         if ($parcoursPrerempli == "ECMPS") {
@@ -257,8 +257,28 @@ if ($resultat) {
         $choix = "";
     }
 }
-$More1 = "";
-$More2 = "";
+
+// Savoir si l'offre de M2 découle du stage de M1
+// On prend l'idOffre du stage de M1
+$M1M2Oui = "";
+$M1M2Non = "";
+
+$searchM1 = $bdd -> prepare ('SELECT * FROM convention_contrat JOIN offre USING (idOffre) WHERE idUtilisateur = ? AND niveau = "M1"');
+$searchM1 -> execute (array($_SESSION['user']));
+$resultatM1 = $searchM1 -> fetch();
+if ($resultatM1 != null) {
+    $idOffreM2 = $resultatM1['idEntreprise'];
+
+    // On regarde si idOffreM2 de l'offre de M2 est égal a l'idOffre de M1 ($idOffreM2)
+    $searchM1M2 = $bdd->prepare('SELECT * FROM convention_contrat JOIN offre USING (idOffre) WHERE idUtilisateur = ? AND niveau = "M2" AND idOffreM2 = ?');
+    $searchM1M2->execute(array($_SESSION['user'], $idOffreM2));
+    $resultatM1M2 = $searchM1M2->fetch();
+    if ($resultatM1M2 != null) {
+        $M1M2Oui = "checked";
+    } else {
+        $M1M2Non = "checked";
+    }
+}
 ?>
 
 <!-- Les styles pour quelques div spéciales -->
@@ -414,13 +434,27 @@ $More2 = "";
                     <br>
 
                     <!-- A partir de là, affichage seulement si l'étudiant à accepté une offre. -->
-                    <div id="additionalFields" style="display: none;">
+                    <div id="additionalFields" style="display: block;">
                         <p>Éléments de l'offre</p>
                         <span class="smaller-text"><p>À ce niveau du formulaire, votre convention d'apprentissage, de stage ou de contrat pro
                         est établie, et en cours de signature. Donc vous devez connaître l'ensemble des
                         informations demandées ici.</p></span>
+
                         <!-- Question 7 -->
-                        <label for="natureEtu">7.<?php echo $espaces5 ?>Nature <span style="color: red;">*</span></label><br>
+                        <label for="OffreM1">7.<?php echo $espaces5 ?>Offre découlant du stage de M1 ? <span style="color: red;">*</span></label><br>
+                        <?php echo $espaces8 ?><span class="smaller-text"><i>Si l'offre que vous avez accepté est une continuation de votre stage de M1, cochez "oui".</i></span><br><br>
+                        <div>
+                            <?php echo $espaces8 ?><input type="radio" id="OuiM1" name="OffreM1" value="ouim1" <?php echo $M1M2Oui ?>>
+                            <label for="OuiM1">Oui</label>
+                        </div>
+                        <div>
+                            <?php echo $espaces8 ?><input type="radio" id="NonM1" name="OffreM1" value="nonm1" <?php echo $M1M2Non ?>>
+                            <label for="NonM1">Non</label>
+                        </div>
+                        <br>
+
+                        <!-- Question 8 -->
+                        <label for="natureEtu">8.<?php echo $espaces5 ?>Nature <span style="color: red;">*</span></label><br>
                         <?php echo $espaces8 ?><span class="smaller-text"><i>Une seule réponse possible</i></span><br><br>
                         <div>
                             <?php echo $espaces8 ?><input type="radio" id="Apprentissage" name="natureEtu" value="apprentissage" <?php echo $selectedNatContrat1 ?>>
@@ -436,38 +470,38 @@ $More2 = "";
                         </div>
                         <br>
 
-                        <!-- Question 8 -->
-                        <label for="RSEntreprise">8.<?php echo $espaces5 ?>Entreprise <span style="color: red;">*</span></label><br>
+                        <!-- Question 9 -->
+                        <label for="RSEntreprise">9.<?php echo $espaces5 ?>Entreprise <span style="color: red;">*</span></label><br>
                         <?php echo $espaces8 ?><span class="smaller-text">Raison sociale de la société</span><br><br>
                         <?php echo $espaces8 ?><input type="text" id="RSEntreprise" name="RSEntreprise" value="<?php echo $rsEntreprisePrerempli ?>"><br><br>
 
-                        <!-- Question 9 -->
-                        <label for="SiteEntreprise">9.<?php echo $espaces5 ?>Site d'entreprise</label><br>
+                        <!-- Question 10 -->
+                        <label for="SiteEntreprise">10.<?php echo $espaces5 ?>Site d'entreprise</label><br>
                         <?php echo $espaces8 ?><span class="smaller-text">Si l'entreprise comporte plusieurs sites industriels, désignez celui dans lequel vous travaillerez. ATTENTION : ON NE DEMANDE PAS ICI LE SITE WEB DE L'ENTREPRISE.</span><br><br>
                         <?php echo $espaces8 ?><input type="text" id="SiteEntreprise" name="SiteEntreprise" value="<?php echo $siteEntreprisePrerempli ?>"><br><br>
 
-                        <!-- Question 10 -->
-                        <label for="ServiceEntreprise">10.<?php echo $espaces3 ?>Service</label><br>
-                        <?php echo $espaces8 ?><span class="smaller-text">Si l'entreprise ou le site d'entreprise comporte plusieurs services, désignez celui dans lequel vous travaillerez</span><br><br>
+                        <!-- Question 11 -->
+                        <label for="ServiceEntreprise">11.<?php echo $espaces3 ?>Service</label><br>
+                        <?php echo $espaces8 ?><span class="smaller-text">Si l'entreprise ou le site d'entreprise comporte plusieurs services, désignez celui dans lequel vous travaillerez.</span><br><br>
                         <?php echo $espaces8 ?><input type="text" id="ServiceEntreprise" name="ServiceEntreprise" value="<?php echo $serviceEntreprisePrerempli ?>"><br><br>
 
-                        <!-- Question 11 -->
-                        <label for="PaysEntreprise">11.<?php echo $espaces3 ?>Pays <span style="color: red;">*</span></label><br>
+                        <!-- Question 12 -->
+                        <label for="PaysEntreprise">12.<?php echo $espaces3 ?>Pays <span style="color: red;">*</span></label><br>
                         <?php echo $espaces8 ?><span class="smaller-text">Pays d'activité</span><br><br>
                         <?php echo $espaces8 ?><input type="text" id="PaysEntreprise" name="PaysEntreprise" value="<?php echo $paysEntreprisePrerempli ?>"><br><br>
 
-                        <!-- Question 12 -->
-                        <label for="VilleEntreprise">12.<?php echo $espaces3 ?>Ville <span style="color: red;">*</span></label><br>
+                        <!-- Question 13 -->
+                        <label for="VilleEntreprise">13.<?php echo $espaces3 ?>Ville <span style="color: red;">*</span></label><br>
                         <?php echo $espaces8 ?><span class="smaller-text">Ville au sein de laquelle se trouve le site d'entreprise au sein duquel vous travaillerez.</span><br><br>
                         <?php echo $espaces8 ?><input type="text" id="VilleEntreprise" name="VilleEntreprise" value="<?php echo $villeEntreprisePrerempli ?>"><br><br>
 
-                        <!-- Question 13 -->
-                        <label for="CPEntreprise">13.<?php echo $espaces3 ?>Code Postal <span style="color: red;">*</span></label><br>
+                        <!-- Question 14 -->
+                        <label for="CPEntreprise">14.<?php echo $espaces3 ?>Code Postal <span style="color: red;">*</span></label><br>
                         <?php echo $espaces8 ?><span class="smaller-text">Code Postal de la ville en question, au format international (par exemple F-72300 ou B-8876)</span><br><br>
                         <?php echo $espaces8 ?><input type="text" id="CPEntreprise" name="CPEntreprise" value="<?php echo $cpEntreprisePrerempli ?>"><br><br>
 
-                        <!-- Question 14 -->
-                        <label for="StatutContrat">14.<?php echo $espaces3 ?>Statut <span style="color: red;">*</span></label><br>
+                        <!-- Question 15 -->
+                        <label for="StatutContrat">15.<?php echo $espaces3 ?>Statut <span style="color: red;">*</span></label><br>
                         <?php echo $espaces8 ?><span class="smaller-text">[Traitement] vous avez accepté la proposition, le contrat est en cours de rédaction, il n’est pas encore signé.
                         <br><?php echo $espaces8 ?>&nbsp;[Signé] le contrat est signé par vous et par l’entreprise, il a été remis au CFA ou à UP-Pro.</span><br><br>
                         <?php echo $espaces8 ?><span class="smaller-text"><i>Une seule réponse possible</i></span><br><br>
@@ -477,42 +511,42 @@ $More2 = "";
                         </div>
                         <div>
                             <?php echo $espaces8 ?><input type="radio" id="Statut2" name="StatutContrat" value="Signe" <?php echo $selectedStatutContrat2 ?>>
-                            <label for="Statut2">Signé <?php echo $espaces5 ?> <i>Passer à la question 15</i></label>
+                            <label for="Statut2">Signé <?php echo $espaces5 ?> <i>Passer à la question 16</i></label>
                         </div>
                         <br>
 
                         <!-- A partir de là, affichage seulement si l'étudiant à signé un contrat. -->
-                        <div id="additionalFields2" style="display: none;">
+                        <div id="additionalFields2" style="display: block;">
                             <p>Éléments opérationnels du contrat</p>
-                            <!-- Question 15 -->
-                            <label for="DebContrat">15.<?php echo $espaces3 ?>Début <span style="color: red;">*</span></label><br>
+                            <!-- Question 16 -->
+                            <label for="DebContrat">16.<?php echo $espaces3 ?>Début <span style="color: red;">*</span></label><br>
                             <?php echo $espaces8 ?><span class="smaller-text">Date de début du stage ou du contrat d'alternance (indiquée sur la convention ou sur le contrat)</span><br><br>
                             <?php echo $espaces8 ?><input type="text" id="DebContrat" name="DebContrat" value="<?php echo $debutStagePrerempli ?>"><br>
                             <?php echo $espaces8 ?><span class="smaller-text"><i>Exemple : 7 janvier 2019</i></span><br><br>
 
-                            <!-- Question 16 -->
-                            <label for="FinContrat">16.<?php echo $espaces3 ?>Fin <span style="color: red;">*</span></label><br>
+                            <!-- Question 17 -->
+                            <label for="FinContrat">17.<?php echo $espaces3 ?>Fin <span style="color: red;">*</span></label><br>
                             <?php echo $espaces8 ?><span class="smaller-text">Date de fin du stage ou du contrat d'alternance (indiquée sur la convention ou sur le contrat)</span><br><br>
                             <?php echo $espaces8 ?><input type="text" id="FinContrat" name="FinContrat" value="<?php echo $finStagePrerempli ?>"><br>
                             <?php echo $espaces8 ?><span class="smaller-text"><i>Exemple : 7 janvier 2019</i></span><br><br>
 
-                            <!-- Question 17 -->
-                            <label for="NomMDS">17.<?php echo $espaces3 ?>Nom du MDS <span style="color: red;">*</span></label><br>
+                            <!-- Question 18 -->
+                            <label for="NomMDS">18.<?php echo $espaces3 ?>Nom du MDS <span style="color: red;">*</span></label><br>
                             <?php echo $espaces8 ?><span class="smaller-text">Nom du maître de stage ou alternance</span><br><br>
                             <?php echo $espaces8 ?><input type="text" id="NomMDS" name="NomMDS" value="<?php echo $nomMDSPrerempli ?>"><br><br>
 
-                            <!-- Question 18 -->
-                            <label for="PrenomMDS">18.<?php echo $espaces3 ?>Prénom du MDS <span style="color: red;">*</span></label><br>
+                            <!-- Question 19 -->
+                            <label for="PrenomMDS">19.<?php echo $espaces3 ?>Prénom du MDS <span style="color: red;">*</span></label><br>
                             <?php echo $espaces8 ?><span class="smaller-text">Prénom du maître de stage ou alternance</span><br><br>
                             <?php echo $espaces8 ?><input type="text" id="PrenomMDS" name="PrenomMDS" value="<?php echo $prenomMDSPrerempli ?>"><br><br>
 
-                            <!-- Question 19 -->
-                            <label for="EmailMDS">19.<?php echo $espaces3 ?>EMail du MDS <span style="color: red;">*</span></label><br>
+                            <!-- Question 20 -->
+                            <label for="EmailMDS">20.<?php echo $espaces3 ?>EMail du MDS <span style="color: red;">*</span></label><br>
                             <?php echo $espaces8 ?><span class="smaller-text">Adresse électronique du maître de stage ou d'alternance.</span><br><br>
                             <?php echo $espaces8 ?><input type="text" id="EmailMDS" name="EmailMDS" value="<?php echo $emailMDSPrerempli ?>"><br><br>
 
-                            <!-- Question 20 -->
-                            <label for="Rémunération">20.<?php echo $espaces3 ?>Rémunération</label><br>
+                            <!-- Question 21 -->
+                            <label for="Rémunération">21.<?php echo $espaces3 ?>Rémunération</label><br>
                             <?php echo $espaces8 ?><span class="smaller-text">Net mensuel. Cette information est utilisée uniquement à des fins statistiques, et de manière anonyme.</span><br>
                             <?php echo $espaces8 ?><span class="smaller-text"><i>Une seule réponse possible</i></span><br><br>
                             <div>
@@ -544,18 +578,18 @@ $More2 = "";
                             <p>Tuteur académique</p>
                             <span class="smaller-text"><p>Le tuteur académique est l'enseignant de l'université inscrit sur votre convention de stage ou sur votre contrat d'alternance.</p></span>
 
-                            <!-- Question 21 -->
-                            <label for="NomTA">21.<?php echo $espaces3 ?>Nom Tuteur <span style="color: red;">*</span></label><br>
+                            <!-- Question 22 -->
+                            <label for="NomTA">22.<?php echo $espaces3 ?>Nom Tuteur <span style="color: red;">*</span></label><br>
                             <?php echo $espaces8 ?><span class="smaller-text">Nom du tuteur académique</span><br><br>
                             <?php echo $espaces8 ?><input type="text" id="NomTA" name="NomTA" value="<?php echo $nomTAPrerempli ?>"><br><br>
 
-                            <!-- Question 22 -->
-                            <label for="PrénomTA">22.<?php echo $espaces3 ?>Prénom Tuteur <span style="color: red;">*</span></label><br>
+                            <!-- Question 23 -->
+                            <label for="PrénomTA">23.<?php echo $espaces3 ?>Prénom Tuteur <span style="color: red;">*</span></label><br>
                             <?php echo $espaces8 ?><span class="smaller-text">Prénom du tuteur académique</span><br><br>
                             <?php echo $espaces8 ?><input type="text" id="PrénomTA" name="PrénomTA" value="<?php echo $prenomTAPrerempli ?>"><br><br>
 
-                            <!-- Question 23 -->
-                            <label for="EmailTA">23.<?php echo $espaces3 ?>Adresse électronique du Tuteur <span style="color: red;">*</span></label><br><br>
+                            <!-- Question 24 -->
+                            <label for="EmailTA">24.<?php echo $espaces3 ?>Adresse électronique du Tuteur <span style="color: red;">*</span></label><br><br>
                             <?php echo $espaces8 ?><input type="text" id="EmailTA" name="EmailTA" value="<?php echo $emailTAPrerempli ?>"><br><br><br>
                         </div>
                     </div>
