@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST['OffreM1'])) {
         $offreM1 = $_POST['OffreM1'];
-
         $natureCont = $_POST['natureEtu'];
         $rsEnt = $_POST['RSEntreprise'];
         $siteEnt = $_POST['SiteEntreprise'];
@@ -231,7 +230,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $updateCC2->execute(array($debCont, $finCont, $remuneration, $idTA, $idMDS, $_SESSION['user']));
         }
     }
-    header("Location: formu_stage_m2.php");
+    echo $emailEtu;
+    echo $numEtu;
+    echo $nomEtu;
+    echo $prenomEtu;
+    echo $parcoursEtu;
+    echo $statutEtu;
+    echo $offreM1;
+    echo $natureCont;
+    echo $rsEnt;
+    echo $siteEnt;
+    echo $serviceEnt;
+    echo $paysEnt;
+    echo $villeEnt;
+    echo $cpEnt;
+    echo $statutCont;
+    echo $debCont;
+    echo $finCont;
+    echo $nomMDS;
+    echo $prenomMDS;
+    echo $emailMDS;
+    echo $remuneration;
+    echo $nomTA;
+
+    //header("Location: formu_stage_m2.php");
 } else {
     header("Location: profil.php");
 }

@@ -288,20 +288,27 @@ if ($resultat) {
 $M1M2Oui = "";
 $M1M2Non = "";
 
-$searchM1 = $bdd -> prepare ('SELECT * FROM convention_contrat JOIN offre USING (idOffre) WHERE idUtilisateur = ? AND niveau = "M1"');
-$searchM1 -> execute (array($_SESSION['user']));
-$resultatM1 = $searchM1 -> fetch();
-if ($resultatM1 != null) {
-    $idOffreM2 = $resultatM1['idOffre'];
+// On regarde d'abord si l'utilsateur a une convention de M2
+$searchM2 = $bdd -> prepare ('SELECT * FROM convention_contrat JOIN offre USING (idOffre) WHERE idUtilisateur = ? AND niveau = "M2"');
+$searchM2 -> execute (array($_SESSION['user']));
+$resultatM2 = $searchM2 -> fetch();
 
-    // On regarde si idOffreM2 de l'offre de M2 est égal a l'idOffre de M1 ($idOffreM2)
-    $searchM1M2 = $bdd->prepare('SELECT * FROM convention_contrat JOIN offre USING (idOffre) WHERE idUtilisateur = ? AND niveau = "M2" AND idOffreM2 = ?');
-    $searchM1M2->execute(array($_SESSION['user'], $idOffreM2));
-    $resultatM1M2 = $searchM1M2->fetch();
-    if ($resultatM1M2 != null) {
-        $M1M2Oui = "checked";
-    } else {
-        $M1M2Non = "checked";
+if ($resultatM2 != null) {
+    $searchM1 = $bdd -> prepare ('SELECT * FROM convention_contrat JOIN offre USING (idOffre) WHERE idUtilisateur = ? AND niveau = "M1"');
+    $searchM1 -> execute (array($_SESSION['user']));
+    $resultatM1 = $searchM1 -> fetch();
+    if ($resultatM1 != null) {
+        $idOffreM2 = $resultatM1['idOffre'];
+
+        // On regarde si idOffreM2 de l'offre de M2 est égal a l'idOffre de M1 ($idOffreM2)
+        $searchM1M2 = $bdd->prepare('SELECT * FROM convention_contrat JOIN offre USING (idOffre) WHERE idUtilisateur = ? AND niveau = "M2" AND idOffreM2 = ?');
+        $searchM1M2->execute(array($_SESSION['user'], $idOffreM2));
+        $resultatM1M2 = $searchM1M2->fetch();
+        if ($resultatM1M2 != null) {
+            $M1M2Oui = "checked";
+        } else {
+            $M1M2Non = "checked";
+        }
     }
 }
 ?>
@@ -466,7 +473,7 @@ if ($resultatM1 != null) {
                         informations demandées ici.</p></span>
 
                         <!-- Question 7 -->
-                        <label for="OffreM1">7.<?php echo $espaces5 ?>Offre découlant du stage de M1 ? <span style="color: red;">*</span></label><br>
+                        <label for="OffreM1">7.<?php echo $espaces5 ?>Offre découlant du stage de M1 ? <span style="$color: red;">*</span></label><br>
                         <?php echo $espaces8 ?><span class="smaller-text"><i>Si l'offre que vous avez accepté est une continuation de votre stage de M1, cochez "oui".</i></span><br><br>
                         <div>
                             <?php echo $espaces8 ?><input type="radio" id="OuiM1" name="OffreM1" value="ouim1" <?php echo $M1M2Oui ?>>
@@ -645,27 +652,26 @@ if ($resultatM1 != null) {
 
 <!-- Un peu de Javascript pour préremplir les inputs dont on connait déjà la réponse -->
 <script>
-
     // Script JS pour que la suite du formulaire devienne accessible si l'étudiant répond "j'ai accepté une offre" à la question 6
-    let choix = <?php echo $choix ?>;
-    console.log(choix);
+    let choix = "<?php echo $choix ?>";
+    let choix2 = "<?php echo $choix2 ?>";
 
     document.addEventListener("DOMContentLoaded", function() {
-        let additionalFields = document.getElementById("additionalFields"); // additionalFields est le nom de la div qui gère la suite du formulaire
-        console.log(choix);
-        // Vérifie la valeur de la variable `choix` et affiche/masque la section du formulaire
-        if (choix === "Recherche4") {
-            additionalFields.style.display = "block"; // Afficher la suite
+        let additionalFields = document.getElementById("additionalFields");
+        let additionalFields2 = document.getElementById("additionalFields2");
+
+        // Vérifie la valeur de la variable  "choix" et affiche/masque la section du formulaire
+        if (choix === "accepte") {
+            additionalFields.style.display = "block";
         } else {
-            additionalFields.style.display = "none"; // Enlever la suite
+            additionalFields.style.display = "none";
         }
 
-        // Écoute les changements de sélection du choix radio
+        // Écoute les changements de sélection du choix radio pour "statutEtu"
         let choixRadio = document.getElementsByName("statutEtu");
         for (let i = 0; i < choixRadio.length; i++) {
             choixRadio[i].addEventListener("click", function() {
-                // Vérifie à nouveau la valeur du choix et affiche/masque la section
-                // On enverra la valeur du boolean '$More1' et '$More2' au fichier traitement.php pour vérifier quels infos à update dans la base de données
+                console.log("Selected value:", this.value);
                 if (this.value === "accepte") {
                     additionalFields.style.display = "block";
                 } else {
@@ -673,27 +679,19 @@ if ($resultatM1 != null) {
                 }
             });
         }
-    });
 
-    // Même chose mais pour la question 14 "Statut".
-    let choix2 = <?php echo $choix ?>;
-    console.log(choix2);
-
-    document.addEventListener("DOMContentLoaded", function() {
-        let additionalFields2 = document.getElementById("additionalFields2"); // additionalFields est le nom de la div qui gère la suite du formulaire
-
-        // Vérifie la valeur de la variable `choix` et affiche/masque la section du formulaire
+        // Vérifie la valeur de la variable "choix2" et affiche/masque la section du formulaire
         if (choix2 === "Statut2") {
-            additionalFields2.style.display = "block"; // Afficher la suite
+            additionalFields2.style.display = "block";
         } else {
-            additionalFields2.style.display = "none"; // Enlever la suite
+            additionalFields2.style.display = "none";
         }
 
-        // Écoute les changements de sélection du choix radio
-        let choixRadio = document.getElementsByName("StatutContrat");
-        for (let i = 0; i < choixRadio.length; i++) {
-            choixRadio[i].addEventListener("click", function() {
-                // Vérifie à nouveau la valeur du choix et affiche/masque la section
+        // Écoute les changements de sélection du choix radio pour "StatutContrat"
+        let choixRadio2 = document.getElementsByName("StatutContrat");
+        for (let i = 0; i < choixRadio2.length; i++) {
+            choixRadio2[i].addEventListener("click", function() {
+                console.log("Selected value:", this.value);
                 if (this.value === "Signe") {
                     additionalFields2.style.display = "block";
                 } else {
