@@ -628,8 +628,9 @@ if ($resultatM1 != null) {
                                         value = "vide"></option>
                             </select>
                             <br><br>
+
                             <label for="EmailTA"><?php echo $espaces3 ?>Adresse électronique du Tuteur (automatique)</label><br><br>
-                            <?php echo $espaces8 ?><input type="text" id="EmailTA" name="EmailTA" value="<?php echo $emailTAPrerempli ?>" readonly class="readonly-input"><br><br><br>
+                            <?php echo $espaces8 ?><input type="email" id="EmailTA" name="EmailTA" value="<?php echo $emailTAPrerempli ?>" readonly class="readonly-input"><br><br><br>
                         </div>
                     </div>
                     <input type="submit" name="Validation" value="Envoyer">
