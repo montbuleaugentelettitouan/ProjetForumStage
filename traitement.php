@@ -188,8 +188,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $emailMDS = $_POST['EmailMDS'];
             $remuneration = $_POST['Rémunération'];
             $nomTA = $_POST['NomTA'];
-            $prenomTA = $_POST['PrénomTA'];
-            $emailTA = $_POST['EmailTA'];
 
             // On cherche si le MDS est dans la table maitre_de_stage
             $reqIdMDS = $bdd->prepare('SELECT idMDS FROM maitre_de_stage WHERE nomMDS = ? AND prenomMDS = ?');
@@ -222,7 +220,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // On regarde quel TA a été choisi et on récup son idTA
-
+            if ($nomTA == "thierry") {$idTA = 1; }
+            if ($nomTA == "patrick") {$idTA = 2; }
+            if ($nomTA == "dominique") {$idTA = 3; }
+            if ($nomTA == "allan") {$idTA = 4; }
+            if ($nomTA == "vide") {$idTA = 1; } // Placeholder
 
             // On met a jour les infos dans convention_contrat
             $updateCC2 = $bdd->prepare('UPDATE convention_contrat JOIN offre USING (idOffre) SET dateDeb = ?, dateFin = ?, gratification = ?, idTA = ?, idMDS = ? WHERE idUtilisateur = ? AND niveau = "M2"');

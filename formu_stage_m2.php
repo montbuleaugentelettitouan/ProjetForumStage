@@ -56,6 +56,7 @@ $req = $bdd->prepare("SELECT
                             convention_contrat.dateFin,
                             convention_contrat.gratification,
                             offre.titre,
+                            tuteur_academique.idTA,
                             tuteur_academique.nomTA,
                             tuteur_academique.prenomTA,
                             tuteur_academique.emailTA,
@@ -104,6 +105,12 @@ $selectedRemu4 = '';
 $selectedRemu5 = '';
 $selectedRemu6 = '';
 
+$selectedTA1 = '';
+$selectedTA2 = '';
+$selectedTA3 = '';
+$selectedTA4 = '';
+$selectedTA5 = '';
+
 if ($resultat) {
     $emailEtuPrerempli = $resultat['email'];
     $numEtuPrerempli = $resultat['numEtu'];
@@ -125,11 +132,29 @@ if ($resultat) {
     $prenomMDSPrerempli = $resultat['prenomMDS'];
     $emailMDSPrerempli = $resultat['emailMDS'];
     $remunerationPrerempli = $resultat['gratification'];
+    $idTAPrerempli = $resultat['idTA'];
     $nomTAPrerempli = $resultat['nomTA'];
     $prenomTAPrerempli = $resultat['prenomTA'];
     $emailTAPrerempli = $resultat['emailTA'];
 
     /* Ces variables vont permettre de préremplir les choix dans les types 'radios'. On les met à jour selon ce que la base de données renvoie. */
+
+    if ($idTAPrerempli != "") {
+        if($idTAPrerempli == "1"){
+            $selectedTA1 = "selected";
+        }
+        if($idTAPrerempli == "2"){
+            $selectedTA2 = "selected";
+        }
+        if($idTAPrerempli == "3"){
+            $selectedTA3 = "selected";
+        }
+        if($idTAPrerempli == "4"){
+            $selectedTA4 = "selected";
+        }
+    } else {
+        $selectedTA5 = "selected";
+    }
 
     if ($parcoursPrerempli != "") {
         if ($parcoursPrerempli == "ECMPS") {
@@ -434,7 +459,7 @@ if ($resultatM1 != null) {
                     <br>
 
                     <!-- A partir de là, affichage seulement si l'étudiant à accepté une offre. -->
-                    <div id="additionalFields" style="display: block;">
+                    <div id="additionalFields" style="display: none;">
                         <p>Éléments de l'offre</p>
                         <span class="smaller-text"><p>À ce niveau du formulaire, votre convention d'apprentissage, de stage ou de contrat pro
                         est établie, et en cours de signature. Donc vous devez connaître l'ensemble des
@@ -520,7 +545,7 @@ if ($resultatM1 != null) {
                         <br>
 
                         <!-- A partir de là, affichage seulement si l'étudiant à signé un contrat. -->
-                        <div id="additionalFields2" style="display: block;">
+                        <div id="additionalFields2" style="display: none;">
                             <p>Éléments opérationnels du contrat</p>
                             <!-- Question 16 -->
                             <label for="DebContrat">16.<?php echo $espaces3 ?>Début <span style="color: red;">*</span></label><br>
@@ -583,17 +608,27 @@ if ($resultatM1 != null) {
                             <span class="smaller-text"><p>Le tuteur académique est l'enseignant de l'université inscrit sur votre convention de stage ou sur votre contrat d'alternance.</p></span>
 
                             <!-- Question 22 -->
-                            <label for="NomTA">22.<?php echo $espaces3 ?>Nom Tuteur <span style="color: red;">*</span></label><br>
-                            <?php echo $espaces8 ?><span class="smaller-text">Nom du tuteur académique</span><br><br>
-                            <?php echo $espaces8 ?><input type="text" id="NomTA" name="NomTA" value="<?php echo $nomTAPrerempli ?>"><br><br>
-
-                            <!-- Question 23 -->
-                            <label for="PrénomTA">23.<?php echo $espaces3 ?>Prénom Tuteur <span style="color: red;">*</span></label><br>
-                            <?php echo $espaces8 ?><span class="smaller-text">Prénom du tuteur académique</span><br><br>
-                            <?php echo $espaces8 ?><input type="text" id="PrénomTA" name="PrénomTA" value="<?php echo $prenomTAPrerempli ?>"><br><br>
-
-                            <!-- Question 24 -->
-                            <label for="EmailTA">24.<?php echo $espaces3 ?>Adresse électronique du Tuteur <span style="color: red;">*</span></label><br><br>
+                            <label for="NomTA">22.<?php echo $espaces3 ?>Nom et prénom Tuteur <span style="color: red;">*</span></label><br>
+                            <?php echo $espaces8 ?><span class="smaller-text">Nom et prénom du tuteur académique</span><br><br>
+                            <select  name="NomTA">
+                                <option
+                                    <?php echo $selectedTA1?>
+                                        value = "thierry">URRUTY Thierry</option>
+                                <option
+                                    <?php echo $selectedTA2?>
+                                        value = "patrick">GIRARD Patrick</option>
+                                <option
+                                    <?php echo $selectedTA3?>
+                                        value = "dominique">GENIET Dominique</option>
+                                <option
+                                    <?php echo $selectedTA4?>
+                                        value = "allan">FOUSSE Allan</option>
+                                <option
+                                    <?php echo $selectedTA5?>
+                                        value = "vide"></option>
+                            </select>
+                            <br><br>
+                            <label for="EmailTA"><?php echo $espaces3 ?>Adresse électronique du Tuteur (automatique)</label><br><br>
                             <?php echo $espaces8 ?><input type="text" id="EmailTA" name="EmailTA" value="<?php echo $emailTAPrerempli ?>" readonly class="readonly-input"><br><br><br>
                         </div>
                     </div>
