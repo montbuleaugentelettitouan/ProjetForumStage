@@ -122,12 +122,12 @@ include('fonctionality/bdd.php');
                         FROM
                             utilisateur
                         LEFT JOIN convention_contrat ON utilisateur.idUtilisateur = convention_contrat.idUtilisateur
+                        LEFT JOIN offre ON convention_contrat.idOffre = offre.idOffre
                         LEFT JOIN tuteur_academique ON convention_contrat.idTA = tuteur_academique.idTA
                         LEFT JOIN maitre_de_stage ON convention_contrat.idMDS = maitre_de_stage.idMDS
                         LEFT JOIN site ON maitre_de_stage.idSite = site.idSite
                         LEFT JOIN entreprise ON site.idEntreprise = entreprise.idEntreprise
-                        WHERE statut='etudiant' AND promo = ? AND parcours = ? AND ((convention_contrat.type_contrat = 'stage' AND utilisateur.typeAnnee = 'M2') OR convention_contrat.type_contrat = 'apprentissage' OR convention_contrat.type_contrat = 'pro')ORDER BY nom");
-
+                        WHERE statut='etudiant' AND promo = ? AND utilisateur.parcours = ? AND (utilisateur.typeAnnee = 'M2' OR (utilisateur.typeAnnee = 'M1' AND convention_contrat.type_contrat = 'anticipe')) AND offre.niveau = 'M2' ORDER BY nom");
                         $req->execute(array($promo, $parcours));
                         $resultat = $req->fetchAll();
 
@@ -164,6 +164,9 @@ include('fonctionality/bdd.php');
                             }
                             elseif ($ligne['type_contrat'] == 'pro') {
                                 $typecontrat = 'Contrat Pro';
+                            }
+                            elseif ($ligne['type_contrat'] == 'anticipe') {
+                                $typecontrat = 'Apprentissage anticipé';
                             }
                             ?>
 

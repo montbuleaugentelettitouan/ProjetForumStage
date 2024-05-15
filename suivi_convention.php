@@ -195,6 +195,9 @@
                     if($type_contrat == "pro"){
                         $selectedtype3 = "selected";
                     }
+                    if($type_contrat == "anticipe"){
+                        $selectedtype4 = "selected";
+                    }
                 }
 
 
@@ -249,11 +252,8 @@
                                     <?php echo $selectedtype1?>
                                         value = "stage">Stage</option>
                                 <option
-                                    <?php echo $selectedtype2?>
-                                        value = "apprentissage">Apprentissage</option>
-                                <option
-                                    <?php echo $selectedtype3?>
-                                        value = "pro">Contrat Pro</option>
+                                    <?php echo $selectedtype4?>
+                                        value = "anticipe">Apprentissage anticipé</option>
                             </select>
                                 <br>
                         </div> <!--fin div de tableau 1 -->

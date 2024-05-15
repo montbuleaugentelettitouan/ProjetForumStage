@@ -188,6 +188,9 @@
                         if($typeContrat == "pro"){
                             $selectedContratpro = "selected";
                         }
+                        if($typeContrat == "anticipe"){
+                            $selectedContratanticip = "selected";
+                        }
                     }
                     if($idTA != ""){
                         if($idTA == "1"){
