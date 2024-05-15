@@ -72,6 +72,7 @@ include('fonctionality/bdd.php');
                                 </div>
                             </th>
                             <th style="border-top : 2px solid black; max-width: 200px;">Parcours</th>
+                            <th style="border-top : 2px solid black; max-width: 200px;">Promo</th>
                             <th style="border-top : 2px solid black; max-width: 200px;">Statut</th>
                             <th style="border-top : 2px solid black; max-width: 200px;">Nature</th>
                             <th style="border-top : 2px solid black; max-width: 200px;">Entreprise</th>
@@ -103,6 +104,7 @@ include('fonctionality/bdd.php');
                             utilisateur.etatC,
                             utilisateur.parcours,
                             utilisateur.typeAnnee,
+                            utilisateur.etatCM2,
                             tuteur_academique.nomTA,
                             tuteur_academique.prenomTA,
                             tuteur_academique.emailTA,
@@ -182,10 +184,13 @@ include('fonctionality/bdd.php');
                                     </div>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <span><?php echo $ligne['typeAnnee'];?><?php echo " "?><?php echo $ligne['parcours'];?></span>
+                                    <span><?php echo " "?><?php echo $ligne['parcours'];?></span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
-                                    <span><?php echo $ligne['statut_contrat'];?></span>
+                                    <span><?php echo " "?><?php echo $promo;?></span>
+                                </td>
+                                <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
+                                    <span><?php echo $ligne['etatCM2'];?></span>
                                 </td>
                                 <td <?php if ($i == $totalLigne) { echo 'style="border-bottom : 2px solid black;"'; } ?>>
                                     <span><?php echo $typecontrat?></span>

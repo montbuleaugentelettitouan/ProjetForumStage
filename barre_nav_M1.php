@@ -54,7 +54,7 @@ ini_set('display_errors', '1');
                     <hr class="dropdown-divider"/>
                 </li> -->
 
-                <li><a class="dropdown-item" href="GuideEtu.pdf" download="GuideEtu.pdf"><i class="fas fa-file-pdf"></i> Guide d'utilisation</a></li>
+                <li><a class="dropdown-item" href="uploads/GuideEtu.pdf" download="GuideEtu.pdf"><i class="fas fa-file-pdf"></i> Guide d'utilisation</a></li>
                 <li>
                     <hr class="dropdown-divider"/>
                 </li>

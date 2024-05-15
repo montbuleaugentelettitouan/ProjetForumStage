@@ -110,7 +110,7 @@ if (isset($_POST['recherche'])) {
                 <li>
                     <hr class="dropdown-divider"/>
                 </li>
-                <li><a class="dropdown-item" href="GuideAdmin.pdf" download="GuideAdmin.pdf"><i class="fas fa-file-pdf"></i> Guide d'utilisation</a></li>
+                <li><a class="dropdown-item" href="uploads/GuideAdmin.pdf" download="GuideAdmin.pdf"><i class="fas fa-file-pdf"></i> Guide d'utilisation</a></li>
         </li>
         <li>
             <hr class="dropdown-divider"/>

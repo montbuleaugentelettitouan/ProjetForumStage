@@ -23,6 +23,7 @@ $req = $bdd->prepare("SELECT
                             utilisateur.parcours,
                             utilisateur.promo,
                             utilisateur.typeAnnee,
+                            utilisateur.etatCM2,
                             tuteur_academique.nomTA,
                             tuteur_academique.prenomTA,
                             tuteur_academique.emailTA,
@@ -79,7 +80,7 @@ foreach($resultat as $ligne) {
     $sheet->setCellValue('C' . $row, $ligne['promo']);
     $sheet->setCellValue('D' . $row, $ligne['typeAnnee']);
     $sheet->setCellValue('E' . $row, $ligne['parcours']);
-    $sheet->setCellValue('F' . $row, $ligne['statut_contrat']);
+    $sheet->setCellValue('F' . $row, $ligne['etatCM2']);
     $sheet->setCellValue('G' . $row, $ligne['type_contrat']);
     $sheet->setCellValue('H' . $row, $ligne['nomEntreprise']);
     $sheet->setCellValue('I' . $row, $ligne['ville']);
@@ -95,10 +96,10 @@ foreach($resultat as $ligne) {
 $writer = new Xlsx($spreadsheet);
 
 // Enregistrer le fichier sur le serveur
-$writer->save('liste_etu_postM1.xlsx');
+$writer->save('uploads/liste_etu_postM1.xlsx');
 
 // Télécharger le fichier
-$file = 'liste_etu_postM1.xlsx';
+$file = 'uploads/liste_etu_postM1.xlsx';
 header('Content-Description: File Transfer');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment; filename="'.basename($file).'"');
