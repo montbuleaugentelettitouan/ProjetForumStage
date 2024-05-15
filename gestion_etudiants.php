@@ -1,11 +1,4 @@
 <?php
-/**
- * Fonctionnalité de login à l'application
- *
- * @autor : Anne SIECA, Victor ALLIOT, Alice Broussely et Audrey CHALAUX
- * @date : Promo GPhy 2022 - Année 2021 : 2022
- *
- */
 include('barre_nav_admin.php');
 include('fonctionality/bdd.php');
 ?>

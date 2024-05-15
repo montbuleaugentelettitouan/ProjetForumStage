@@ -114,6 +114,21 @@ $selectedValue = $_GET['value'];
                     $mailTA = !empty($resultat['emailTA']) ? $resultat['emailTA'] : NULL ;
                     $gratif = !empty($resultat['gratification']) ? $resultat['gratification'] : NULL ;
                     $formatGratif = !empty($resultat['format_gratification']) ? $resultat['format_gratification'] : NULL ;
+                    if ($formatGratif=='horairebrut') {
+                        $formatGratif = '/H BRUT';
+                    }
+                    else if ($formatGratif=='mensuelbrut') {
+                        $formatGratif='/MOIS BRUT';
+                    }
+                    else if ($formatGratif=='horairenet') {
+                        $formatGratif='/H BRUT';
+                    }
+                    else if ($formatGratif=='mensuelnet') {
+                        $formatGratif='/MOIS NET';
+                    }
+                    else {
+                        $formatGratif='% DU SMIC';
+                    }
                     ?>
 
                     <!-- affichage du tableau des informations de stage de l'étudiant -->
