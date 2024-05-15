@@ -55,7 +55,7 @@ $req = $bdd->prepare("SELECT
                             convention_contrat.dateDeb,
                             convention_contrat.dateFin,
                             convention_contrat.gratification,
-                            offre.secteur,
+                            offre.titre,
                             tuteur_academique.nomTA,
                             tuteur_academique.prenomTA,
                             tuteur_academique.emailTA,
@@ -114,7 +114,7 @@ if ($resultat) {
     $natureContratPrerempli = $resultat['type_contrat'];
     $rsEntreprisePrerempli = $resultat['nomEntreprise'];
     $siteEntreprisePrerempli = $resultat['nomSite'];
-    $serviceEntreprisePrerempli = $resultat['secteur'];
+    $serviceEntreprisePrerempli = $resultat['titre'];
     $paysEntreprisePrerempli = $resultat['pays'];
     $villeEntreprisePrerempli = $resultat['ville'];
     $cpEntreprisePrerempli = $resultat['code_postal'];
@@ -594,7 +594,7 @@ if ($resultatM1 != null) {
 
                             <!-- Question 24 -->
                             <label for="EmailTA">24.<?php echo $espaces3 ?>Adresse électronique du Tuteur <span style="color: red;">*</span></label><br><br>
-                            <?php echo $espaces8 ?><input type="text" id="EmailTA" name="EmailTA" value="<?php echo $emailTAPrerempli ?>"><br><br><br>
+                            <?php echo $espaces8 ?><input type="text" id="EmailTA" name="EmailTA" value="<?php echo $emailTAPrerempli ?>" readonly class="readonly-input"><br><br><br>
                         </div>
                     </div>
                     <input type="submit" name="Validation" value="Envoyer">
