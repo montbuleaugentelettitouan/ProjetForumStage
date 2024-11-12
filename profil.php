@@ -1,12 +1,13 @@
-<!DOCTYPE html>
 <?php
 include('barre_nav_M1.php');
 include('fonctionality/bdd.php');
+
 $req = $bdd->prepare('SELECT * FROM utilisateur WHERE idUtilisateur=?');
 $req->execute(array($_SESSION['user']));
 $resultat = $req->fetchAll();
 foreach ($resultat as $ligne) {
 ?>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
