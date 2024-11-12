@@ -29,7 +29,7 @@ ini_set('display_errors', '1');
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-red">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="profil.php">
-        <img src="assets/img/gphy.png" alt="Logo" width="50" height="50">
+        Forum Stage GPHY
     </a>
 
     <!-- Sidebar Toggle-->

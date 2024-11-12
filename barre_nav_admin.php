@@ -106,10 +106,10 @@ if (isset($_POST['recherche'])) {
                 <li>
                     <hr class="dropdown-divider"/>
                 </li>
-                <li><a class="dropdown-item" href="evolution_etudiants.php">Passage M1 -> M2</a></li>
+                <!-- <li><a class="dropdown-item" href="evolution_etudiants.php">Passage M1 -> M2</a></li> !-->
                 <li>
                     <hr class="dropdown-divider"/>
-                </li>
+                </li> 
                 <li><a class="dropdown-item" href="uploads/GuideAdmin.pdf" download="GuideAdmin.pdf"><i class="fas fa-file-pdf"></i> Guide d'utilisation</a></li>
         </li>
         <li>
